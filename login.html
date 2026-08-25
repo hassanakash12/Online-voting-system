@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login | AI Online Voting System</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root{
+
+    --primary:#2563eb;
+    --primary-dark:#1d4ed8;
+    --cyan:#06b6d4;
+
+    --dark:#07152f;
+    --dark-2:#0f172a;
+
+    --text:#334155;
+    --muted:#64748b;
+    --light:#94a3b8;
+
+    --bg:#f4f7fb;
+    --white:#ffffff;
+
+    --border:#e2e8f0;
+
+    --danger:#dc2626;
+    --danger-bg:#fef2f2;
+    --danger-border:#fecaca;
+
+    --shadow:
+        0 25px 70px rgba(15,23,42,.16);
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+
+    margin:0;
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:
+        "Inter",
+        Arial,
+        sans-serif;
+}
+
+html,
+body{
+
+    width:100%;
+    min-height:100%;
+}
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:30px;
+
+    color:var(--text);
+
+    background:
+
+        radial-gradient(
+            circle at 10% 15%,
+            rgba(37,99,235,.14),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 90% 85%,
+            rgba(6,182,212,.12),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            135deg,
+            #eef5ff,
+            #f8fbff
+        );
+
+    overflow-x:hidden;
+}
+
+button,
+input{
+
+    font-family:inherit;
+}
+
+
+/* =========================================================
+   BACKGROUND DECORATIONS
+========================================================= */
+
+.background-shape{
+
+    position:fixed;
+
+    border-radius:50%;
+
+    pointer-events:none;
+
+    z-index:0;
+}
+
+.shape-one{
+
+    width:330px;
+    height:330px;
+
+    top:-160px;
+    left:-110px;
+
+    border:
+        1px solid
+        rgba(37,99,235,.10);
+
+    box-shadow:
+        0 0 0 45px
+        rgba(37,99,235,.025),
+        0 0 0 90px
+        rgba(37,99,235,.018);
+}
+
+.shape-two{
+
+    width:280px;
+    height:280px;
+
+    bottom:-140px;
+    right:-100px;
+
+    border:
+        1px solid
+        rgba(6,182,212,.10);
+
+    box-shadow:
+        0 0 0 45px
+        rgba(6,182,212,.025),
+        0 0 0 90px
+        rgba(6,182,212,.018);
+}
+
+
+/* =========================================================
+   MAIN WRAPPER
+========================================================= */
+
+.page{
+
+    width:
+        min(100%, 950px);
+
+    min-height:
+        590px;
+
+    position:relative;
+
+    z-index:2;
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    overflow:hidden;
+
+    border-radius:26px;
+
+    background:white;
+
+    box-shadow:
+        var(--shadow);
+
+    border:
+        1px solid
+        rgba(255,255,255,.8);
+
+    animation:
+        pageIn .55s ease;
+}
+
+@keyframes pageIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(18px)
+            scale(.985);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   LEFT BRAND PANEL
+========================================================= */
+
+.brand-panel{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:45px;
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #07152f 0%,
+            #0d2c6b 45%,
+            #1d4ed8 78%,
+            #087f9b 100%
+        );
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+}
+
+
+/* Decorative circles */
+
+.brand-panel::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:380px;
+    height:380px;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    right:-210px;
+    top:-180px;
+}
+
+.brand-panel::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:260px;
+    height:260px;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    left:-180px;
+    bottom:-130px;
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.brand{
+
+    position:relative;
+
+    z-index:2;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:13px;
+}
+
+.logo{
+
+    width:48px;
+    height:48px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:14px;
+
+    font-size:22px;
+
+    background:
+        rgba(255,255,255,.12);
+
+    border:
+        1px solid
+        rgba(255,255,255,.17);
+
+    box-shadow:
+        inset 0 1px 0
+        rgba(255,255,255,.16);
+}
+
+.brand-text strong{
+
+    display:block;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    letter-spacing:.1px;
+}
+
+.brand-text span{
+
+    display:block;
+
+    margin-top:5px;
+
+    color:
+        rgba(255,255,255,.52);
+
+    font-size:8px;
+
+    font-weight:600;
+
+    letter-spacing:1.1px;
+}
+
+
+/* =========================================================
+   LEFT CONTENT
+========================================================= */
+
+.brand-content{
+
+    position:relative;
+
+    z-index:2;
+
+    margin-top:30px;
+}
+
+.brand-content .eyebrow{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    padding:
+        7px 10px;
+
+    border-radius:20px;
+
+    background:
+        rgba(255,255,255,.09);
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    color:
+        rgba(255,255,255,.72);
+
+    font-size:8px;
+
+    font-weight:800;
+
+    text-transform:uppercase;
+
+    letter-spacing:.7px;
+}
+
+.online-dot{
+
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#22c55e;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(34,197,94,.12);
+}
+
+.brand-content h1{
+
+    max-width:390px;
+
+    margin-top:19px;
+
+    color:white;
+
+    font-size:
+        clamp(28px, 3.2vw, 40px);
+
+    line-height:1.08;
+
+    letter-spacing:-1.6px;
+
+    font-weight:800;
+}
+
+.brand-content h1 span{
+
+    background:
+        linear-gradient(
+            90deg,
+            #67e8f9,
+            #93c5fd
+        );
+
+    -webkit-background-clip:text;
+
+    background-clip:text;
+
+    color:transparent;
+}
+
+.brand-content p{
+
+    max-width:400px;
+
+    margin-top:16px;
+
+    color:
+        rgba(255,255,255,.60);
+
+    font-size:10px;
+
+    line-height:1.8;
+}
+
+
+/* =========================================================
+   SECURITY FEATURES
+========================================================= */
+
+.features{
+
+    position:relative;
+
+    z-index:2;
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:10px;
+
+    margin-top:30px;
+}
+
+.feature{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    padding:
+        11px;
+
+    border-radius:11px;
+
+    background:
+        rgba(255,255,255,.06);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+}
+
+.feature-icon{
+
+    width:28px;
+    height:28px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
+
+    border-radius:8px;
+
+    background:
+        rgba(255,255,255,.09);
+
+    font-size:12px;
+}
+
+.feature span{
+
+    color:
+        rgba(255,255,255,.70);
+
+    font-size:8px;
+
+    font-weight:600;
+
+    line-height:1.3;
+}
+
+
+/* =========================================================
+   COPYRIGHT
+========================================================= */
+
+.brand-footer{
+
+    position:relative;
+
+    z-index:2;
+
+    color:
+        rgba(255,255,255,.36);
+
+    font-size:8px;
+}
+
+
+/* =========================================================
+   LOGIN PANEL
+========================================================= */
+
+.login-panel{
+
+    padding:
+        45px 46px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    background:white;
+}
+
+
+/* =========================================================
+   LOGIN HEADER
+========================================================= */
+
+.login-header{
+
+    margin-bottom:26px;
+}
+
+.login-header .small-label{
+
+    color:var(--primary);
+
+    font-size:8px;
+
+    font-weight:800;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+}
+
+.login-header h2{
+
+    color:var(--dark);
+
+    font-size:27px;
+
+    font-weight:800;
+
+    letter-spacing:-.8px;
+
+    margin-top:7px;
+}
+
+.login-header p{
+
+    color:var(--muted);
+
+    font-size:9px;
+
+    margin-top:7px;
+
+    line-height:1.6;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.error-msg{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:9px;
+
+    padding:
+        11px 12px;
+
+    margin-bottom:18px;
+
+    border-radius:10px;
+
+    background:
+        var(--danger-bg);
+
+    border:
+        1px solid
+        var(--danger-border);
+
+    color:
+        var(--danger);
+
+    font-size:9px;
+
+    line-height:1.5;
+
+    animation:
+        shake .35s ease;
+}
+
+.error-icon{
+
+    width:20px;
+    height:20px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
+
+    border-radius:6px;
+
+    background:
+        rgba(220,38,38,.09);
+
+    font-size:10px;
+}
+
+@keyframes shake{
+
+    0%,100%{
+        transform:translateX(0);
+    }
+
+    25%{
+        transform:translateX(-4px);
+    }
+
+    75%{
+        transform:translateX(4px);
+    }
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.form-group{
+
+    margin-bottom:17px;
+}
+
+.form-group label{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:7px;
+
+    color:#334155;
+
+    font-size:9px;
+
+    font-weight:700;
+}
+
+.input-wrapper{
+
+    position:relative;
+}
+
+.input-icon{
+
+    position:absolute;
+
+    left:13px;
+
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    color:#94a3b8;
+
+    font-size:13px;
+
+    pointer-events:none;
+
+    transition:.2s;
+}
+
+.input-wrapper input{
+
+    width:100%;
+
+    height:46px;
+
+    padding:
+        0 43px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:10px;
+
+    outline:none;
+
+    color:var(--dark);
+
+    background:#f8fafc;
+
+    font-size:10px;
+
+    transition:
+        border-color .2s,
+        background .2s,
+        box-shadow .2s;
+}
+
+.input-wrapper input::placeholder{
+
+    color:#a3afbf;
+}
+
+.input-wrapper input:focus{
+
+    background:white;
+
+    border-color:
+        var(--primary);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(37,99,235,.08);
+}
+
+.input-wrapper:focus-within .input-icon{
+
+    color:var(--primary);
+}
+
+
+/* password eye */
+
+.password-toggle{
+
+    position:absolute;
+
+    right:11px;
+
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    width:27px;
+    height:27px;
+
+    border:none;
+
+    background:transparent;
+
+    color:#94a3b8;
+
+    cursor:pointer;
+
+    border-radius:7px;
+
+    font-size:12px;
+
+    transition:.2s;
+}
+
+.password-toggle:hover{
+
+    background:#eff6ff;
+
+    color:var(--primary);
+}
+
+
+/* =========================================================
+   FORM OPTIONS
+========================================================= */
+
+.form-options{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin:
+        3px 0 21px;
+}
+
+.remember{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    color:var(--muted);
+
+    font-size:8px;
+
+    cursor:pointer;
+}
+
+.remember input{
+
+    width:13px;
+    height:13px;
+
+    accent-color:
+        var(--primary);
+
+    cursor:pointer;
+}
+
+.forgot{
+
+    color:var(--primary);
+
+    font-size:8px;
+
+    font-weight:700;
+}
+
+.forgot:hover{
+
+    text-decoration:underline;
+}
+
+
+/* =========================================================
+   LOGIN BUTTON
+========================================================= */
+
+.login-btn{
+
+    width:100%;
+
+    height:46px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:9px;
+
+    border:none;
+
+    border-radius:10px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
+
+    font-size:10px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 9px 22px
+        rgba(37,99,235,.22);
+
+    transition:
+        transform .2s,
+        box-shadow .2s,
+        opacity .2s;
+}
+
+.login-btn:hover{
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 13px 28px
+        rgba(37,99,235,.28);
+}
+
+.login-btn:active{
+
+    transform:
+        translateY(0);
+}
+
+
+/* loading */
+
+.login-btn.loading{
+
+    opacity:.75;
+
+    pointer-events:none;
+}
+
+.spinner{
+
+    width:14px;
+    height:14px;
+
+    border:
+        2px solid
+        rgba(255,255,255,.4);
+
+    border-top-color:white;
+
+    border-radius:50%;
+
+    animation:
+        spin .7s linear infinite;
+}
+
+@keyframes spin{
+
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.divider{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin:
+        23px 0 19px;
+
+    color:#cbd5e1;
+
+    font-size:8px;
+}
+
+.divider::before,
+.divider::after{
+
+    content:"";
+
+    flex:1;
+
+    height:1px;
+
+    background:#e8edf3;
+}
+
+
+/* =========================================================
+   REGISTER
+========================================================= */
+
+.register-box{
+
+    text-align:center;
+
+    color:var(--muted);
+
+    font-size:9px;
+}
+
+.register-box a{
+
+    color:var(--primary);
+
+    font-weight:800;
+
+    margin-left:3px;
+}
+
+.register-box a:hover{
+
+    text-decoration:underline;
+}
+
+
+/* =========================================================
+   SECURITY NOTE
+========================================================= */
+
+.security-note{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:7px;
+
+    margin-top:22px;
+
+    color:#94a3b8;
+
+    font-size:7px;
+
+    text-align:center;
+}
+
+.security-note span{
+
+    color:#16a34a;
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:800px){
+
+    body{
+
+        padding:18px;
+    }
+
+    .page{
+
+        max-width:520px;
+
+        min-height:auto;
+
+        grid-template-columns:1fr;
+
+        border-radius:22px;
+    }
+
+    .brand-panel{
+
+        min-height:300px;
+
+        padding:30px;
+    }
+
+    .brand-content{
+
+        margin-top:25px;
+    }
+
+    .brand-content h1{
+
+        font-size:29px;
+    }
+
+    .features{
+
+        margin-top:20px;
+    }
+
+    .brand-footer{
+
+        margin-top:25px;
+    }
+
+    .login-panel{
+
+        padding:35px 30px;
+    }
+}
+
+
+@media(max-width:500px){
+
+    body{
+
+        padding:10px;
+    }
+
+    .page{
+
+        border-radius:18px;
+    }
+
+    .brand-panel{
+
+        padding:25px;
+
+        min-height:275px;
+    }
+
+    .brand-content h1{
+
+        font-size:26px;
+
+        letter-spacing:-1px;
+    }
+
+    .brand-content p{
+
+        font-size:9px;
+    }
+
+    .features{
+
+        grid-template-columns:1fr;
+    }
+
+    .feature{
+
+        padding:9px;
+    }
+
+    .login-panel{
+
+        padding:30px 23px;
+    }
+
+    .login-header h2{
+
+        font-size:24px;
+    }
+
+    .form-options{
+
+        align-items:flex-start;
+
+        flex-direction:column;
+    }
+
+    .forgot{
+
+        align-self:flex-end;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     BACKGROUND
+========================================================= -->
+
+<div class="background-shape shape-one"></div>
+<div class="background-shape shape-two"></div>
+
+
+
+<!-- =========================================================
+     MAIN PAGE
+========================================================= -->
+
+<div class="page">
+
+
+    <!-- =====================================================
+         BRAND PANEL
+    ====================================================== -->
+
+    <section class="brand-panel">
+
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+
+            <div class="logo">
+                🗳️
+            </div>
+
+
+            <div class="brand-text">
+
+                <strong>
+                    AI Online Voting System
+                </strong>
+
+                <span>
+                    SECURE DIGITAL ELECTION PLATFORM
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- CONTENT -->
+
+        <div class="brand-content">
+
+
+            <div class="eyebrow">
+
+                <span class="online-dot"></span>
+
+                Secure voting portal
+
+            </div>
+
+
+            <h1>
+
+                Your vote.
+                <br>
+
+                Your <span>voice.</span>
+
+            </h1>
+
+
+            <p>
+
+                Access your secure voter account and
+                participate in active elections with a
+                modern, transparent and reliable digital
+                voting experience.
+
+            </p>
+
+
+
+            <!-- FEATURES -->
+
+            <div class="features">
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🔐
+                    </div>
+
+                    <span>
+                        Secure
+                        <br>
+                        Authentication
+                    </span>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        ✓
+                    </div>
+
+                    <span>
+                        Verified
+                        <br>
+                        Voting
+                    </span>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🛡️
+                    </div>
+
+                    <span>
+                        Protected
+                        <br>
+                        Account
+                    </span>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        ⚡
+                    </div>
+
+                    <span>
+                        Fast
+                        <br>
+                        Access
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- FOOTER -->
+
+        <div class="brand-footer">
+
+            © 2026 AI Online Voting System
+            &nbsp;•&nbsp;
+            Secure Digital Elections
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         LOGIN PANEL
+    ====================================================== -->
+
+    <section class="login-panel">
+
+
+        <!-- HEADER -->
+
+        <div class="login-header">
+
+
+            <div class="small-label">
+                Voter Portal
+            </div>
+
+
+            <h2>
+                Welcome back
+            </h2>
+
+
+            <p>
+                Sign in to access your voter dashboard.
+            </p>
+
+
+        </div>
+
+
+
+        <!-- ERROR -->
+
+        {% if error %}
+
+        <div class="error-msg">
+
+
+            <div class="error-icon">
+                !
+            </div>
+
+
+            <div>
+                {{ error }}
+            </div>
+
+
+        </div>
+
+        {% endif %}
+
+
+
+        <!-- FORM -->
+
+        <form
+            method="POST"
+            id="loginForm"
+        >
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+
+                <label for="email">
+                    Email Address
+                </label>
+
+
+                <div class="input-wrapper">
+
+
+                    <span class="input-icon">
+                        ✉
+                    </span>
+
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email address"
+                        autocomplete="email"
+                        required
+                    >
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+
+                <label for="password">
+                    Password
+                </label>
+
+
+                <div class="input-wrapper">
+
+
+                    <span class="input-icon">
+                        🔒
+                    </span>
+
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        id="togglePassword"
+                        aria-label="Show password"
+                    >
+                        👁
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- OPTIONS -->
+
+            <div class="form-options">
+
+
+                <label class="remember">
+
+                    <input
+                        type="checkbox"
+                        name="remember"
+                    >
+
+                    Remember me
+
+                </label>
+
+
+                <a
+                    href="#"
+                    class="forgot"
+                    onclick="return false;"
+                >
+                    Forgot password?
+                </a>
+
+
+            </div>
+
+
+
+            <!-- LOGIN -->
+
+            <button
+                type="submit"
+                class="login-btn"
+                id="loginButton"
+            >
+
+                <span id="buttonIcon">
+                    → 
+                </span>
+
+                <span id="buttonText">
+                    Sign In Securely
+                </span>
+
+            </button>
+
+
+        </form>
+
+
+
+        <!-- DIVIDER -->
+
+        <div class="divider">
+            OR
+        </div>
+
+
+
+        <!-- REGISTER -->
+
+        <div class="register-box">
+
+            Don't have an account?
+
+            <a href="/register">
+                Create an account
+            </a>
+
+        </div>
+
+
+
+        <!-- SECURITY -->
+
+        <div class="security-note">
+
+            <span>🔒</span>
+
+            Your login information is securely protected
+
+        </div>
+
+
+    </section>
+
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   PASSWORD SHOW / HIDE
+========================================================= */
+
+const password =
+    document.getElementById("password");
+
+const toggle =
+    document.getElementById("togglePassword");
+
+
+toggle.addEventListener(
+    "click",
+    function(){
+
+        if(password.type === "password"){
+
+            password.type = "text";
+
+            toggle.textContent = "🙈";
+
+            toggle.setAttribute(
+                "aria-label",
+                "Hide password"
+            );
+
+        }
+
+        else{
+
+            password.type = "password";
+
+            toggle.textContent = "👁";
+
+            toggle.setAttribute(
+                "aria-label",
+                "Show password"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   LOGIN LOADING STATE
+========================================================= */
+
+const form =
+    document.getElementById("loginForm");
+
+const button =
+    document.getElementById("loginButton");
+
+const buttonText =
+    document.getElementById("buttonText");
+
+const buttonIcon =
+    document.getElementById("buttonIcon");
+
+
+form.addEventListener(
+    "submit",
+    function(){
+
+        if(!form.checkValidity()){
+            return;
+        }
+
+        button.classList.add("loading");
+
+        buttonIcon.innerHTML =
+            '<span class="spinner"></span>';
+
+        buttonText.textContent =
+            "Signing in...";
+
+    }
+);
+
+
+/* =========================================================
+   AUTO FOCUS
+========================================================= */
+
+window.addEventListener(
+    "load",
+    function(){
+
+        const email =
+            document.getElementById("email");
+
+        if(email){
+
+            email.focus();
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

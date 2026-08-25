@@ -1,0 +1,2401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Add Voter | AI Online Voting System</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    min-height:100vh;
+
+    background:
+    radial-gradient(circle at 10% 20%, rgba(0,198,255,.35), transparent 30%),
+    radial-gradient(circle at 90% 80%, rgba(15,98,254,.35), transparent 30%),
+    linear-gradient(135deg,#061b45,#0f62fe,#00b4ff);
+
+    background-size:cover;
+
+    padding:35px 20px;
+
+    color:#1e293b;
+
+    overflow-x:hidden;
+}
+
+
+/* =========================================================
+   BACKGROUND SHAPES
+========================================================= */
+
+.bg-shape{
+
+    position:fixed;
+
+    border-radius:50%;
+
+    filter:blur(2px);
+
+    opacity:.18;
+
+    z-index:-1;
+
+    animation:float 7s ease-in-out infinite;
+
+}
+
+.shape-one{
+
+    width:260px;
+    height:260px;
+
+    background:#fff;
+
+    top:-80px;
+    left:-80px;
+
+}
+
+.shape-two{
+
+    width:320px;
+    height:320px;
+
+    background:#00e5ff;
+
+    right:-120px;
+    bottom:-100px;
+
+    animation-delay:2s;
+
+}
+
+.shape-three{
+
+    width:150px;
+    height:150px;
+
+    background:#fff;
+
+    right:15%;
+    top:8%;
+
+    animation-delay:4s;
+
+}
+
+@keyframes float{
+
+    0%,100%{
+        transform:translateY(0) scale(1);
+    }
+
+    50%{
+        transform:translateY(-25px) scale(1.05);
+    }
+
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.container{
+
+    width:100%;
+
+    max-width:1100px;
+
+    margin:auto;
+
+    background:rgba(255,255,255,.15);
+
+    backdrop-filter:blur(22px);
+
+    -webkit-backdrop-filter:blur(22px);
+
+    border:1px solid rgba(255,255,255,.25);
+
+    border-radius:28px;
+
+    padding:25px;
+
+    box-shadow:
+    0 25px 70px rgba(0,0,0,.30);
+
+    animation:containerIn .7s ease;
+
+}
+
+@keyframes containerIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(35px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    margin-bottom:25px;
+
+    padding:10px 10px 20px;
+
+}
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.brand-icon{
+
+    width:62px;
+
+    height:62px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#fff;
+
+    color:#0f62fe;
+
+    font-size:27px;
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.20);
+
+}
+
+.brand-text h1{
+
+    color:#fff;
+
+    font-size:25px;
+
+    font-weight:700;
+
+    line-height:1.2;
+
+}
+
+.brand-text p{
+
+    color:rgba(255,255,255,.80);
+
+    font-size:13px;
+
+    margin-top:4px;
+
+}
+
+.header-badge{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    background:rgba(255,255,255,.95);
+
+    color:#0f62fe;
+
+    padding:11px 17px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+}
+
+.header-badge i{
+
+    color:#16a34a;
+
+}
+
+
+/* =========================================================
+   FORM CARD
+========================================================= */
+
+.form-card{
+
+    background:#fff;
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.12);
+
+}
+
+.form-top{
+
+    padding:27px 35px;
+
+    border-bottom:1px solid #edf1f7;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+}
+
+.form-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.form-title-icon{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:12px;
+
+    background:linear-gradient(135deg,#0f62fe,#00b4ff);
+
+    color:#fff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:19px;
+
+}
+
+.form-title h2{
+
+    font-size:19px;
+
+    color:#172033;
+
+}
+
+.form-title p{
+
+    font-size:12px;
+
+    color:#7b8798;
+
+    margin-top:2px;
+
+}
+
+.required-note{
+
+    font-size:12px;
+
+    color:#7b8798;
+
+}
+
+.required-note span{
+
+    color:#ef4444;
+
+}
+
+
+/* =========================================================
+   FORM CONTENT
+========================================================= */
+
+.form-content{
+
+    padding:35px;
+
+}
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:24px;
+
+}
+
+.form-group{
+
+    position:relative;
+
+}
+
+.full-width{
+
+    grid-column:1 / -1;
+
+}
+
+.form-group label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    margin-bottom:9px;
+
+    color:#344054;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.form-group label i{
+
+    color:#0f62fe;
+
+    font-size:13px;
+
+}
+
+.required{
+
+    color:#ef4444;
+
+    margin-left:2px;
+
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.input-wrapper{
+
+    position:relative;
+
+}
+
+.input-wrapper > i{
+
+    position:absolute;
+
+    left:16px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#8491a5;
+
+    font-size:16px;
+
+    pointer-events:none;
+
+    transition:.3s;
+
+}
+
+.input-wrapper input,
+.input-wrapper select{
+
+    width:100%;
+
+    height:52px;
+
+    border:1.5px solid #dce2ea;
+
+    border-radius:12px;
+
+    background:#f9fafc;
+
+    color:#1f2937;
+
+    padding:0 16px 0 46px;
+
+    font-size:14px;
+
+    outline:none;
+
+    transition:.25s ease;
+
+}
+
+.input-wrapper input::placeholder{
+
+    color:#a4adba;
+
+}
+
+.input-wrapper input:hover,
+.input-wrapper select:hover{
+
+    border-color:#b8c5d6;
+
+}
+
+.input-wrapper input:focus,
+.input-wrapper select:focus{
+
+    background:#fff;
+
+    border-color:#0f62fe;
+
+    box-shadow:0 0 0 4px rgba(15,98,254,.09);
+
+}
+
+.input-wrapper:focus-within > i{
+
+    color:#0f62fe;
+
+}
+
+
+/* =========================================================
+   PASSWORD
+========================================================= */
+
+.password-wrapper input{
+
+    padding-right:48px;
+
+}
+
+.password-toggle{
+
+    position:absolute;
+
+    right:15px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    border:none;
+
+    background:none;
+
+    color:#8a96a8;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    padding:4px;
+
+}
+
+.password-toggle:hover{
+
+    color:#0f62fe;
+
+}
+
+
+/* =========================================================
+   PASSWORD STRENGTH
+========================================================= */
+
+.password-strength{
+
+    display:none;
+
+    margin-top:9px;
+
+}
+
+.strength-bars{
+
+    display:flex;
+
+    gap:5px;
+
+}
+
+.strength-bar{
+
+    height:4px;
+
+    flex:1;
+
+    border-radius:10px;
+
+    background:#e5e7eb;
+
+    transition:.3s;
+
+}
+
+.strength-text{
+
+    display:block;
+
+    margin-top:5px;
+
+    font-size:11px;
+
+    color:#7b8798;
+
+}
+
+
+/* =========================================================
+   PHOTO UPLOAD
+========================================================= */
+
+.photo-section{
+
+    grid-column:1 / -1;
+
+}
+
+.upload-area{
+
+    position:relative;
+
+    min-height:185px;
+
+    border:2px dashed #cbd5e1;
+
+    border-radius:16px;
+
+    background:#f8fafc;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    padding:25px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    overflow:hidden;
+
+}
+
+.upload-area:hover{
+
+    border-color:#0f62fe;
+
+    background:#f5f9ff;
+
+}
+
+.upload-area.dragover{
+
+    border-color:#00a6ff;
+
+    background:#edf8ff;
+
+    transform:scale(1.01);
+
+}
+
+.upload-content{
+
+    pointer-events:none;
+
+}
+
+.upload-icon{
+
+    width:58px;
+
+    height:58px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#e8f1ff,#dff8ff);
+
+    color:#0f62fe;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin:0 auto 12px;
+
+    font-size:23px;
+
+}
+
+.upload-content h3{
+
+    color:#334155;
+
+    font-size:14px;
+
+    margin-bottom:5px;
+
+}
+
+.upload-content p{
+
+    color:#94a3b8;
+
+    font-size:12px;
+
+}
+
+.upload-content span{
+
+    color:#0f62fe;
+
+    font-weight:600;
+
+}
+
+#photo{
+
+    display:none;
+
+}
+
+
+/* =========================================================
+   IMAGE PREVIEW
+========================================================= */
+
+.preview-container{
+
+    display:none;
+
+    align-items:center;
+
+    gap:18px;
+
+    width:100%;
+
+}
+
+.preview-image{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:16px;
+
+    object-fit:cover;
+
+    border:3px solid #fff;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.15);
+
+}
+
+.preview-info{
+
+    text-align:left;
+
+}
+
+.preview-info h4{
+
+    color:#334155;
+
+    font-size:14px;
+
+    margin-bottom:4px;
+
+}
+
+.preview-info p{
+
+    color:#94a3b8;
+
+    font-size:11px;
+
+}
+
+.remove-photo{
+
+    margin-top:8px;
+
+    border:none;
+
+    background:#fee2e2;
+
+    color:#dc2626;
+
+    padding:6px 10px;
+
+    border-radius:7px;
+
+    font-size:11px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+
+.remove-photo:hover{
+
+    background:#fecaca;
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-select{
+
+    position:relative;
+
+}
+
+.status-select select{
+
+    appearance:none;
+
+    -webkit-appearance:none;
+
+    cursor:pointer;
+
+}
+
+.select-arrow{
+
+    position:absolute;
+
+    right:17px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#8491a5;
+
+    pointer-events:none;
+
+}
+
+
+/* =========================================================
+   FORM ACTIONS
+========================================================= */
+
+.form-actions{
+
+    margin-top:32px;
+
+    padding-top:25px;
+
+    border-top:1px solid #edf1f7;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.back-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:9px;
+
+    height:50px;
+
+    padding:0 22px;
+
+    border:1px solid #dce2ea;
+
+    border-radius:11px;
+
+    color:#475467;
+
+    background:#fff;
+
+    text-decoration:none;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.back-btn:hover{
+
+    background:#f8fafc;
+
+    border-color:#b8c5d6;
+
+    transform:translateY(-2px);
+
+}
+
+.save-btn{
+
+    height:50px;
+
+    min-width:190px;
+
+    border:none;
+
+    border-radius:11px;
+
+    color:#fff;
+
+    background:linear-gradient(135deg,#0f62fe,#00a6ff);
+
+    font-size:14px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    box-shadow:0 8px 20px rgba(15,98,254,.25);
+
+    transition:.25s;
+
+}
+
+.save-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 12px 25px rgba(15,98,254,.35);
+
+}
+
+.save-btn:active{
+
+    transform:translateY(0);
+
+}
+
+.save-btn.loading{
+
+    pointer-events:none;
+
+    opacity:.75;
+
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.error-message{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:13px 16px;
+
+    margin-bottom:25px;
+
+    background:#fff1f2;
+
+    border:1px solid #fecdd3;
+
+    border-radius:11px;
+
+    color:#be123c;
+
+    font-size:13px;
+
+    font-weight:500;
+
+}
+
+.error-message i{
+
+    font-size:17px;
+
+}
+
+
+/* =========================================================
+   HELP TEXT
+========================================================= */
+
+.help-text{
+
+    margin-top:6px;
+
+    color:#98a2b3;
+
+    font-size:10px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:800px){
+
+    body{
+
+        padding:20px 12px;
+
+    }
+
+    .container{
+
+        padding:15px;
+
+        border-radius:20px;
+
+    }
+
+    .header{
+
+        padding:5px 5px 15px;
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .header-badge{
+
+        align-self:flex-start;
+
+    }
+
+    .form-top{
+
+        padding:22px;
+
+    }
+
+    .form-content{
+
+        padding:22px;
+
+    }
+
+    .form-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .full-width,
+    .photo-section{
+
+        grid-column:auto;
+
+    }
+
+    .form-actions{
+
+        flex-direction:column-reverse;
+
+        align-items:stretch;
+
+    }
+
+    .back-btn,
+    .save-btn{
+
+        width:100%;
+
+    }
+
+}
+
+
+@media(max-width:480px){
+
+    body{
+
+        padding:10px;
+
+    }
+
+    .container{
+
+        padding:10px;
+
+    }
+
+    .brand-text h1{
+
+        font-size:20px;
+
+    }
+
+    .brand-icon{
+
+        width:52px;
+
+        height:52px;
+
+        font-size:22px;
+
+    }
+
+    .form-top{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .form-content{
+
+        padding:18px;
+
+    }
+
+    .upload-area{
+
+        min-height:165px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SUCCESS ANIMATION
+========================================================= */
+
+.success-icon{
+
+    display:none;
+
+    width:18px;
+
+    height:18px;
+
+    border:2px solid rgba(255,255,255,.4);
+
+    border-top-color:#fff;
+
+    border-radius:50%;
+
+    animation:spin .7s linear infinite;
+
+}
+
+@keyframes spin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- BACKGROUND DECORATION -->
+
+<div class="bg-shape shape-one"></div>
+<div class="bg-shape shape-two"></div>
+<div class="bg-shape shape-three"></div>
+
+
+<!-- MAIN CONTAINER -->
+
+<div class="container">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+
+                <i class="fa-solid fa-user-plus"></i>
+
+            </div>
+
+            <div class="brand-text">
+
+                <h1>Add New Voter</h1>
+
+                <p>AI Online Voting System • Voter Management</p>
+
+            </div>
+
+        </div>
+
+
+        <div class="header-badge">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            Admin Panel
+
+        </div>
+
+    </div>
+
+
+    <!-- FORM CARD -->
+
+    <div class="form-card">
+
+
+        <!-- FORM HEADER -->
+
+        <div class="form-top">
+
+            <div class="form-title">
+
+                <div class="form-title-icon">
+
+                    <i class="fa-solid fa-id-card"></i>
+
+                </div>
+
+                <div>
+
+                    <h2>Voter Information</h2>
+
+                    <p>Enter the voter's information carefully</p>
+
+                </div>
+
+            </div>
+
+            <div class="required-note">
+
+                <span>*</span> Required fields
+
+            </div>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <div class="form-content">
+
+
+            {% if error %}
+
+            <div class="error-message">
+
+                <i class="fa-solid fa-circle-exclamation"></i>
+
+                <span>{{ error }}</span>
+
+            </div>
+
+            {% endif %}
+
+
+            <form method="POST"
+                  enctype="multipart/form-data"
+                  id="voterForm">
+
+
+                <div class="form-grid">
+
+
+                    <!-- FULL NAME -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            <i class="fa-solid fa-user"></i>
+
+                            Full Name
+
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-user"></i>
+
+                            <input
+                                type="text"
+                                name="full_name"
+                                id="full_name"
+                                placeholder="Enter voter's full name"
+                                autocomplete="name"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            <i class="fa-solid fa-envelope"></i>
+
+                            Email Address
+
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-envelope"></i>
+
+                            <input
+                                type="email"
+                                name="email"
+                                id="email"
+                                placeholder="example@email.com"
+                                autocomplete="email"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CNIC -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            <i class="fa-solid fa-address-card"></i>
+
+                            CNIC Number
+
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-id-card"></i>
+
+                            <input
+                                type="text"
+                                name="cnic"
+                                id="cnic"
+                                placeholder="42101-1234567-1"
+                                maxlength="15"
+                                required>
+
+                        </div>
+
+                        <div class="help-text">
+
+                            Format: 42101-1234567-1
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            <i class="fa-solid fa-phone"></i>
+
+                            Phone Number
+
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-phone"></i>
+
+                            <input
+                                type="tel"
+                                name="phone"
+                                id="phone"
+                                placeholder="03001234567"
+                                maxlength="11"
+                                required>
+
+                        </div>
+
+                        <div class="help-text">
+
+                            Example: 03001234567
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            <i class="fa-solid fa-lock"></i>
+
+                            Password
+
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <div class="input-wrapper password-wrapper">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input
+                                type="password"
+                                name="password"
+                                id="password"
+                                placeholder="Create secure password"
+                                autocomplete="new-password"
+                                required>
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="passwordToggle"
+                                aria-label="Show password">
+
+                                <i class="fa-solid fa-eye"></i>
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="password-strength" id="passwordStrength">
+
+                            <div class="strength-bars">
+
+                                <span class="strength-bar"></span>
+                                <span class="strength-bar"></span>
+                                <span class="strength-bar"></span>
+                                <span class="strength-bar"></span>
+
+                            </div>
+
+                            <span class="strength-text" id="strengthText">
+
+                                Password strength
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONFIRM PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            <i class="fa-solid fa-shield-halved"></i>
+
+                            Confirm Password
+
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <div class="input-wrapper password-wrapper">
+
+                            <i class="fa-solid fa-shield-halved"></i>
+
+                            <input
+                                type="password"
+                                name="confirm_password"
+                                id="confirm_password"
+                                placeholder="Confirm password"
+                                autocomplete="new-password"
+                                required>
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="confirmToggle"
+                                aria-label="Show password">
+
+                                <i class="fa-solid fa-eye"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PHOTO -->
+
+                    <div class="form-group photo-section">
+
+                        <label>
+
+                            <i class="fa-solid fa-camera"></i>
+
+                            Profile Photo
+
+                        </label>
+
+
+                        <div class="upload-area" id="uploadArea">
+
+
+                            <div class="upload-content" id="uploadContent">
+
+                                <div class="upload-icon">
+
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                                </div>
+
+                                <h3>
+
+                                    Upload Voter Photo
+
+                                </h3>
+
+                                <p>
+
+                                    Drag & drop your image here or
+
+                                    <span>browse</span>
+
+                                </p>
+
+                                <p style="margin-top:5px;">
+
+                                    JPG, JPEG or PNG • Max 5MB
+
+                                </p>
+
+                            </div>
+
+
+                            <div class="preview-container"
+                                 id="previewContainer">
+
+                                <img
+                                    id="previewImage"
+                                    class="preview-image"
+                                    src=""
+                                    alt="Voter Photo Preview">
+
+                                <div class="preview-info">
+
+                                    <h4 id="fileName">
+
+                                        Selected Photo
+
+                                    </h4>
+
+                                    <p id="fileSize">
+
+                                        Image ready
+
+                                    </p>
+
+                                    <button
+                                        type="button"
+                                        class="remove-photo"
+                                        id="removePhoto">
+
+                                        <i class="fa-solid fa-trash"></i>
+
+                                        Remove
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+
+                            <input
+                                type="file"
+                                name="photo"
+                                id="photo"
+                                accept="image/png,image/jpeg,image/jpg">
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <div class="form-group full-width">
+
+                        <label>
+
+                            <i class="fa-solid fa-toggle-on"></i>
+
+                            Voter Status
+
+                            <span class="required">*</span>
+
+                        </label>
+
+
+                        <div class="input-wrapper status-select">
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                            <select name="status" id="status" required>
+
+                                <option value="Pending">
+
+                                    Pending
+
+                                </option>
+
+                                <option value="Approved">
+
+                                    Approved
+
+                                </option>
+
+                                <option value="Rejected">
+
+                                    Rejected
+
+                                </option>
+
+                            </select>
+
+                            <i class="fa-solid fa-chevron-down select-arrow"></i>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="form-actions">
+
+
+                    <a href="/voters" class="back-btn">
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Back to Voter Management
+
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                        id="saveBtn">
+
+                        <span class="success-icon" id="loadingIcon"></span>
+
+                        <i class="fa-solid fa-user-plus"
+                           id="saveIcon"></i>
+
+                        <span id="saveText">
+
+                            Save Voter
+
+                        </span>
+
+                    </button>
+
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const photoInput = document.getElementById("photo");
+
+const uploadArea = document.getElementById("uploadArea");
+
+const uploadContent = document.getElementById("uploadContent");
+
+const previewContainer =
+document.getElementById("previewContainer");
+
+const previewImage =
+document.getElementById("previewImage");
+
+const fileName =
+document.getElementById("fileName");
+
+const fileSize =
+document.getElementById("fileSize");
+
+const removePhoto =
+document.getElementById("removePhoto");
+
+const password =
+document.getElementById("password");
+
+const confirmPassword =
+document.getElementById("confirm_password");
+
+const passwordToggle =
+document.getElementById("passwordToggle");
+
+const confirmToggle =
+document.getElementById("confirmToggle");
+
+const passwordStrength =
+document.getElementById("passwordStrength");
+
+const strengthText =
+document.getElementById("strengthText");
+
+const strengthBars =
+document.querySelectorAll(".strength-bar");
+
+const cnic =
+document.getElementById("cnic");
+
+const phone =
+document.getElementById("phone");
+
+const form =
+document.getElementById("voterForm");
+
+const saveBtn =
+document.getElementById("saveBtn");
+
+const loadingIcon =
+document.getElementById("loadingIcon");
+
+const saveIcon =
+document.getElementById("saveIcon");
+
+const saveText =
+document.getElementById("saveText");
+
+
+/* =========================================================
+   OPEN FILE SELECTOR
+========================================================= */
+
+uploadArea.addEventListener("click", function(e){
+
+    if(e.target.closest("#removePhoto")){
+        return;
+    }
+
+    photoInput.click();
+
+});
+
+
+/* =========================================================
+   FILE SELECT
+========================================================= */
+
+photoInput.addEventListener("change", function(){
+
+    if(this.files && this.files.length > 0){
+
+        handleFile(this.files[0]);
+
+    }
+
+});
+
+
+/* =========================================================
+   DRAG OVER
+========================================================= */
+
+uploadArea.addEventListener("dragover", function(e){
+
+    e.preventDefault();
+
+    uploadArea.classList.add("dragover");
+
+});
+
+
+/* =========================================================
+   DRAG LEAVE
+========================================================= */
+
+uploadArea.addEventListener("dragleave", function(){
+
+    uploadArea.classList.remove("dragover");
+
+});
+
+
+/* =========================================================
+   DROP
+========================================================= */
+
+uploadArea.addEventListener("drop", function(e){
+
+    e.preventDefault();
+
+    uploadArea.classList.remove("dragover");
+
+    const files = e.dataTransfer.files;
+
+    if(files.length > 0){
+
+        const file = files[0];
+
+        const allowedTypes = [
+            "image/jpeg",
+            "image/jpg",
+            "image/png"
+        ];
+
+        if(!allowedTypes.includes(file.type)){
+
+            alert("Please select JPG, JPEG or PNG image.");
+
+            return;
+
+        }
+
+        if(file.size > 5 * 1024 * 1024){
+
+            alert("Image size must be less than 5MB.");
+
+            return;
+
+        }
+
+        const dataTransfer = new DataTransfer();
+
+        dataTransfer.items.add(file);
+
+        photoInput.files = dataTransfer.files;
+
+        handleFile(file);
+
+    }
+
+});
+
+
+/* =========================================================
+   HANDLE FILE
+========================================================= */
+
+function handleFile(file){
+
+    const allowedTypes = [
+        "image/jpeg",
+        "image/jpg",
+        "image/png"
+    ];
+
+    if(!allowedTypes.includes(file.type)){
+
+        alert("Only JPG, JPEG and PNG images are allowed.");
+
+        photoInput.value = "";
+
+        return;
+
+    }
+
+
+    if(file.size > 5 * 1024 * 1024){
+
+        alert("Image size must be less than 5MB.");
+
+        photoInput.value = "";
+
+        return;
+
+    }
+
+
+    const reader = new FileReader();
+
+
+    reader.onload = function(e){
+
+        previewImage.src = e.target.result;
+
+        fileName.textContent = file.name;
+
+        fileSize.textContent =
+        formatFileSize(file.size);
+
+        uploadContent.style.display = "none";
+
+        previewContainer.style.display = "flex";
+
+    };
+
+
+    reader.readAsDataURL(file);
+
+}
+
+
+/* =========================================================
+   FORMAT FILE SIZE
+========================================================= */
+
+function formatFileSize(bytes){
+
+    if(bytes < 1024){
+
+        return bytes + " Bytes";
+
+    }
+
+    if(bytes < 1024 * 1024){
+
+        return (bytes / 1024).toFixed(1) + " KB";
+
+    }
+
+    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+
+}
+
+
+/* =========================================================
+   REMOVE PHOTO
+========================================================= */
+
+removePhoto.addEventListener("click", function(e){
+
+    e.stopPropagation();
+
+    photoInput.value = "";
+
+    previewImage.src = "";
+
+    previewContainer.style.display = "none";
+
+    uploadContent.style.display = "block";
+
+});
+
+
+/* =========================================================
+   PASSWORD TOGGLE
+========================================================= */
+
+function togglePassword(input, button){
+
+    const icon = button.querySelector("i");
+
+    if(input.type === "password"){
+
+        input.type = "text";
+
+        icon.classList.remove("fa-eye");
+
+        icon.classList.add("fa-eye-slash");
+
+        button.setAttribute("aria-label","Hide password");
+
+    }
+
+    else{
+
+        input.type = "password";
+
+        icon.classList.remove("fa-eye-slash");
+
+        icon.classList.add("fa-eye");
+
+        button.setAttribute("aria-label","Show password");
+
+    }
+
+}
+
+
+passwordToggle.addEventListener("click", function(){
+
+    togglePassword(password, passwordToggle);
+
+});
+
+
+confirmToggle.addEventListener("click", function(){
+
+    togglePassword(confirmPassword, confirmToggle);
+
+});
+
+
+/* =========================================================
+   PASSWORD STRENGTH
+========================================================= */
+
+password.addEventListener("input", function(){
+
+    const value = password.value;
+
+    if(value.length === 0){
+
+        passwordStrength.style.display = "none";
+
+        return;
+
+    }
+
+
+    passwordStrength.style.display = "block";
+
+
+    let score = 0;
+
+
+    if(value.length >= 6){
+
+        score++;
+
+    }
+
+    if(value.length >= 10){
+
+        score++;
+
+    }
+
+    if(/[A-Z]/.test(value)){
+
+        score++;
+
+    }
+
+    if(/[0-9]/.test(value) && /[^A-Za-z0-9]/.test(value)){
+
+        score++;
+
+    }
+
+
+    strengthBars.forEach(function(bar){
+
+        bar.style.background = "#e5e7eb";
+
+    });
+
+
+    if(score === 1){
+
+        strengthBars[0].style.background = "#ef4444";
+
+        strengthText.textContent = "Weak password";
+
+        strengthText.style.color = "#ef4444";
+
+    }
+
+    else if(score === 2){
+
+        strengthBars[0].style.background = "#f59e0b";
+
+        strengthBars[1].style.background = "#f59e0b";
+
+        strengthText.textContent = "Fair password";
+
+        strengthText.style.color = "#d97706";
+
+    }
+
+    else if(score === 3){
+
+        strengthBars[0].style.background = "#3b82f6";
+
+        strengthBars[1].style.background = "#3b82f6";
+
+        strengthBars[2].style.background = "#3b82f6";
+
+        strengthText.textContent = "Good password";
+
+        strengthText.style.color = "#2563eb";
+
+    }
+
+    else{
+
+        strengthBars.forEach(function(bar){
+
+            bar.style.background = "#16a34a";
+
+        });
+
+        strengthText.textContent = "Strong password";
+
+        strengthText.style.color = "#16a34a";
+
+    }
+
+});
+
+
+/* =========================================================
+   CNIC AUTO FORMAT
+========================================================= */
+
+cnic.addEventListener("input", function(){
+
+    let value = this.value.replace(/\D/g,"");
+
+    value = value.substring(0,13);
+
+    let formatted = "";
+
+    if(value.length > 0){
+
+        formatted += value.substring(0,5);
+
+    }
+
+    if(value.length > 5){
+
+        formatted += "-" + value.substring(5,12);
+
+    }
+
+    if(value.length > 12){
+
+        formatted += "-" + value.substring(12,13);
+
+    }
+
+    this.value = formatted;
+
+});
+
+
+/* =========================================================
+   PHONE ONLY NUMBERS
+========================================================= */
+
+phone.addEventListener("input", function(){
+
+    this.value = this.value.replace(/\D/g,"");
+
+    this.value = this.value.substring(0,11);
+
+});
+
+
+/* =========================================================
+   FORM VALIDATION
+========================================================= */
+
+form.addEventListener("submit", function(e){
+
+    const cnicValue =
+    cnic.value.trim();
+
+    const phoneValue =
+    phone.value.trim();
+
+    const passwordValue =
+    password.value;
+
+    const confirmValue =
+    confirmPassword.value;
+
+
+    /* CNIC */
+
+    const cnicPattern =
+    /^\d{5}-\d{7}-\d{1}$/;
+
+
+    if(!cnicPattern.test(cnicValue)){
+
+        e.preventDefault();
+
+        alert(
+            "Please enter a valid CNIC.\nExample: 42101-1234567-1"
+        );
+
+        cnic.focus();
+
+        return;
+
+    }
+
+
+    /* PHONE */
+
+    const phonePattern =
+    /^03\d{9}$/;
+
+
+    if(!phonePattern.test(phoneValue)){
+
+        e.preventDefault();
+
+        alert(
+            "Please enter a valid Pakistani phone number.\nExample: 03001234567"
+        );
+
+        phone.focus();
+
+        return;
+
+    }
+
+
+    /* PASSWORD */
+
+    if(passwordValue.length < 6){
+
+        e.preventDefault();
+
+        alert(
+            "Password must contain at least 6 characters."
+        );
+
+        password.focus();
+
+        return;
+
+    }
+
+
+    /* CONFIRM PASSWORD */
+
+    if(passwordValue !== confirmValue){
+
+        e.preventDefault();
+
+        alert(
+            "Password and Confirm Password do not match."
+        );
+
+        confirmPassword.focus();
+
+        return;
+
+    }
+
+
+    /* LOADING */
+
+    saveBtn.classList.add("loading");
+
+    loadingIcon.style.display = "block";
+
+    saveIcon.style.display = "none";
+
+    saveText.textContent = "Saving Voter...";
+
+});
+
+
+/* =========================================================
+   INPUT CLEANUP
+========================================================= */
+
+document
+.getElementById("full_name")
+.addEventListener("input", function(){
+
+    this.value =
+    this.value.replace(/\s{2,}/g," ");
+
+});
+
+
+/* =========================================================
+   PREVENT ENTER ACCIDENTALLY
+========================================================= */
+
+document.querySelectorAll("input").forEach(function(input){
+
+    input.addEventListener("keydown", function(e){
+
+        if(e.key === "Enter" && input.type !== "submit"){
+
+            if(input.type !== "email"){
+
+                e.preventDefault();
+
+            }
+
+        }
+
+    });
+
+});
+
+
+/* =========================================================
+   INITIAL STATUS
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const status =
+    document.getElementById("status");
+
+    if(status){
+
+        status.value = "Pending";
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>

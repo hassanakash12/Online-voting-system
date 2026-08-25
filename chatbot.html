@@ -1,0 +1,2877 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>AI Election Assistant | Admin</title>
+
+
+<!-- GOOGLE FONT -->
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet">
+
+
+<!-- BOOTSTRAP ICONS -->
+
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+<style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root{
+
+    --primary:#2563eb;
+    --primary-dark:#1747b5;
+    --cyan:#06b6d4;
+
+    --dark:#101828;
+    --text:#344054;
+    --muted:#667085;
+
+    --bg:#f4f7fb;
+    --card:#ffffff;
+
+    --border:#e4e7ec;
+
+    --ai-bg:#f7f9fc;
+    --user-bg:#2563eb;
+
+    --success:#16a34a;
+    --danger:#dc2626;
+
+    --shadow:
+        0 18px 50px rgba(16,24,40,.09);
+
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+body.dark{
+
+    --dark:#f8fafc;
+
+    --text:#d0d5dd;
+
+    --muted:#98a2b3;
+
+    --bg:#08111f;
+
+    --card:#0f1b2d;
+
+    --border:#23324a;
+
+    --ai-bg:#152238;
+
+    --user-bg:#2563eb;
+
+    --shadow:
+        0 18px 50px rgba(0,0,0,.35);
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Inter',sans-serif;
+
+}
+
+
+html{
+
+    height:100%;
+
+}
+
+
+body{
+
+    min-height:100vh;
+
+    color:var(--text);
+
+    background:
+
+        radial-gradient(
+            circle at 5% 5%,
+            rgba(37,99,235,.12),
+            transparent 25%
+        ),
+
+        radial-gradient(
+            circle at 95% 90%,
+            rgba(6,182,212,.10),
+            transparent 27%
+        ),
+
+        var(--bg);
+
+    transition:
+        background .3s ease,
+        color .3s ease;
+
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app{
+
+    min-height:100vh;
+
+    display:flex;
+
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar{
+
+    width:240px;
+
+    min-height:100vh;
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    z-index:100;
+
+    padding:22px 15px;
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            #061a3a,
+            #0a2b5c 60%,
+            #071b39
+        );
+
+    box-shadow:
+        10px 0 35px rgba(0,0,0,.13);
+
+    transition:.3s;
+
+}
+
+
+/* brand */
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+
+    padding:
+        3px 8px 25px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.08);
+
+}
+
+
+.brand-logo{
+
+    width:44px;
+
+    height:44px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:13px;
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
+
+    box-shadow:
+        0 10px 25px rgba(37,99,235,.30);
+
+    font-size:19px;
+
+}
+
+
+.brand h1{
+
+    font-size:13px;
+
+    font-weight:800;
+
+}
+
+
+.brand p{
+
+    margin-top:3px;
+
+    color:rgba(255,255,255,.45);
+
+    font-size:7px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+
+}
+
+
+/* nav */
+
+.nav-title{
+
+    margin:
+        23px 10px 8px;
+
+    color:rgba(255,255,255,.34);
+
+    font-size:8px;
+
+    font-weight:800;
+
+    text-transform:uppercase;
+
+    letter-spacing:1.2px;
+
+}
+
+
+.nav-link{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+
+    padding:11px 12px;
+
+    margin:4px 0;
+
+    border-radius:9px;
+
+    color:rgba(255,255,255,.63);
+
+    text-decoration:none;
+
+    font-size:9px;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+
+.nav-link i{
+
+    width:17px;
+
+    text-align:center;
+
+    font-size:13px;
+
+}
+
+
+.nav-link:hover{
+
+    color:white;
+
+    background:
+        rgba(255,255,255,.07);
+
+    transform:translateX(2px);
+
+}
+
+
+.nav-link.active{
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(37,99,235,.95),
+            rgba(6,182,212,.42)
+        );
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.12);
+
+}
+
+
+.nav-link.active i{
+
+    color:#8be9ff;
+
+}
+
+
+/* sidebar footer */
+
+.sidebar-footer{
+
+    position:absolute;
+
+    left:15px;
+
+    right:15px;
+
+    bottom:20px;
+
+}
+
+
+.ai-status{
+
+    padding:12px;
+
+    border-radius:11px;
+
+    background:
+        rgba(255,255,255,.055);
+
+    border:
+        1px solid rgba(255,255,255,.07);
+
+}
+
+
+.ai-status-top{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+
+}
+
+
+.ai-status-dot{
+
+    width:7px;
+
+    height:7px;
+
+    border-radius:50%;
+
+    background:#4ade80;
+
+    box-shadow:
+        0 0 0 4px rgba(74,222,128,.10);
+
+}
+
+
+.ai-status strong{
+
+    font-size:8px;
+
+}
+
+
+.ai-status p{
+
+    margin-top:6px;
+
+    color:rgba(255,255,255,.40);
+
+    font-size:7px;
+
+    line-height:1.5;
+
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main{
+
+    width:calc(100% - 240px);
+
+    margin-left:240px;
+
+    min-height:100vh;
+
+}
+
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar{
+
+    height:70px;
+
+    padding:
+        0 28px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:50;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--card) 92%,
+            transparent
+        );
+
+    backdrop-filter:blur(16px);
+
+    border-bottom:
+        1px solid var(--border);
+
+}
+
+
+.page-location{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:var(--muted);
+
+    font-size:9px;
+
+}
+
+
+.page-location strong{
+
+    color:var(--dark);
+
+}
+
+
+.top-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+
+.top-button{
+
+    width:36px;
+
+    height:36px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:9px;
+
+    color:var(--muted);
+
+    background:var(--card);
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.top-button:hover{
+
+    color:var(--primary);
+
+    background:#eff6ff;
+
+}
+
+
+.mobile-menu{
+
+    display:none;
+
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content{
+
+    width:100%;
+
+    max-width:1300px;
+
+    margin:auto;
+
+    padding:25px 28px;
+
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header{
+
+    display:flex;
+
+    align-items:flex-end;
+
+    justify-content:space-between;
+
+    margin-bottom:18px;
+
+}
+
+
+.page-title h2{
+
+    color:var(--dark);
+
+    font-size:24px;
+
+    font-weight:800;
+
+    letter-spacing:-.6px;
+
+}
+
+
+.page-title p{
+
+    margin-top:5px;
+
+    color:var(--muted);
+
+    font-size:9px;
+
+}
+
+
+.ai-live{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    padding:8px 11px;
+
+    border-radius:20px;
+
+    color:#15803d;
+
+    background:#ecfdf3;
+
+    font-size:8px;
+
+    font-weight:800;
+
+}
+
+
+.ai-live span{
+
+    width:6px;
+
+    height:6px;
+
+    border-radius:50%;
+
+    background:#16a34a;
+
+    box-shadow:
+        0 0 0 4px rgba(22,163,74,.10);
+
+}
+
+
+/* =========================================================
+   AI WORKSPACE
+========================================================= */
+
+.workspace{
+
+    height:
+        calc(100vh - 155px);
+
+    min-height:580px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    overflow:hidden;
+
+    background:var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:19px;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+/* =========================================================
+   CHAT HEADER
+========================================================= */
+
+.chat-header{
+
+    min-height:68px;
+
+    padding:
+        13px 19px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    border-bottom:
+        1px solid var(--border);
+
+}
+
+
+.ai-profile{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+
+}
+
+
+.ai-avatar{
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:12px;
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
+
+    box-shadow:
+        0 8px 20px rgba(37,99,235,.22);
+
+    font-size:18px;
+
+}
+
+
+.ai-name{
+
+    color:var(--dark);
+
+    font-size:11px;
+
+    font-weight:800;
+
+}
+
+
+.ai-subtitle{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:5px;
+
+    margin-top:3px;
+
+    color:var(--muted);
+
+    font-size:7px;
+
+}
+
+
+.online-dot{
+
+    width:5px;
+
+    height:5px;
+
+    border-radius:50%;
+
+    background:#16a34a;
+
+}
+
+
+.chat-actions{
+
+    display:flex;
+
+    gap:6px;
+
+}
+
+
+.chat-action{
+
+    width:32px;
+
+    height:32px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:8px;
+
+    color:var(--muted);
+
+    background:var(--card);
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.chat-action:hover{
+
+    color:var(--primary);
+
+    background:#eff6ff;
+
+}
+
+
+/* =========================================================
+   CHAT BODY
+========================================================= */
+
+.chat-body{
+
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:
+        22px 25px;
+
+    scroll-behavior:smooth;
+
+}
+
+
+.chat-body::-webkit-scrollbar{
+
+    width:5px;
+
+}
+
+
+.chat-body::-webkit-scrollbar-thumb{
+
+    border-radius:10px;
+
+    background:#cbd5e1;
+
+}
+
+
+/* =========================================================
+   WELCOME
+========================================================= */
+
+.welcome{
+
+    max-width:620px;
+
+    margin:35px auto 25px;
+
+    text-align:center;
+
+}
+
+
+.welcome-icon{
+
+    width:68px;
+
+    height:68px;
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:20px;
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
+
+    box-shadow:
+        0 14px 30px rgba(37,99,235,.22);
+
+    font-size:28px;
+
+}
+
+
+.welcome h3{
+
+    margin-top:15px;
+
+    color:var(--dark);
+
+    font-size:18px;
+
+    font-weight:800;
+
+}
+
+
+.welcome p{
+
+    margin-top:6px;
+
+    color:var(--muted);
+
+    font-size:9px;
+
+    line-height:1.6;
+
+}
+
+
+.quick-actions{
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:7px;
+
+    margin-top:16px;
+
+}
+
+
+.quick-btn{
+
+    padding:8px 11px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:20px;
+
+    color:var(--text);
+
+    background:var(--card);
+
+    cursor:pointer;
+
+    font-size:8px;
+
+    font-weight:600;
+
+    transition:.2s;
+
+}
+
+
+.quick-btn:hover{
+
+    color:var(--primary);
+
+    border-color:#bcd1ff;
+
+    background:#eff6ff;
+
+    transform:translateY(-1px);
+
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+.message-row{
+
+    display:flex;
+
+    gap:9px;
+
+    margin-bottom:17px;
+
+    animation:
+        messageIn .25s ease;
+
+}
+
+
+@keyframes messageIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(5px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+.message-row.user{
+
+    justify-content:flex-end;
+
+}
+
+
+.message-avatar{
+
+    width:29px;
+
+    height:29px;
+
+    min-width:29px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:9px;
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
+
+    font-size:10px;
+
+}
+
+
+.user .message-avatar{
+
+    order:2;
+
+}
+
+
+.message-content{
+
+    max-width:72%;
+
+}
+
+
+.message-name{
+
+    margin-bottom:4px;
+
+    color:var(--muted);
+
+    font-size:7px;
+
+    font-weight:700;
+
+}
+
+
+.user .message-name{
+
+    text-align:right;
+
+}
+
+
+.bubble{
+
+    padding:11px 13px;
+
+    border-radius:12px;
+
+    color:var(--text);
+
+    background:var(--ai-bg);
+
+    border:
+        1px solid var(--border);
+
+    font-size:9px;
+
+    line-height:1.6;
+
+    white-space:pre-wrap;
+
+    word-break:break-word;
+
+}
+
+
+.user .bubble{
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #4f46e5
+        );
+
+    border:none;
+
+    border-bottom-right-radius:4px;
+
+}
+
+
+.ai .bubble{
+
+    border-top-left-radius:4px;
+
+}
+
+
+.message-time{
+
+    margin-top:4px;
+
+    color:#98a2b3;
+
+    font-size:6px;
+
+}
+
+
+.user .message-time{
+
+    text-align:right;
+
+}
+
+
+/* =========================================================
+   TYPING
+========================================================= */
+
+.typing{
+
+    display:none;
+
+    align-items:center;
+
+    gap:9px;
+
+    margin-bottom:16px;
+
+}
+
+
+.typing.show{
+
+    display:flex;
+
+}
+
+
+.typing-avatar{
+
+    width:29px;
+
+    height:29px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:9px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
+
+    font-size:10px;
+
+}
+
+
+.typing-bubble{
+
+    padding:10px 13px;
+
+    border-radius:12px;
+
+    background:var(--ai-bg);
+
+    border:
+        1px solid var(--border);
+
+}
+
+
+.typing-dots{
+
+    display:flex;
+
+    gap:4px;
+
+}
+
+
+.typing-dots span{
+
+    width:5px;
+
+    height:5px;
+
+    border-radius:50%;
+
+    background:#94a3b8;
+
+    animation:
+        typing 1.2s infinite;
+
+}
+
+
+.typing-dots span:nth-child(2){
+
+    animation-delay:.15s;
+
+}
+
+
+.typing-dots span:nth-child(3){
+
+    animation-delay:.3s;
+
+}
+
+
+@keyframes typing{
+
+    0%,60%,100%{
+
+        opacity:.3;
+
+        transform:translateY(0);
+
+    }
+
+    30%{
+
+        opacity:1;
+
+        transform:translateY(-3px);
+
+    }
+
+}
+
+
+/* =========================================================
+   INPUT AREA
+========================================================= */
+
+.chat-input-area{
+
+    padding:
+        13px 17px 15px;
+
+    border-top:
+        1px solid var(--border);
+
+    background:
+        color-mix(
+            in srgb,
+            var(--card) 96%,
+            #f8fafc
+        );
+
+}
+
+
+.input-box{
+
+    display:flex;
+
+    align-items:flex-end;
+
+    gap:8px;
+
+    padding:8px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:13px;
+
+    background:var(--card);
+
+    box-shadow:
+        0 5px 18px rgba(16,24,40,.04);
+
+    transition:.2s;
+
+}
+
+
+.input-box:focus-within{
+
+    border-color:#7aa5ff;
+
+    box-shadow:
+        0 0 0 4px rgba(37,99,235,.07);
+
+}
+
+
+#message{
+
+    flex:1;
+
+    min-height:38px;
+
+    max-height:130px;
+
+    padding:
+        10px 8px;
+
+    border:none;
+
+    outline:none;
+
+    resize:none;
+
+    color:var(--dark);
+
+    background:transparent;
+
+    font-size:9px;
+
+    line-height:1.5;
+
+}
+
+
+#message::placeholder{
+
+    color:#98a2b3;
+
+}
+
+
+.send-button{
+
+    width:42px;
+
+    height:42px;
+
+    min-width:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border:none;
+
+    border-radius:10px;
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #4f46e5
+        );
+
+    cursor:pointer;
+
+    box-shadow:
+        0 7px 15px rgba(37,99,235,.22);
+
+    transition:.2s;
+
+}
+
+
+.send-button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+
+.send-button:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+}
+
+
+.input-footer{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:
+        6px 3px 0;
+
+    color:#98a2b3;
+
+    font-size:6px;
+
+}
+
+
+.input-footer span{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:4px;
+
+}
+
+
+/* =========================================================
+   EMPTY / ERROR
+========================================================= */
+
+.error-message{
+
+    color:#b91c1c !important;
+
+    background:#fef2f2 !important;
+
+    border-color:#fecaca !important;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:850px){
+
+    .sidebar{
+
+        transform:translateX(-100%);
+
+    }
+
+    .sidebar.open{
+
+        transform:translateX(0);
+
+    }
+
+    .main{
+
+        width:100%;
+
+        margin-left:0;
+
+    }
+
+    .mobile-menu{
+
+        display:flex;
+
+    }
+
+}
+
+
+@media(max-width:650px){
+
+    .topbar{
+
+        padding:0 15px;
+
+    }
+
+    .content{
+
+        padding:
+            18px 12px;
+
+    }
+
+    .page-header{
+
+        align-items:flex-start;
+
+        gap:10px;
+
+        flex-direction:column;
+
+    }
+
+    .workspace{
+
+        height:
+            calc(100vh - 180px);
+
+        min-height:520px;
+
+        border-radius:14px;
+
+    }
+
+    .chat-body{
+
+        padding:
+            18px 13px;
+
+    }
+
+    .message-content{
+
+        max-width:82%;
+
+    }
+
+    .quick-actions{
+
+        justify-content:flex-start;
+
+    }
+
+    .welcome{
+
+        margin-top:25px;
+
+    }
+
+}
+
+
+@media(max-width:430px){
+
+    .page-title h2{
+
+        font-size:20px;
+
+    }
+
+    .ai-live{
+
+        font-size:7px;
+
+    }
+
+    .chat-header{
+
+        padding:
+            11px 12px;
+
+    }
+
+    .ai-name{
+
+        font-size:10px;
+
+    }
+
+    .chat-action{
+
+        width:29px;
+
+        height:29px;
+
+    }
+
+    .message-content{
+
+        max-width:84%;
+
+    }
+
+}
+
+
+/* =========================================================
+   HIDDEN CLASS
+========================================================= */
+
+.hidden{
+
+    display:none !important;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar" id="sidebar">
+
+
+    <div class="brand">
+
+        <div class="brand-logo">
+
+            <i class="bi bi-shield-lock-fill"></i>
+
+        </div>
+
+
+        <div>
+
+            <h1>
+                AI Voting System
+            </h1>
+
+            <p>
+                Administration Portal
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="nav-title">
+        Main Menu
+    </div>
+
+
+    <a href="/admin"
+       class="nav-link">
+
+        <i class="bi bi-grid-1x2-fill"></i>
+
+        Dashboard
+
+    </a>
+
+
+    <a href="/candidates"
+       class="nav-link">
+
+        <i class="bi bi-people-fill"></i>
+
+        Candidates
+
+    </a>
+
+
+    <a href="/parties"
+       class="nav-link">
+
+        <i class="bi bi-building"></i>
+
+        Political Parties
+
+    </a>
+
+
+    <a href="/notifications"
+       class="nav-link">
+
+        <i class="bi bi-bell-fill"></i>
+
+        Notifications
+
+    </a>
+
+
+    <a href="/ai_assistant"
+       class="nav-link active">
+
+        <i class="bi bi-stars"></i>
+
+        AI Assistant
+
+    </a>
+
+
+    <div class="nav-title">
+        Election
+    </div>
+
+
+    <a href="/results"
+       class="nav-link">
+
+        <i class="bi bi-bar-chart-fill"></i>
+
+        Results
+
+    </a>
+
+
+    <a href="/voters"
+       class="nav-link">
+
+        <i class="bi bi-person-vcard-fill"></i>
+
+        Voters
+
+    </a>
+
+
+    <a href="/settings"
+       class="nav-link">
+
+        <i class="bi bi-gear-fill"></i>
+
+        Settings
+
+    </a>
+
+
+    <div class="sidebar-footer">
+
+        <div class="ai-status">
+
+            <div class="ai-status-top">
+
+                <span class="ai-status-dot"></span>
+
+                <strong>
+                    AI Assistant Online
+                </strong>
+
+            </div>
+
+            <p>
+                Election assistance service is
+                currently available.
+            </p>
+
+        </div>
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- =================================================
+         TOPBAR
+    ================================================= -->
+
+    <header class="topbar">
+
+
+        <div class="page-location">
+
+            <button
+                class="top-button mobile-menu"
+                onclick="toggleSidebar()">
+
+                <i class="bi bi-list"></i>
+
+            </button>
+
+
+            <span>
+                Admin
+            </span>
+
+            <i class="bi bi-chevron-right"></i>
+
+            <strong>
+                AI Assistant
+            </strong>
+
+        </div>
+
+
+        <div class="top-actions">
+
+
+            <!-- DARK MODE -->
+
+            <button
+                class="top-button"
+                id="themeButton"
+                onclick="toggleTheme()"
+                title="Toggle theme">
+
+                <i class="bi bi-moon-stars"
+                   id="themeIcon"></i>
+
+            </button>
+
+
+            <!-- CLEAR -->
+
+            <button
+                class="top-button"
+                onclick="clearChat()"
+                title="Clear conversation">
+
+                <i class="bi bi-trash3"></i>
+
+            </button>
+
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =================================================
+         CONTENT
+    ================================================= -->
+
+    <section class="content">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+
+            <div class="page-title">
+
+                <h2>
+                    AI Election Assistant
+                </h2>
+
+                <p>
+                    Ask questions and get assistance related to your election system.
+                </p>
+
+            </div>
+
+
+            <div class="ai-live">
+
+                <span></span>
+
+                AI Assistant Online
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             WORKSPACE
+        ================================================= -->
+
+        <div class="workspace">
+
+
+            <!-- =================================================
+                 CHAT HEADER
+            ================================================= -->
+
+            <div class="chat-header">
+
+
+                <div class="ai-profile">
+
+
+                    <div class="ai-avatar">
+
+                        <i class="bi bi-stars"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="ai-name">
+
+                            Election AI
+
+                        </div>
+
+
+                        <div class="ai-subtitle">
+
+                            <span class="online-dot"></span>
+
+                            Online • Ready to assist
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="chat-actions">
+
+
+                    <button
+                        class="chat-action"
+                        onclick="clearChat()"
+                        title="Clear chat">
+
+                        <i class="bi bi-eraser"></i>
+
+                    </button>
+
+
+                    <button
+                        class="chat-action"
+                        onclick="scrollToBottom()"
+                        title="Scroll to bottom">
+
+                        <i class="bi bi-arrow-down"></i>
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 CHAT BODY
+            ================================================= -->
+
+            <div
+                class="chat-body"
+                id="chatBox">
+
+
+                <!-- WELCOME -->
+
+                <div
+                    class="welcome"
+                    id="welcome">
+
+
+                    <div class="welcome-icon">
+
+                        <i class="bi bi-robot"></i>
+
+                    </div>
+
+
+                    <h3>
+
+                        How can I help you today?
+
+                    </h3>
+
+
+                    <p>
+
+                        I can assist you with election-related
+                        questions, voter information, candidates,
+                        notifications and general system guidance.
+
+                    </p>
+
+
+                    <div class="quick-actions">
+
+
+                        <button
+                            class="quick-btn"
+                            onclick="quickMessage(
+                                'How can I manage voters?'
+                            )">
+
+                            <i class="bi bi-people"></i>
+
+                            Manage Voters
+
+                        </button>
+
+
+                        <button
+                            class="quick-btn"
+                            onclick="quickMessage(
+                                'How can I manage candidates?'
+                            )">
+
+                            <i class="bi bi-person-badge"></i>
+
+                            Candidates
+
+                        </button>
+
+
+                        <button
+                            class="quick-btn"
+                            onclick="quickMessage(
+                                'How can I send an election notification?'
+                            )">
+
+                            <i class="bi bi-bell"></i>
+
+                            Notifications
+
+                        </button>
+
+
+                        <button
+                            class="quick-btn"
+                            onclick="quickMessage(
+                                'How can I view election results?'
+                            )">
+
+                            <i class="bi bi-bar-chart"></i>
+
+                            Election Results
+
+                        </button>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- TYPING -->
+
+                <div
+                    class="typing"
+                    id="typingIndicator">
+
+
+                    <div class="typing-avatar">
+
+                        <i class="bi bi-stars"></i>
+
+                    </div>
+
+
+                    <div class="typing-bubble">
+
+                        <div class="typing-dots">
+
+                            <span></span>
+
+                            <span></span>
+
+                            <span></span>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 INPUT
+            ================================================= -->
+
+            <div class="chat-input-area">
+
+
+                <div class="input-box">
+
+
+                    <textarea
+                        id="message"
+                        rows="1"
+                        placeholder="Ask the AI Election Assistant..."
+                        autocomplete="off"></textarea>
+
+
+                    <button
+                        class="send-button"
+                        id="sendButton"
+                        onclick="sendMessage()"
+                        title="Send message">
+
+                        <i
+                            class="bi bi-send-fill"
+                            id="sendIcon">
+                        </i>
+
+                    </button>
+
+
+                </div>
+
+
+                <div class="input-footer">
+
+
+                    <span>
+
+                        <i class="bi bi-shield-check"></i>
+
+                        Secure AI Assistant
+
+                    </span>
+
+
+                    <span>
+
+                        Press Enter to send
+
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const chatBox =
+    document.getElementById("chatBox");
+
+const messageInput =
+    document.getElementById("message");
+
+const sendButton =
+    document.getElementById("sendButton");
+
+const sendIcon =
+    document.getElementById("sendIcon");
+
+const typingIndicator =
+    document.getElementById("typingIndicator");
+
+const welcome =
+    document.getElementById("welcome");
+
+
+let isSending = false;
+
+
+
+/* =========================================================
+   SEND MESSAGE
+========================================================= */
+
+async function sendMessage(){
+
+    if(isSending){
+
+        return;
+
+    }
+
+
+    const message =
+        messageInput.value.trim();
+
+
+    if(message === ""){
+
+        return;
+
+    }
+
+
+    /* Remove welcome screen */
+
+    if(welcome){
+
+        welcome.classList.add("hidden");
+
+    }
+
+
+    /* Add user message */
+
+    addMessage(
+        "user",
+        message
+    );
+
+
+    /* Clear input */
+
+    messageInput.value = "";
+
+    autoResize();
+
+
+    /* Loading */
+
+    isSending = true;
+
+    sendButton.disabled = true;
+
+    sendIcon.className =
+        "bi bi-arrow-repeat";
+
+    sendIcon.style.animation =
+        "spin 1s linear infinite";
+
+
+    typingIndicator.classList.add("show");
+
+    scrollToBottom();
+
+
+    try{
+
+
+        const response =
+            await fetch(
+                "/ask_ai",
+                {
+
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/x-www-form-urlencoded"
+                    },
+
+                    body:
+                        "message=" +
+                        encodeURIComponent(message)
+
+                }
+            );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "Server error"
+            );
+
+        }
+
+
+        const ai =
+            await response.text();
+
+
+        typingIndicator.classList.remove(
+            "show"
+        );
+
+
+        addMessage(
+            "ai",
+            ai
+        );
+
+
+    }
+
+    catch(error){
+
+        typingIndicator.classList.remove(
+            "show"
+        );
+
+
+        addMessage(
+            "ai",
+            "Sorry, I could not connect to the AI service right now. Please try again."
+        );
+
+
+        console.error(
+            error
+        );
+
+    }
+
+
+    finally{
+
+        isSending = false;
+
+        sendButton.disabled = false;
+
+        sendIcon.className =
+            "bi bi-send-fill";
+
+        sendIcon.style.animation =
+            "";
+
+        messageInput.focus();
+
+        scrollToBottom();
+
+    }
+
+}
+
+
+
+/* =========================================================
+   ADD MESSAGE
+========================================================= */
+
+function addMessage(
+    type,
+    text
+){
+
+    const row =
+        document.createElement("div");
+
+
+    row.className =
+        "message-row " + type;
+
+
+    const avatar =
+        document.createElement("div");
+
+
+    avatar.className =
+        "message-avatar";
+
+
+    avatar.innerHTML =
+        type === "ai"
+        ?
+        '<i class="bi bi-stars"></i>'
+        :
+        '<i class="bi bi-person-fill"></i>';
+
+
+    const content =
+        document.createElement("div");
+
+
+    content.className =
+        "message-content";
+
+
+    const name =
+        document.createElement("div");
+
+
+    name.className =
+        "message-name";
+
+
+    name.textContent =
+        type === "ai"
+        ?
+        "Election AI"
+        :
+        "You";
+
+
+    const bubble =
+        document.createElement("div");
+
+
+    bubble.className =
+        "bubble";
+
+
+    /*
+       textContent is intentionally used
+       instead of innerHTML so user/AI
+       text cannot inject HTML.
+    */
+
+    bubble.textContent =
+        text;
+
+
+    const time =
+        document.createElement("div");
+
+
+    time.className =
+        "message-time";
+
+
+    time.textContent =
+        getCurrentTime();
+
+
+    content.appendChild(
+        name
+    );
+
+
+    content.appendChild(
+        bubble
+    );
+
+
+    content.appendChild(
+        time
+    );
+
+
+    /*
+       Copy button for AI replies
+    */
+
+    if(type === "ai"){
+
+        const copy =
+            document.createElement("button");
+
+
+        copy.className =
+            "chat-action";
+
+        copy.style.marginTop =
+            "5px";
+
+        copy.style.width =
+            "28px";
+
+        copy.style.height =
+            "25px";
+
+
+        copy.title =
+            "Copy response";
+
+
+        copy.innerHTML =
+            '<i class="bi bi-copy"></i>';
+
+
+        copy.onclick =
+            function(){
+
+                navigator.clipboard
+                    .writeText(text)
+                    .then(
+                        function(){
+
+                            copy.innerHTML =
+                                '<i class="bi bi-check2"></i>';
+
+                            setTimeout(
+                                function(){
+
+                                    copy.innerHTML =
+                                        '<i class="bi bi-copy"></i>';
+
+                                },
+                                1200
+                            );
+
+                        }
+                    );
+
+            };
+
+
+        content.appendChild(
+            copy
+        );
+
+    }
+
+
+    row.appendChild(
+        avatar
+    );
+
+
+    row.appendChild(
+        content
+    );
+
+
+    chatBox.insertBefore(
+        row,
+        typingIndicator
+    );
+
+
+    scrollToBottom();
+
+}
+
+
+
+/* =========================================================
+   CURRENT TIME
+========================================================= */
+
+function getCurrentTime(){
+
+    return new Date().toLocaleTimeString(
+        [],
+        {
+            hour:"2-digit",
+            minute:"2-digit"
+        }
+    );
+
+}
+
+
+
+/* =========================================================
+   QUICK MESSAGE
+========================================================= */
+
+function quickMessage(
+    text
+){
+
+    messageInput.value =
+        text;
+
+    autoResize();
+
+    sendMessage();
+
+}
+
+
+
+/* =========================================================
+   ENTER TO SEND
+========================================================= */
+
+messageInput.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Enter" &&
+            !event.shiftKey
+        ){
+
+            event.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+
+/* =========================================================
+   AUTO RESIZE TEXTAREA
+========================================================= */
+
+messageInput.addEventListener(
+    "input",
+    autoResize
+);
+
+
+function autoResize(){
+
+    messageInput.style.height =
+        "auto";
+
+
+    messageInput.style.height =
+        Math.min(
+            messageInput.scrollHeight,
+            130
+        ) + "px";
+
+}
+
+
+
+/* =========================================================
+   SCROLL
+========================================================= */
+
+function scrollToBottom(){
+
+    chatBox.scrollTop =
+        chatBox.scrollHeight;
+
+}
+
+
+
+/* =========================================================
+   CLEAR CHAT
+========================================================= */
+
+function clearChat(){
+
+    const messages =
+        chatBox.querySelectorAll(
+            ".message-row"
+        );
+
+
+    if(messages.length === 0){
+
+        return;
+
+    }
+
+
+    if(
+        !confirm(
+            "Clear the current conversation?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    messages.forEach(
+        message => message.remove()
+    );
+
+
+    if(welcome){
+
+        welcome.classList.remove(
+            "hidden"
+        );
+
+    }
+
+
+    scrollToBottom();
+
+}
+
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+function toggleSidebar(){
+
+    const sidebar =
+        document.getElementById(
+            "sidebar"
+        );
+
+
+    sidebar.classList.toggle(
+        "open"
+    );
+
+}
+
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+function toggleTheme(){
+
+    document.body.classList.toggle(
+        "dark"
+    );
+
+
+    const icon =
+        document.getElementById(
+            "themeIcon"
+        );
+
+
+    const isDark =
+        document.body.classList.contains(
+            "dark"
+        );
+
+
+    if(isDark){
+
+        icon.className =
+            "bi bi-sun-fill";
+
+        localStorage.setItem(
+            "aiTheme",
+            "dark"
+        );
+
+    }
+
+    else{
+
+        icon.className =
+            "bi bi-moon-stars";
+
+        localStorage.setItem(
+            "aiTheme",
+            "light"
+        );
+
+    }
+
+}
+
+
+
+/* =========================================================
+   RESTORE THEME
+========================================================= */
+
+if(
+    localStorage.getItem(
+        "aiTheme"
+    ) === "dark"
+){
+
+    document.body.classList.add(
+        "dark"
+    );
+
+
+    document.getElementById(
+        "themeIcon"
+    ).className =
+        "bi bi-sun-fill";
+
+}
+
+
+
+/* =========================================================
+   SPINNER
+========================================================= */
+
+const spinnerStyle =
+document.createElement("style");
+
+
+spinnerStyle.innerHTML = `
+
+@keyframes spin{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+`;
+
+
+document.head.appendChild(
+    spinnerStyle
+);
+
+
+/* =========================================================
+   INITIAL FOCUS
+========================================================= */
+
+messageInput.focus();
+
+</script>
+
+
+</body>
+
+</html>

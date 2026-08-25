@@ -1,0 +1,1968 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile | AI Online Voting System</title>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", "Segoe UI", Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(37,99,235,.08), transparent 30%),
+                radial-gradient(circle at bottom right, rgba(6,182,212,.08), transparent 30%),
+                #f4f7fb;
+            color: #0f172a;
+            min-height: 100vh;
+        }
+
+        button,
+        a {
+            font-family: inherit;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+
+        /* =========================================================
+           TOP NAVBAR
+        ========================================================= */
+
+        .navbar {
+            height: 76px;
+            width: 100%;
+
+            background:
+                linear-gradient(135deg, #0f172a 0%, #172554 55%, #1d4ed8 100%);
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 38px;
+
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            box-shadow:
+                0 8px 30px rgba(15,23,42,.18);
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand-logo {
+            width: 43px;
+            height: 43px;
+
+            border-radius: 13px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(135deg, #3b82f6, #06b6d4);
+
+            box-shadow:
+                0 7px 20px rgba(37,99,235,.35);
+
+            font-size: 21px;
+        }
+
+        .brand-text h2 {
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: -.3px;
+        }
+
+        .brand-text span {
+            display: block;
+            margin-top: 2px;
+            font-size: 10px;
+            color: #bfdbfe;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links a {
+            color: #dbeafe;
+
+            padding: 10px 13px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            transition: .25s ease;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background: rgba(255,255,255,.11);
+            transform: translateY(-1px);
+        }
+
+        .nav-links a.active {
+            background: rgba(255,255,255,.14);
+            color: white;
+        }
+
+        .logout-link {
+            color: #fecaca !important;
+        }
+
+        .logout-link:hover {
+            background: rgba(239,68,68,.14) !important;
+        }
+
+        .mobile-menu {
+            display: none;
+
+            border: 0;
+            background: rgba(255,255,255,.1);
+            color: white;
+
+            width: 42px;
+            height: 42px;
+
+            border-radius: 10px;
+
+            font-size: 21px;
+            cursor: pointer;
+        }
+
+
+        /* =========================================================
+           MAIN WRAPPER
+        ========================================================= */
+
+        .page-wrapper {
+            width: min(1180px, calc(100% - 40px));
+            margin: 35px auto 60px;
+        }
+
+
+        /* =========================================================
+           BREADCRUMB
+        ========================================================= */
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            color: #64748b;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb i {
+            color: #94a3b8;
+        }
+
+        .breadcrumb .current {
+            color: #2563eb;
+        }
+
+
+        /* =========================================================
+           PROFILE HERO
+        ========================================================= */
+
+        .profile-hero {
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f172a 0%,
+                    #172554 48%,
+                    #1d4ed8 100%
+                );
+
+            border-radius: 25px;
+
+            padding: 34px;
+
+            color: white;
+
+            box-shadow:
+                0 20px 55px rgba(15,23,42,.18);
+
+            margin-bottom: 22px;
+        }
+
+        .profile-hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            border-radius: 50%;
+
+            background: rgba(59,130,246,.18);
+
+            top: -170px;
+            right: 30px;
+
+            filter: blur(5px);
+        }
+
+        .profile-hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
+            height: 220px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(255,255,255,.08);
+
+            right: 100px;
+            bottom: -130px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 30px;
+        }
+
+        .profile-main {
+            display: flex;
+            align-items: center;
+            gap: 23px;
+        }
+
+
+        /* =========================================================
+           AVATAR
+        ========================================================= */
+
+        .avatar-wrapper {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .avatar {
+            width: 118px;
+            height: 118px;
+
+            border-radius: 50%;
+
+            padding: 4px;
+
+            background:
+                linear-gradient(135deg, #60a5fa, #22d3ee, #818cf8);
+
+            box-shadow:
+                0 12px 35px rgba(0,0,0,.3);
+        }
+
+        .avatar-inner {
+            width: 100%;
+            height: 100%;
+
+            border-radius: 50%;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(135deg, #2563eb, #06b6d4);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 43px;
+            font-weight: 800;
+
+            color: white;
+
+            border: 4px solid #172554;
+        }
+
+        .avatar-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .verified-icon {
+            position: absolute;
+
+            right: 3px;
+            bottom: 7px;
+
+            width: 31px;
+            height: 31px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #22c55e;
+            color: white;
+
+            border: 4px solid #172554;
+
+            font-size: 12px;
+        }
+
+        .profile-title h1 {
+            font-size: 31px;
+            line-height: 1.15;
+            font-weight: 800;
+
+            letter-spacing: -.8px;
+
+            margin-bottom: 8px;
+        }
+
+        .profile-title p {
+            color: #bfdbfe;
+            font-size: 14px;
+            margin-bottom: 13px;
+        }
+
+        .profile-badges {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .badge-green {
+            background: rgba(34,197,94,.14);
+            color: #86efac;
+            border: 1px solid rgba(134,239,172,.18);
+        }
+
+        .badge-blue {
+            background: rgba(96,165,250,.14);
+            color: #bfdbfe;
+            border: 1px solid rgba(191,219,254,.16);
+        }
+
+
+        /* =========================================================
+           HERO ACTIONS
+        ========================================================= */
+
+        .hero-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+
+            padding: 12px 16px;
+
+            border-radius: 11px;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            transition: .25s ease;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .hero-btn.primary {
+            color: #0f172a;
+            background: white;
+
+            box-shadow:
+                0 8px 20px rgba(0,0,0,.16);
+        }
+
+        .hero-btn.primary:hover {
+            background: #f8fafc;
+        }
+
+        .hero-btn.secondary {
+            color: white;
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.17);
+        }
+
+        .hero-btn.secondary:hover {
+            background: rgba(255,255,255,.14);
+        }
+
+
+        /* =========================================================
+           GRID
+        ========================================================= */
+
+        .content-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.7fr)
+                minmax(280px, .9fr);
+
+            gap: 22px;
+
+            align-items: start;
+        }
+
+
+        /* =========================================================
+           CARD
+        ========================================================= */
+
+        .card {
+            background: rgba(255,255,255,.94);
+
+            border: 1px solid rgba(226,232,240,.9);
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 10px 35px rgba(15,23,42,.06);
+
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 22px 24px;
+
+            border-bottom: 1px solid #eef2f7;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .title-icon {
+            width: 37px;
+            height: 37px;
+
+            border-radius: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #eff6ff;
+            color: #2563eb;
+
+            font-size: 17px;
+        }
+
+        .card-title h3 {
+            font-size: 15px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .card-title p {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+
+        /* =========================================================
+           DETAILS
+        ========================================================= */
+
+        .details-grid {
+            display: grid;
+
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+
+            gap: 14px;
+        }
+
+        .detail {
+            padding: 17px;
+
+            border-radius: 14px;
+
+            background: #f8fafc;
+
+            border: 1px solid #eef2f7;
+
+            transition: .25s ease;
+        }
+
+        .detail:hover {
+            background: white;
+
+            border-color: #dbeafe;
+
+            box-shadow:
+                0 8px 22px rgba(37,99,235,.06);
+
+            transform: translateY(-2px);
+        }
+
+        .detail-top {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            margin-bottom: 9px;
+        }
+
+        .detail-icon {
+            width: 29px;
+            height: 29px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 8px;
+
+            background: white;
+            color: #2563eb;
+
+            box-shadow: 0 3px 10px rgba(15,23,42,.06);
+
+            font-size: 13px;
+        }
+
+        .detail-label {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            padding-left: 38px;
+
+            color: #0f172a;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            word-break: break-word;
+        }
+
+        .status-value {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #22c55e;
+
+            box-shadow:
+                0 0 0 4px rgba(34,197,94,.1);
+        }
+
+        .status-text {
+            color: #16a34a;
+        }
+
+
+        /* =========================================================
+           PROFILE COMPLETION
+        ========================================================= */
+
+        .completion-box {
+            padding: 20px 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eff6ff,
+                    #f0fdfa
+                );
+
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .completion-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 10px;
+        }
+
+        .completion-head strong {
+            font-size: 13px;
+        }
+
+        .completion-percent {
+            color: #2563eb;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .progress {
+            width: 100%;
+            height: 8px;
+
+            background: #dbeafe;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 85%;
+            height: 100%;
+
+            border-radius: inherit;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #2563eb,
+                    #06b6d4
+                );
+
+            box-shadow:
+                0 2px 8px rgba(37,99,235,.25);
+        }
+
+        .completion-text {
+            font-size: 11px;
+            color: #64748b;
+
+            margin-top: 9px;
+        }
+
+
+        /* =========================================================
+           RIGHT SIDE SECURITY CARD
+        ========================================================= */
+
+        .security-item {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+
+            padding: 14px 0;
+
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .security-item:last-child {
+            border-bottom: none;
+        }
+
+        .security-icon {
+            width: 39px;
+            height: 39px;
+
+            flex-shrink: 0;
+
+            border-radius: 11px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #f1f5f9;
+
+            color: #2563eb;
+
+            font-size: 16px;
+        }
+
+        .security-info {
+            min-width: 0;
+        }
+
+        .security-info strong {
+            display: block;
+
+            color: #0f172a;
+
+            font-size: 12px;
+
+            margin-bottom: 3px;
+        }
+
+        .security-info span {
+            display: block;
+
+            color: #94a3b8;
+
+            font-size: 10px;
+        }
+
+        .secure-badge {
+            margin-left: auto;
+
+            white-space: nowrap;
+
+            padding: 5px 8px;
+
+            border-radius: 7px;
+
+            font-size: 9px;
+            font-weight: 800;
+
+            color: #15803d;
+
+            background: #f0fdf4;
+        }
+
+
+        /* =========================================================
+           ACCOUNT ROLE CARD
+        ========================================================= */
+
+        .role-card {
+            margin-top: 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8fafc,
+                    #ffffff
+                );
+        }
+
+        .role-box {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .role-icon {
+            width: 50px;
+            height: 50px;
+
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #06b6d4
+                );
+
+            color: white;
+
+            font-size: 21px;
+
+            box-shadow:
+                0 8px 20px rgba(37,99,235,.2);
+        }
+
+        .role-text strong {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .role-text span {
+            color: #64748b;
+            font-size: 11px;
+        }
+
+
+        /* =========================================================
+           QUICK ACTIONS
+        ========================================================= */
+
+        .quick-actions {
+            display: grid;
+            gap: 9px;
+        }
+
+        .quick-action {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            padding: 12px;
+
+            border-radius: 11px;
+
+            background: #f8fafc;
+
+            color: #334155;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            border: 1px solid #eef2f7;
+
+            transition: .2s ease;
+        }
+
+        .quick-action:hover {
+            background: #eff6ff;
+            color: #2563eb;
+            border-color: #dbeafe;
+            transform: translateX(3px);
+        }
+
+        .quick-action i {
+            font-size: 15px;
+        }
+
+        .quick-arrow {
+            margin-left: auto;
+            color: #94a3b8;
+        }
+
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        .footer {
+            margin-top: 28px;
+
+            padding: 20px 5px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            color: #94a3b8;
+
+            font-size: 10px;
+        }
+
+        .footer strong {
+            color: #64748b;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-links a {
+            color: #64748b;
+        }
+
+        .footer-links a:hover {
+            color: #2563eb;
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 900px) {
+
+            .navbar {
+                padding: 0 22px;
+            }
+
+            .nav-links {
+                display: none;
+
+                position: absolute;
+
+                top: 76px;
+                left: 15px;
+                right: 15px;
+
+                padding: 10px;
+
+                border-radius: 15px;
+
+                background: #0f172a;
+
+                box-shadow:
+                    0 15px 35px rgba(15,23,42,.25);
+
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 12px 14px;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero-content {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .hero-actions {
+                justify-content: flex-start;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        @media (max-width: 650px) {
+
+            .page-wrapper {
+                width: min(100% - 22px, 1180px);
+                margin-top: 22px;
+            }
+
+            .navbar {
+                height: 68px;
+            }
+
+            .brand-text h2 {
+                font-size: 14px;
+            }
+
+            .brand-text span {
+                font-size: 8px;
+            }
+
+            .brand-logo {
+                width: 39px;
+                height: 39px;
+            }
+
+            .nav-links {
+                top: 68px;
+            }
+
+            .profile-hero {
+                padding: 24px 20px;
+                border-radius: 20px;
+            }
+
+            .profile-main {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .avatar {
+                width: 100px;
+                height: 100px;
+            }
+
+            .profile-title h1 {
+                font-size: 25px;
+            }
+
+            .profile-title p {
+                font-size: 12px;
+            }
+
+            .hero-actions {
+                width: 100%;
+                display: grid;
+                grid-template-columns: 1fr;
+            }
+
+            .hero-btn {
+                width: 100%;
+            }
+
+            .card-header {
+                padding: 18px;
+            }
+
+            .card-body {
+                padding: 18px;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+
+
+        @media (max-width: 400px) {
+
+            .brand-text span {
+                display: none;
+            }
+
+            .profile-title h1 {
+                font-size: 22px;
+            }
+
+            .completion-box {
+                padding: 17px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<header class="navbar">
+
+    <div class="navbar-left">
+
+        <div class="brand-logo">
+            <i class="bi bi-check2-square"></i>
+        </div>
+
+        <div class="brand-text">
+
+            <h2>AI Online Voting System</h2>
+
+            <span>Secure Digital Democracy</span>
+
+        </div>
+
+    </div>
+
+
+    <nav class="nav-links" id="navLinks">
+
+        <a href="/voter">
+            <i class="bi bi-grid-1x2-fill"></i>
+            Dashboard
+        </a>
+
+        <a href="/vote">
+            <i class="bi bi-check2-circle"></i>
+            Live Election
+        </a>
+
+        <a href="/results">
+            <i class="bi bi-bar-chart-fill"></i>
+            Results
+        </a>
+
+        <a href="/profile" class="active">
+            <i class="bi bi-person-fill"></i>
+            Profile
+        </a>
+
+        <a href="/logout" class="logout-link">
+            <i class="bi bi-box-arrow-right"></i>
+            Logout
+        </a>
+
+    </nav>
+
+
+    <button class="mobile-menu"
+            onclick="toggleMenu()"
+            aria-label="Open menu">
+
+        <i class="bi bi-list"></i>
+
+    </button>
+
+</header>
+
+
+
+<!-- =========================================================
+     PAGE
+========================================================= -->
+
+<main class="page-wrapper">
+
+
+    <!-- Breadcrumb -->
+
+    <div class="breadcrumb">
+
+        <span>Voter Portal</span>
+
+        <i class="bi bi-chevron-right"></i>
+
+        <span class="current">My Profile</span>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PROFILE HERO
+    ====================================================== -->
+
+    <section class="profile-hero">
+
+        <div class="hero-content">
+
+
+            <div class="profile-main">
+
+
+                <!-- Avatar -->
+
+                <div class="avatar-wrapper">
+
+                    <div class="avatar">
+
+                        <div class="avatar-inner">
+
+                            {% if user.photo %}
+
+                                <img
+                                    src="{{ url_for('static', filename='uploads/' + user.photo) }}"
+                                    alt="Profile Photo"
+                                >
+
+                            {% else %}
+
+                                {{ user.full_name[0] | upper }}
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="verified-icon">
+
+                        <i class="bi bi-check-lg"></i>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Profile Title -->
+
+                <div class="profile-title">
+
+                    <h1>{{ user.full_name }}</h1>
+
+                    <p>
+                        <i class="bi bi-person-badge"></i>
+                        Registered Voter Account
+                    </p>
+
+
+                    <div class="profile-badges">
+
+                        <span class="badge badge-green">
+
+                            <i class="bi bi-shield-check"></i>
+
+                            Verified Account
+
+                        </span>
+
+
+                        <span class="badge badge-blue">
+
+                            <i class="bi bi-person-check"></i>
+
+                            {{ user.role }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- Actions -->
+
+            <div class="hero-actions">
+
+                <a href="/edit_profile"
+                   class="hero-btn primary">
+
+                    <i class="bi bi-pencil-square"></i>
+
+                    Edit Profile
+
+                </a>
+
+
+                <a href="/voter"
+                   class="hero-btn secondary">
+
+                    <i class="bi bi-grid-1x2"></i>
+
+                    Dashboard
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         CONTENT GRID
+    ====================================================== -->
+
+    <div class="content-grid">
+
+
+        <!-- =================================================
+             LEFT COLUMN
+        ================================================== -->
+
+        <div>
+
+
+            <!-- Account Information -->
+
+            <section class="card">
+
+                <div class="card-header">
+
+                    <div class="card-title">
+
+                        <div class="title-icon">
+
+                            <i class="bi bi-person-vcard"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>Personal Information</h3>
+
+                            <p>Your registered voter information</p>
+
+                        </div>
+
+                    </div>
+
+                    <i class="bi bi-three-dots"
+                       style="color:#94a3b8;">
+                    </i>
+
+                </div>
+
+
+
+                <!-- Profile Completion -->
+
+                <div class="completion-box">
+
+                    <div class="completion-head">
+
+                        <strong>
+                            Profile Completion
+                        </strong>
+
+                        <span class="completion-percent">
+                            85%
+                        </span>
+
+                    </div>
+
+
+                    <div class="progress">
+
+                        <div class="progress-bar"></div>
+
+                    </div>
+
+
+                    <p class="completion-text">
+
+                        Your profile is almost complete.
+                        Add any missing information to keep your
+                        voter account up to date.
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- Details -->
+
+                <div class="card-body">
+
+                    <div class="details-grid">
+
+
+                        <!-- Full Name -->
+
+                        <div class="detail">
+
+                            <div class="detail-top">
+
+                                <div class="detail-icon">
+
+                                    <i class="bi bi-person"></i>
+
+                                </div>
+
+                                <span class="detail-label">
+                                    Full Name
+                                </span>
+
+                            </div>
+
+                            <div class="detail-value">
+
+                                {{ user.full_name }}
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Email -->
+
+                        <div class="detail">
+
+                            <div class="detail-top">
+
+                                <div class="detail-icon">
+
+                                    <i class="bi bi-envelope"></i>
+
+                                </div>
+
+                                <span class="detail-label">
+                                    Email Address
+                                </span>
+
+                            </div>
+
+                            <div class="detail-value">
+
+                                {{ user.email }}
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- CNIC -->
+
+                        <div class="detail">
+
+                            <div class="detail-top">
+
+                                <div class="detail-icon">
+
+                                    <i class="bi bi-card-heading"></i>
+
+                                </div>
+
+                                <span class="detail-label">
+                                    CNIC / National ID
+                                </span>
+
+                            </div>
+
+                            <div class="detail-value">
+
+                                {{ user.cnic or "Not Added" }}
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Phone -->
+
+                        <div class="detail">
+
+                            <div class="detail-top">
+
+                                <div class="detail-icon">
+
+                                    <i class="bi bi-telephone"></i>
+
+                                </div>
+
+                                <span class="detail-label">
+                                    Phone Number
+                                </span>
+
+                            </div>
+
+                            <div class="detail-value">
+
+                                {{ user.phone or "Not Added" }}
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Role -->
+
+                        <div class="detail">
+
+                            <div class="detail-top">
+
+                                <div class="detail-icon">
+
+                                    <i class="bi bi-person-badge"></i>
+
+                                </div>
+
+                                <span class="detail-label">
+                                    Account Role
+                                </span>
+
+                            </div>
+
+                            <div class="detail-value">
+
+                                {{ user.role }}
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Status -->
+
+                        <div class="detail">
+
+                            <div class="detail-top">
+
+                                <div class="detail-icon">
+
+                                    <i class="bi bi-shield-check"></i>
+
+                                </div>
+
+                                <span class="detail-label">
+                                    Account Status
+                                </span>
+
+                            </div>
+
+                            <div class="detail-value status-value">
+
+                                <span class="status-dot"></span>
+
+                                <span class="status-text">
+                                    {{ user.status }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- Account Role -->
+
+            <section class="card role-card">
+
+                <div class="card-header">
+
+                    <div class="card-title">
+
+                        <div class="title-icon">
+
+                            <i class="bi bi-award"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>Account Access</h3>
+
+                            <p>Your current system permissions</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card-body">
+
+                    <div class="role-box">
+
+                        <div class="role-icon">
+
+                            <i class="bi bi-person-check-fill"></i>
+
+                        </div>
+
+                        <div class="role-text">
+
+                            <strong>
+                                {{ user.role }}
+                            </strong>
+
+                            <span>
+                                Authorized to access the voter portal
+                                and participate in eligible elections.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             RIGHT COLUMN
+        ================================================== -->
+
+        <aside>
+
+
+            <!-- Security -->
+
+            <section class="card">
+
+                <div class="card-header">
+
+                    <div class="card-title">
+
+                        <div class="title-icon">
+
+                            <i class="bi bi-shield-lock"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>Security</h3>
+
+                            <p>Account protection overview</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card-body">
+
+
+                    <div class="security-item">
+
+                        <div class="security-icon">
+
+                            <i class="bi bi-envelope-check"></i>
+
+                        </div>
+
+                        <div class="security-info">
+
+                            <strong>
+                                Email Verification
+                            </strong>
+
+                            <span>
+                                Your email is verified
+                            </span>
+
+                        </div>
+
+                        <span class="secure-badge">
+                            SECURE
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="security-item">
+
+                        <div class="security-icon">
+
+                            <i class="bi bi-person-check"></i>
+
+                        </div>
+
+                        <div class="security-info">
+
+                            <strong>
+                                Voter Identity
+                            </strong>
+
+                            <span>
+                                Identity information protected
+                            </span>
+
+                        </div>
+
+                        <span class="secure-badge">
+                            ACTIVE
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="security-item">
+
+                        <div class="security-icon">
+
+                            <i class="bi bi-lock"></i>
+
+                        </div>
+
+                        <div class="security-info">
+
+                            <strong>
+                                Account Security
+                            </strong>
+
+                            <span>
+                                Protected by secure login
+                            </span>
+
+                        </div>
+
+                        <span class="secure-badge">
+                            SAFE
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- Quick Actions -->
+
+            <section class="card" style="margin-top:22px;">
+
+                <div class="card-header">
+
+                    <div class="card-title">
+
+                        <div class="title-icon">
+
+                            <i class="bi bi-lightning-charge"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>Quick Actions</h3>
+
+                            <p>Manage your voter account</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card-body">
+
+                    <div class="quick-actions">
+
+
+                        <a href="/edit_profile"
+                           class="quick-action">
+
+                            <i class="bi bi-pencil-square"></i>
+
+                            Edit Personal Information
+
+                            <i class="bi bi-chevron-right quick-arrow"></i>
+
+                        </a>
+
+
+
+                        <a href="/vote"
+                           class="quick-action">
+
+                            <i class="bi bi-check2-square"></i>
+
+                            View Live Elections
+
+                            <i class="bi bi-chevron-right quick-arrow"></i>
+
+                        </a>
+
+
+
+                        <a href="/results"
+                           class="quick-action">
+
+                            <i class="bi bi-bar-chart"></i>
+
+                            View Election Results
+
+                            <i class="bi bi-chevron-right quick-arrow"></i>
+
+                        </a>
+
+
+
+                        <a href="/logout"
+                           class="quick-action">
+
+                            <i class="bi bi-box-arrow-right"></i>
+
+                            Sign Out Securely
+
+                            <i class="bi bi-chevron-right quick-arrow"></i>
+
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </aside>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <div>
+
+            © 2026
+            <strong>AI Online Voting System</strong>.
+            All rights reserved.
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="#">
+                Privacy
+            </a>
+
+            <a href="#">
+                Security
+            </a>
+
+            <a href="#">
+                Help Center
+            </a>
+
+        </div>
+
+    </footer>
+
+
+</main>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+    function toggleMenu() {
+
+        const nav = document.getElementById("navLinks");
+
+        nav.classList.toggle("show");
+
+    }
+
+
+    /* Close mobile menu after clicking a link */
+
+    document.querySelectorAll(".nav-links a").forEach(link => {
+
+        link.addEventListener("click", function () {
+
+            document
+                .getElementById("navLinks")
+                .classList.remove("show");
+
+        });
+
+    });
+
+
+    /* Close menu when clicking outside */
+
+    document.addEventListener("click", function(event) {
+
+        const nav = document.getElementById("navLinks");
+
+        const button = document.querySelector(".mobile-menu");
+
+        if (
+            nav.classList.contains("show") &&
+            !nav.contains(event.target) &&
+            !button.contains(event.target)
+        ) {
+
+            nav.classList.remove("show");
+
+        }
+
+    });
+
+</script>
+
+
+</body>
+
+</html>

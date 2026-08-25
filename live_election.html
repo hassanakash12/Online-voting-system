@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Live Elections | AI Online Voting System</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root{
+
+    --primary:#2563eb;
+    --primary-dark:#1d4ed8;
+    --cyan:#06b6d4;
+
+    --green:#16a34a;
+    --green-dark:#15803d;
+    --green-light:#dcfce7;
+
+    --red:#dc2626;
+
+    --dark:#0f172a;
+    --dark-2:#1e293b;
+
+    --text:#334155;
+    --muted:#64748b;
+    --light:#94a3b8;
+
+    --bg:#f4f7fb;
+    --white:#ffffff;
+
+    --border:#e2e8f0;
+
+    --shadow:
+        0 18px 45px rgba(15,23,42,.07);
+
+    --radius:20px;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+
+    margin:0;
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:
+        "Inter",
+        Arial,
+        sans-serif;
+}
+
+html{
+
+    scroll-behavior:smooth;
+}
+
+body{
+
+    min-height:100vh;
+
+    color:var(--text);
+
+    background:
+
+        radial-gradient(
+            circle at 5% 5%,
+            rgba(37,99,235,.07),
+            transparent 25%
+        ),
+
+        radial-gradient(
+            circle at 95% 90%,
+            rgba(6,182,212,.06),
+            transparent 30%
+        ),
+
+        var(--bg);
+}
+
+a{
+
+    text-decoration:none;
+}
+
+button,
+input,
+select{
+
+    font-family:inherit;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar{
+
+    min-height:76px;
+
+    padding:
+        0 35px;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    background:
+        linear-gradient(
+            110deg,
+            #07152f 0%,
+            #0f2d73 42%,
+            #1d4ed8 75%,
+            #0891b2 100%
+        );
+
+    box-shadow:
+        0 8px 30px
+        rgba(15,23,42,.16);
+}
+
+
+/* subtle glow */
+
+.navbar::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    height:1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.25),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    position:relative;
+
+    z-index:2;
+}
+
+.brand-logo{
+
+    width:44px;
+    height:44px;
+
+    border-radius:13px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    font-size:20px;
+
+    background:
+        rgba(255,255,255,.13);
+
+    border:
+        1px solid
+        rgba(255,255,255,.16);
+
+    box-shadow:
+        inset 0 1px 0
+        rgba(255,255,255,.15);
+}
+
+.brand-info strong{
+
+    display:block;
+
+    color:white;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    letter-spacing:-.2px;
+}
+
+.brand-info span{
+
+    display:block;
+
+    margin-top:4px;
+
+    color:
+        rgba(255,255,255,.55);
+
+    font-size:8px;
+
+    font-weight:600;
+
+    letter-spacing:1.2px;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.back-btn{
+
+    position:relative;
+
+    z-index:2;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    min-height:40px;
+
+    padding:
+        0 15px;
+
+    border-radius:10px;
+
+    background:
+        rgba(255,255,255,.12);
+
+    border:
+        1px solid
+        rgba(255,255,255,.16);
+
+    color:white;
+
+    font-size:10px;
+
+    font-weight:700;
+
+    transition:.2s;
+
+    backdrop-filter:
+        blur(10px);
+}
+
+.back-btn:hover{
+
+    background:white;
+
+    color:var(--primary);
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.container{
+
+    width:
+        min(1180px,92%);
+
+    margin:
+        34px auto 55px;
+}
+
+
+/* =========================================================
+   BREADCRUMB
+========================================================= */
+
+.breadcrumb{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    color:var(--light);
+
+    font-size:9px;
+
+    font-weight:600;
+
+    margin-bottom:18px;
+}
+
+.breadcrumb span{
+
+    color:var(--primary);
+}
+
+
+/* =========================================================
+   PAGE HERO
+========================================================= */
+
+.page-hero{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:
+        28px 30px;
+
+    border-radius:
+        var(--radius);
+
+    background:
+        linear-gradient(
+            135deg,
+            #0b1f4d,
+            #1744a5,
+            #087f9b
+        );
+
+    color:white;
+
+    box-shadow:
+        0 18px 45px
+        rgba(29,78,216,.16);
+
+    margin-bottom:25px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:25px;
+}
+
+
+/* decorative circles */
+
+.page-hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:280px;
+    height:280px;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    right:-90px;
+    top:-130px;
+}
+
+.page-hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:170px;
+    height:170px;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    right:160px;
+    bottom:-110px;
+}
+
+.hero-content{
+
+    position:relative;
+
+    z-index:2;
+}
+
+.hero-icon{
+
+    width:44px;
+    height:44px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:13px;
+
+    background:
+        rgba(255,255,255,.12);
+
+    border:
+        1px solid
+        rgba(255,255,255,.15);
+
+    font-size:20px;
+
+    margin-bottom:13px;
+}
+
+.hero-content h1{
+
+    font-size:24px;
+
+    font-weight:800;
+
+    letter-spacing:-.7px;
+}
+
+.hero-content p{
+
+    max-width:650px;
+
+    color:
+        rgba(255,255,255,.68);
+
+    font-size:10px;
+
+    line-height:1.6;
+
+    margin-top:7px;
+}
+
+
+/* LIVE COUNTER */
+
+.live-counter{
+
+    position:relative;
+
+    z-index:2;
+
+    min-width:145px;
+
+    padding:
+        16px 18px;
+
+    border-radius:14px;
+
+    background:
+        rgba(255,255,255,.10);
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
+    text-align:center;
+
+    backdrop-filter:
+        blur(12px);
+}
+
+.live-counter .number{
+
+    display:block;
+
+    font-size:27px;
+
+    font-weight:800;
+}
+
+.live-counter .label{
+
+    display:block;
+
+    margin-top:4px;
+
+    color:
+        rgba(255,255,255,.58);
+
+    font-size:8px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.section-header{
+
+    display:flex;
+
+    align-items:flex-end;
+
+    justify-content:space-between;
+
+    margin-bottom:15px;
+
+    gap:15px;
+}
+
+.section-header h2{
+
+    color:var(--dark);
+
+    font-size:15px;
+
+    font-weight:800;
+
+    letter-spacing:-.3px;
+}
+
+.section-header p{
+
+    color:var(--muted);
+
+    font-size:9px;
+
+    margin-top:4px;
+}
+
+
+/* =========================================================
+   LIVE GRID
+========================================================= */
+
+.election-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap:20px;
+}
+
+
+/* =========================================================
+   ELECTION CARD
+========================================================= */
+
+.live-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:white;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius);
+
+    padding:24px;
+
+    box-shadow:
+        var(--shadow);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+
+    animation:
+        cardIn .45s ease both;
+}
+
+.live-card:nth-child(2){
+    animation-delay:.06s;
+}
+
+.live-card:nth-child(3){
+    animation-delay:.12s;
+}
+
+.live-card:nth-child(4){
+    animation-delay:.18s;
+}
+
+@keyframes cardIn{
+
+    from{
+        opacity:0;
+        transform:translateY(12px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
+/* top live line */
+
+.live-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    top:0;
+
+    height:4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #16a34a,
+            #06b6d4,
+            #2563eb
+        );
+}
+
+
+/* glow */
+
+.live-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:120px;
+    height:120px;
+
+    border-radius:50%;
+
+    right:-65px;
+    top:-65px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(37,99,235,.07),
+            transparent 70%
+        );
+
+    pointer-events:none;
+}
+
+.live-card:hover{
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        #cbd5e1;
+
+    box-shadow:
+        0 22px 50px
+        rgba(15,23,42,.11);
+}
+
+
+/* =========================================================
+   CARD TOP
+========================================================= */
+
+.card-top{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:12px;
+
+    margin-bottom:17px;
+}
+
+
+/* LIVE BADGE */
+
+.live-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    padding:
+        7px 11px;
+
+    border-radius:20px;
+
+    color:var(--green-dark);
+
+    background:
+        var(--green-light);
+
+    border:
+        1px solid
+        #bbf7d0;
+
+    font-size:8px;
+
+    font-weight:800;
+
+    letter-spacing:.5px;
+}
+
+.dot{
+
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#16a34a;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(22,163,74,.10);
+
+    animation:
+        pulse 1.4s infinite;
+}
+
+@keyframes pulse{
+
+    0%{
+        opacity:1;
+        transform:scale(1);
+    }
+
+    50%{
+        opacity:.45;
+        transform:scale(1.15);
+    }
+
+    100%{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+
+/* CARD ID */
+
+.election-id{
+
+    color:#94a3b8;
+
+    background:#f8fafc;
+
+    border:
+        1px solid
+        #edf1f5;
+
+    padding:
+        6px 8px;
+
+    border-radius:7px;
+
+    font-size:8px;
+
+    font-weight:700;
+
+    font-family:monospace;
+}
+
+
+/* =========================================================
+   ELECTION TITLE
+========================================================= */
+
+.title-row{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:12px;
+}
+
+.election-icon{
+
+    width:43px;
+    height:43px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:12px;
+
+    color:var(--primary);
+
+    background:#eff6ff;
+
+    border:
+        1px solid
+        #dbeafe;
+
+    font-size:18px;
+}
+
+.title-content h2{
+
+    color:var(--dark);
+
+    font-size:17px;
+
+    line-height:1.3;
+
+    font-weight:800;
+
+    letter-spacing:-.4px;
+}
+
+.title-content .subtitle{
+
+    color:var(--light);
+
+    font-size:8px;
+
+    font-weight:600;
+
+    margin-top:5px;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.description{
+
+    color:var(--muted);
+
+    font-size:10px;
+
+    line-height:1.7;
+
+    margin-top:15px;
+
+    min-height:34px;
+}
+
+
+/* =========================================================
+   INFORMATION
+========================================================= */
+
+.info-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:9px;
+
+    margin-top:20px;
+}
+
+.info{
+
+    padding:
+        12px 13px;
+
+    border-radius:11px;
+
+    background:#f8fafc;
+
+    border:
+        1px solid
+        #e9eef4;
+
+    transition:.2s;
+}
+
+.info:hover{
+
+    background:#f1f5f9;
+
+    border-color:#dbe3ec;
+}
+
+.info span{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:5px;
+
+    color:#94a3b8;
+
+    font-size:7px;
+
+    font-weight:800;
+
+    letter-spacing:.7px;
+
+    text-transform:uppercase;
+
+    margin-bottom:6px;
+}
+
+.info strong{
+
+    display:block;
+
+    color:#334155;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    word-break:break-word;
+}
+
+.active-status{
+
+    color:
+        var(--green) !important;
+}
+
+
+/* =========================================================
+   CARD FOOTER
+========================================================= */
+
+.card-footer{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:12px;
+
+    margin-top:19px;
+
+    padding-top:17px;
+
+    border-top:
+        1px solid
+        #eef2f7;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    color:#15803d;
+
+    font-size:8px;
+
+    font-weight:800;
+}
+
+.status-dot{
+
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#22c55e;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(34,197,94,.10);
+}
+
+
+/* =========================================================
+   VOTE BUTTON
+========================================================= */
+
+.vote-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    min-height:40px;
+
+    padding:
+        0 15px;
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
+
+    color:white;
+
+    font-size:9px;
+
+    font-weight:800;
+
+    box-shadow:
+        0 8px 20px
+        rgba(37,99,235,.17);
+
+    transition:
+        transform .2s,
+        box-shadow .2s;
+}
+
+.vote-btn:hover{
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 12px 25px
+        rgba(37,99,235,.27);
+}
+
+.vote-btn:active{
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   NO ELECTION
+========================================================= */
+
+.no-election{
+
+    background:white;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius);
+
+    padding:
+        70px 25px;
+
+    text-align:center;
+
+    box-shadow:
+        var(--shadow);
+}
+
+.no-election-icon{
+
+    width:76px;
+    height:76px;
+
+    margin:
+        0 auto 18px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:22px;
+
+    background:#eff6ff;
+
+    color:var(--primary);
+
+    font-size:32px;
+
+    border:
+        1px solid
+        #dbeafe;
+}
+
+.no-election h2{
+
+    color:var(--dark);
+
+    font-size:18px;
+
+    font-weight:800;
+
+    margin-bottom:7px;
+}
+
+.no-election p{
+
+    max-width:430px;
+
+    margin:auto;
+
+    color:var(--muted);
+
+    font-size:10px;
+
+    line-height:1.7;
+}
+
+.refresh-btn{
+
+    display:inline-flex;
+
+    margin-top:19px;
+
+    align-items:center;
+
+    gap:7px;
+
+    min-height:37px;
+
+    padding:
+        0 14px;
+
+    border-radius:9px;
+
+    background:#eff6ff;
+
+    color:var(--primary);
+
+    font-size:9px;
+
+    font-weight:800;
+
+    transition:.2s;
+}
+
+.refresh-btn:hover{
+
+    background:#dbeafe;
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.page-footer{
+
+    text-align:center;
+
+    color:#94a3b8;
+
+    font-size:8px;
+
+    margin-top:30px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:900px){
+
+    .election-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .page-hero{
+
+        padding:24px;
+    }
+
+}
+
+
+@media(max-width:650px){
+
+    .navbar{
+
+        min-height:68px;
+
+        padding:
+            0 14px;
+    }
+
+    .brand-info span{
+
+        display:none;
+    }
+
+    .brand-logo{
+
+        width:39px;
+        height:39px;
+    }
+
+    .brand-info strong{
+
+        font-size:10px;
+    }
+
+    .back-btn{
+
+        min-height:35px;
+
+        padding:
+            0 10px;
+
+        font-size:8px;
+    }
+
+    .container{
+
+        width:92%;
+
+        margin:
+            22px auto 40px;
+    }
+
+    .page-hero{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        padding:22px;
+    }
+
+    .hero-content h1{
+
+        font-size:19px;
+    }
+
+    .live-counter{
+
+        width:100%;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        gap:10px;
+    }
+
+    .live-counter .number{
+
+        font-size:21px;
+    }
+
+    .live-counter .label{
+
+        margin-top:0;
+    }
+
+    .section-header{
+
+        align-items:flex-start;
+
+        flex-direction:column;
+    }
+
+    .live-card{
+
+        padding:20px;
+    }
+
+    .info-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .card-footer{
+
+        align-items:stretch;
+
+        flex-direction:column;
+    }
+
+    .vote-btn{
+
+        width:100%;
+    }
+
+}
+
+
+@media(max-width:400px){
+
+    .title-row{
+
+        gap:9px;
+    }
+
+    .election-icon{
+
+        width:38px;
+        height:38px;
+
+        font-size:15px;
+    }
+
+    .title-content h2{
+
+        font-size:15px;
+    }
+
+    .description{
+
+        font-size:9px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<nav class="navbar">
+
+
+    <div class="brand">
+
+
+        <div class="brand-logo">
+            🗳️
+        </div>
+
+
+        <div class="brand-info">
+
+            <strong>
+                AI Online Voting System
+            </strong>
+
+            <span>
+                SECURE DIGITAL ELECTION PLATFORM
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+    <a
+        href="/voter"
+        class="back-btn"
+    >
+
+        ←
+        Dashboard
+
+    </a>
+
+
+</nav>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="container">
+
+
+    <!-- BREADCRUMB -->
+
+    <div class="breadcrumb">
+
+        <span>
+            Voter Dashboard
+        </span>
+
+        <b>/</b>
+
+        Live Elections
+
+    </div>
+
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section class="page-hero">
+
+
+        <div class="hero-content">
+
+
+            <div class="hero-icon">
+                🗳️
+            </div>
+
+
+            <h1>
+                Live Elections
+            </h1>
+
+
+            <p>
+                Participate in an active election and make
+                your voice count. Select an election below
+                to securely cast your vote.
+            </p>
+
+
+        </div>
+
+
+        <div class="live-counter">
+
+
+            <span
+                class="number"
+                id="liveCount"
+            >
+                {% if elections %}
+                    {{ elections|length }}
+                {% else %}
+                    0
+                {% endif %}
+            </span>
+
+
+            <span class="label">
+                Active Elections
+            </span>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         SECTION HEADER
+    ====================================================== -->
+
+    {% if elections %}
+
+
+    <div class="section-header">
+
+
+        <div>
+
+            <h2>
+                Currently Active
+            </h2>
+
+            <p>
+                Elections available for your participation
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         ELECTION GRID
+    ====================================================== -->
+
+    <div class="election-grid">
+
+
+        {% for election in elections %}
+
+
+        <article class="live-card">
+
+
+            <!-- CARD TOP -->
+
+            <div class="card-top">
+
+
+                <span class="live-badge">
+
+                    <span class="dot"></span>
+
+                    LIVE NOW
+
+                </span>
+
+
+                <span class="election-id">
+
+                    #{{ election.id }}
+
+                </span>
+
+
+            </div>
+
+
+
+            <!-- TITLE -->
+
+            <div class="title-row">
+
+
+                <div class="election-icon">
+                    🗳
+                </div>
+
+
+                <div class="title-content">
+
+
+                    <h2>
+                        {{ election.title }}
+                    </h2>
+
+
+                    <div class="subtitle">
+                        Official Active Election
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- DESCRIPTION -->
+
+            {% if election.description %}
+
+
+            <p class="description">
+                {{ election.description }}
+            </p>
+
+
+            {% else %}
+
+
+            <p class="description">
+
+                This election is currently active.
+                You can securely cast your vote now.
+
+            </p>
+
+
+            {% endif %}
+
+
+
+            <!-- INFORMATION -->
+
+            <div class="info-grid">
+
+
+                <div class="info">
+
+                    <span>
+                        📅 Start Date
+                    </span>
+
+                    <strong>
+                        {{ election.start_date }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info">
+
+                    <span>
+                        📅 End Date
+                    </span>
+
+                    <strong>
+                        {{ election.end_date }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info">
+
+                    <span>
+                        ● Status
+                    </span>
+
+                    <strong class="active-status">
+                        🟢 {{ election.status }}
+                    </strong>
+
+                </div>
+
+
+                {% if election.created_at %}
+
+
+                <div class="info">
+
+                    <span>
+                        🕐 Created
+                    </span>
+
+                    <strong>
+                        {{ election.created_at }}
+                    </strong>
+
+                </div>
+
+
+                {% endif %}
+
+
+            </div>
+
+
+
+            <!-- FOOTER -->
+
+            <div class="card-footer">
+
+
+                <div class="status">
+
+                    <span class="status-dot"></span>
+
+                    Voting is currently open
+
+                </div>
+
+
+                <a
+                    href="{{ url_for('vote', election_id=election.id) }}"
+                    class="vote-btn"
+                >
+
+                    🗳️
+                    Vote Now
+
+                    <span>
+                        →
+                    </span>
+
+                </a>
+
+
+            </div>
+
+
+        </article>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+    {% else %}
+
+
+    <!-- =====================================================
+         NO ACTIVE ELECTION
+    ====================================================== -->
+
+    <section class="no-election">
+
+
+        <div class="no-election-icon">
+            🗳️
+        </div>
+
+
+        <h2>
+            No Active Elections
+        </h2>
+
+
+        <p>
+
+            There are currently no live elections available
+            for voting. Please check again later when a new
+            election becomes active.
+
+        </p>
+
+
+        <a
+            href="/voter"
+            class="refresh-btn"
+        >
+
+            ←
+            Return to Dashboard
+
+        </a>
+
+
+    </section>
+
+
+    {% endif %}
+
+
+
+    <!-- FOOTER -->
+
+    <div class="page-footer">
+
+        AI Online Voting System
+        &nbsp;•&nbsp;
+        Secure Digital Elections
+        &nbsp;•&nbsp;
+        © 2026
+
+    </div>
+
+
+</main>
+
+
+
+<script>
+
+/* =========================================================
+   LIVE COUNT ANIMATION
+========================================================= */
+
+const counter =
+    document.getElementById("liveCount");
+
+
+if(counter){
+
+    const target =
+        parseInt(counter.textContent) || 0;
+
+    let current = 0;
+
+
+    if(target > 0){
+
+        const duration = 500;
+
+        const start =
+            performance.now();
+
+
+        function animateCount(time){
+
+            const progress =
+                Math.min(
+                    (time - start) / duration,
+                    1
+                );
+
+
+            current =
+                Math.floor(
+                    progress * target
+                );
+
+
+            counter.textContent =
+                current;
+
+
+            if(progress < 1){
+
+                requestAnimationFrame(
+                    animateCount
+                );
+
+            }
+
+            else{
+
+                counter.textContent =
+                    target;
+
+            }
+
+        }
+
+
+        requestAnimationFrame(
+            animateCount
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   VOTE BUTTON LOADING
+========================================================= */
+
+document
+    .querySelectorAll(".vote-btn")
+    .forEach(function(button){
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                this.style.opacity = ".75";
+
+                this.style.pointerEvents =
+                    "none";
+
+                this.innerHTML =
+                    "⏳ Opening secure ballot...";
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   CARD KEYBOARD ACCESS
+========================================================= */
+
+document
+    .querySelectorAll(".live-card")
+    .forEach(function(card){
+
+        card.addEventListener(
+            "mouseenter",
+            function(){
+
+                this.style.zIndex = "5";
+
+            }
+        );
+
+        card.addEventListener(
+            "mouseleave",
+            function(){
+
+                this.style.zIndex = "";
+
+            }
+        );
+
+    });
+
+</script>
+
+
+</body>
+
+</html>

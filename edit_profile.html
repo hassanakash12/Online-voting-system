@@ -1,0 +1,2103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Profile | AI Online Voting System</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        :root{
+            --primary:#2563eb;
+            --primary-dark:#1d4ed8;
+            --blue:#3b82f6;
+            --cyan:#06b6d4;
+            --green:#16a34a;
+            --red:#ef4444;
+
+            --bg:#f4f7fb;
+            --card:#ffffff;
+            --soft:#f8fafc;
+            --border:#e5eaf1;
+
+            --text:#0f172a;
+            --muted:#64748b;
+            --light:#94a3b8;
+
+            --sidebar:#0b1220;
+            --sidebar-2:#111827;
+
+            --shadow:0 20px 50px rgba(15,23,42,.08);
+            --radius:20px;
+        }
+
+        *{
+            box-sizing:border-box;
+            margin:0;
+            padding:0;
+            font-family:"Inter",Segoe UI,Arial,sans-serif;
+        }
+
+        body{
+            background:
+                radial-gradient(circle at 15% 10%,rgba(37,99,235,.07),transparent 28%),
+                radial-gradient(circle at 90% 90%,rgba(6,182,212,.06),transparent 30%),
+                var(--bg);
+            color:var(--text);
+            min-height:100vh;
+        }
+
+        button,
+        input{
+            font-family:inherit;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================== */
+
+        .sidebar{
+            position:fixed;
+            left:0;
+            top:0;
+            bottom:0;
+            width:260px;
+            background:
+                linear-gradient(180deg,#0b1220 0%,#101827 55%,#0b1220 100%);
+            color:white;
+            padding:22px 16px;
+            z-index:1000;
+            display:flex;
+            flex-direction:column;
+            border-right:1px solid rgba(255,255,255,.05);
+        }
+
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            padding:8px 10px 25px;
+            border-bottom:1px solid rgba(255,255,255,.07);
+            margin-bottom:20px;
+        }
+
+        .brand-logo{
+            width:44px;
+            height:44px;
+            border-radius:14px;
+            background:linear-gradient(135deg,#2563eb,#06b6d4);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-size:21px;
+            box-shadow:0 8px 25px rgba(37,99,235,.3);
+        }
+
+        .brand-text h2{
+            font-size:14px;
+            font-weight:800;
+            letter-spacing:.2px;
+        }
+
+        .brand-text span{
+            display:block;
+            font-size:10px;
+            color:#94a3b8;
+            margin-top:3px;
+            letter-spacing:.5px;
+        }
+
+        .menu-title{
+            font-size:10px;
+            text-transform:uppercase;
+            letter-spacing:1.4px;
+            color:#64748b;
+            padding:0 12px 9px;
+            font-weight:700;
+        }
+
+        .nav{
+            display:flex;
+            flex-direction:column;
+            gap:5px;
+        }
+
+        .nav a{
+            display:flex;
+            align-items:center;
+            gap:13px;
+            padding:12px 13px;
+            color:#94a3b8;
+            text-decoration:none;
+            border-radius:12px;
+            font-size:13px;
+            font-weight:600;
+            transition:.2s ease;
+        }
+
+        .nav a:hover{
+            background:rgba(255,255,255,.06);
+            color:white;
+            transform:translateX(2px);
+        }
+
+        .nav a.active{
+            background:linear-gradient(
+                135deg,
+                rgba(37,99,235,.95),
+                rgba(29,78,216,.75)
+            );
+            color:white;
+            box-shadow:0 8px 22px rgba(37,99,235,.25);
+        }
+
+        .nav-icon{
+            width:30px;
+            height:30px;
+            border-radius:9px;
+            background:rgba(255,255,255,.05);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:15px;
+        }
+
+        .nav a.active .nav-icon{
+            background:rgba(255,255,255,.14);
+        }
+
+        .sidebar-bottom{
+            margin-top:auto;
+        }
+
+        .user-mini{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            padding:12px;
+            background:rgba(255,255,255,.045);
+            border:1px solid rgba(255,255,255,.06);
+            border-radius:14px;
+        }
+
+        .mini-avatar{
+            width:38px;
+            height:38px;
+            border-radius:50%;
+            background:linear-gradient(135deg,#2563eb,#06b6d4);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:13px;
+            font-weight:800;
+            overflow:hidden;
+        }
+
+        .mini-avatar img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+        }
+
+        .mini-info{
+            min-width:0;
+        }
+
+        .mini-info strong{
+            display:block;
+            color:#fff;
+            font-size:12px;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        }
+
+        .mini-info span{
+            color:#64748b;
+            font-size:10px;
+        }
+
+        /* =========================
+           MAIN
+        ========================== */
+
+        .main{
+            margin-left:260px;
+            min-height:100vh;
+        }
+
+        /* =========================
+           TOPBAR
+        ========================== */
+
+        .topbar{
+            height:76px;
+            background:rgba(255,255,255,.82);
+            backdrop-filter:blur(18px);
+            border-bottom:1px solid var(--border);
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:0 35px;
+            position:sticky;
+            top:0;
+            z-index:500;
+        }
+
+        .page-heading{
+            display:flex;
+            align-items:center;
+            gap:13px;
+        }
+
+        .mobile-menu{
+            display:none;
+            width:40px;
+            height:40px;
+            border:none;
+            background:#eff6ff;
+            color:var(--primary);
+            border-radius:10px;
+            cursor:pointer;
+            font-size:18px;
+        }
+
+        .page-heading h1{
+            font-size:20px;
+            font-weight:800;
+            letter-spacing:-.4px;
+        }
+
+        .page-heading p{
+            color:var(--muted);
+            font-size:11px;
+            margin-top:3px;
+        }
+
+        .top-actions{
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+
+        .secure-badge{
+            display:flex;
+            align-items:center;
+            gap:7px;
+            padding:8px 12px;
+            border-radius:30px;
+            background:#f0fdf4;
+            color:#15803d;
+            border:1px solid #dcfce7;
+            font-size:11px;
+            font-weight:700;
+        }
+
+        .secure-dot{
+            width:7px;
+            height:7px;
+            background:#22c55e;
+            border-radius:50%;
+            box-shadow:0 0 0 4px rgba(34,197,94,.1);
+        }
+
+        /* =========================
+           CONTENT
+        ========================== */
+
+        .content{
+            padding:34px;
+            max-width:1250px;
+            margin:auto;
+        }
+
+        .breadcrumb{
+            color:var(--muted);
+            font-size:11px;
+            margin-bottom:20px;
+        }
+
+        .breadcrumb span{
+            color:var(--primary);
+            font-weight:700;
+        }
+
+        .profile-layout{
+            display:grid;
+            grid-template-columns:330px 1fr;
+            gap:24px;
+            align-items:start;
+        }
+
+        /* =========================
+           PROFILE PREVIEW
+        ========================== */
+
+        .profile-preview{
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:var(--radius);
+            box-shadow:var(--shadow);
+            overflow:hidden;
+        }
+
+        .preview-cover{
+            height:125px;
+            background:
+                radial-gradient(circle at 20% 20%,rgba(255,255,255,.25),transparent 22%),
+                radial-gradient(circle at 80% 80%,rgba(255,255,255,.16),transparent 25%),
+                linear-gradient(135deg,#1d4ed8,#2563eb,#06b6d4);
+            position:relative;
+        }
+
+        .preview-cover::after{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:linear-gradient(
+                135deg,
+                transparent,
+                rgba(255,255,255,.08)
+            );
+        }
+
+        .preview-body{
+            padding:0 24px 25px;
+            text-align:center;
+        }
+
+        .large-avatar{
+            width:108px;
+            height:108px;
+            border-radius:50%;
+            border:6px solid white;
+            background:linear-gradient(135deg,#2563eb,#06b6d4);
+            margin:-54px auto 14px;
+            position:relative;
+            z-index:2;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:white;
+            font-size:38px;
+            font-weight:800;
+            box-shadow:0 10px 25px rgba(15,23,42,.16);
+            overflow:hidden;
+        }
+
+        .large-avatar img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+        }
+
+        .preview-body h2{
+            font-size:19px;
+            font-weight:800;
+        }
+
+        .preview-body .email{
+            color:var(--muted);
+            font-size:11px;
+            margin-top:5px;
+            word-break:break-all;
+        }
+
+        .profile-status{
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            margin-top:13px;
+            padding:6px 10px;
+            background:#f0fdf4;
+            border:1px solid #dcfce7;
+            color:#15803d;
+            border-radius:30px;
+            font-size:10px;
+            font-weight:700;
+        }
+
+        .status-dot{
+            width:6px;
+            height:6px;
+            background:#22c55e;
+            border-radius:50%;
+        }
+
+        .profile-info{
+            border-top:1px solid var(--border);
+            margin-top:22px;
+            padding-top:18px;
+            text-align:left;
+        }
+
+        .info-row{
+            display:flex;
+            justify-content:space-between;
+            gap:15px;
+            padding:9px 0;
+            font-size:11px;
+        }
+
+        .info-row span:first-child{
+            color:var(--muted);
+        }
+
+        .info-row span:last-child{
+            font-weight:700;
+            text-align:right;
+            color:#334155;
+        }
+
+        .security-note{
+            margin-top:18px;
+            padding:13px;
+            background:#f8fafc;
+            border:1px solid var(--border);
+            border-radius:12px;
+            text-align:left;
+        }
+
+        .security-note strong{
+            display:block;
+            font-size:11px;
+            margin-bottom:4px;
+        }
+
+        .security-note p{
+            font-size:10px;
+            line-height:1.6;
+            color:var(--muted);
+        }
+
+        /* =========================
+           FORM CARD
+        ========================== */
+
+        .form-card{
+            background:white;
+            border:1px solid var(--border);
+            border-radius:var(--radius);
+            box-shadow:var(--shadow);
+            padding:30px;
+        }
+
+        .card-title{
+            display:flex;
+            align-items:flex-start;
+            justify-content:space-between;
+            gap:15px;
+            padding-bottom:22px;
+            border-bottom:1px solid var(--border);
+        }
+
+        .card-title h2{
+            font-size:18px;
+            font-weight:800;
+        }
+
+        .card-title p{
+            color:var(--muted);
+            font-size:11px;
+            margin-top:5px;
+        }
+
+        .edit-icon{
+            width:40px;
+            height:40px;
+            border-radius:11px;
+            background:#eff6ff;
+            color:var(--primary);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:17px;
+        }
+
+        .section{
+            padding-top:25px;
+        }
+
+        .section-heading{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            margin-bottom:17px;
+        }
+
+        .section-number{
+            width:28px;
+            height:28px;
+            background:#eff6ff;
+            color:var(--primary);
+            border-radius:9px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:11px;
+            font-weight:800;
+        }
+
+        .section-heading h3{
+            font-size:13px;
+            font-weight:800;
+        }
+
+        .section-heading p{
+            color:var(--muted);
+            font-size:10px;
+            margin-top:2px;
+        }
+
+        .form-grid{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:17px;
+        }
+
+        .field{
+            position:relative;
+        }
+
+        .field.full{
+            grid-column:1/-1;
+        }
+
+        .field label{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            margin-bottom:7px;
+            color:#334155;
+            font-size:11px;
+            font-weight:700;
+        }
+
+        .optional{
+            color:#94a3b8;
+            font-weight:500;
+            font-size:9px;
+        }
+
+        .input-wrap{
+            position:relative;
+        }
+
+        .input-icon{
+            position:absolute;
+            left:13px;
+            top:50%;
+            transform:translateY(-50%);
+            color:#94a3b8;
+            font-size:14px;
+            pointer-events:none;
+        }
+
+        .field input{
+            width:100%;
+            height:46px;
+            border:1px solid var(--border);
+            border-radius:11px;
+            padding:0 14px 0 40px;
+            background:#f8fafc;
+            color:#0f172a;
+            font-size:12px;
+            transition:.2s;
+        }
+
+        .field input:focus{
+            outline:none;
+            border-color:#60a5fa;
+            background:white;
+            box-shadow:0 0 0 4px rgba(37,99,235,.08);
+        }
+
+        .static-field{
+            min-height:46px;
+            display:flex;
+            align-items:center;
+            gap:10px;
+            border:1px solid var(--border);
+            border-radius:11px;
+            padding:0 14px;
+            background:#f1f5f9;
+            color:#64748b;
+            font-size:12px;
+        }
+
+        .static-field .lock{
+            margin-left:auto;
+            font-size:12px;
+            opacity:.6;
+        }
+
+        .hint{
+            color:#94a3b8;
+            font-size:9px;
+            line-height:1.5;
+            margin-top:6px;
+        }
+
+        /* =========================
+           UPLOAD
+        ========================== */
+
+        .upload-box{
+            border:1.5px dashed #cbd5e1;
+            border-radius:13px;
+            padding:17px;
+            background:#f8fafc;
+            transition:.2s;
+        }
+
+        .upload-box:hover{
+            border-color:#60a5fa;
+            background:#f8fbff;
+        }
+
+        .upload-content{
+            display:flex;
+            align-items:center;
+            gap:13px;
+        }
+
+        .upload-icon{
+            width:42px;
+            height:42px;
+            border-radius:11px;
+            background:#eff6ff;
+            color:var(--primary);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:18px;
+        }
+
+        .upload-text{
+            flex:1;
+            min-width:0;
+        }
+
+        .upload-text strong{
+            display:block;
+            font-size:11px;
+        }
+
+        .upload-text span{
+            color:#94a3b8;
+            font-size:9px;
+            display:block;
+            margin-top:4px;
+        }
+
+        .choose-btn{
+            background:white;
+            border:1px solid var(--border);
+            border-radius:9px;
+            padding:8px 12px;
+            color:#334155;
+            font-size:10px;
+            font-weight:700;
+            cursor:pointer;
+        }
+
+        .choose-btn:hover{
+            border-color:#93c5fd;
+            color:var(--primary);
+        }
+
+        #photo{
+            display:none;
+        }
+
+        /* =========================
+           PASSWORD
+        ========================== */
+
+        .password-box{
+            position:relative;
+        }
+
+        .password-box input{
+            padding-right:43px;
+        }
+
+        .toggle-password{
+            position:absolute;
+            right:11px;
+            top:50%;
+            transform:translateY(-50%);
+            border:none;
+            background:none;
+            cursor:pointer;
+            color:#94a3b8;
+            font-size:14px;
+        }
+
+        .strength{
+            margin-top:9px;
+        }
+
+        .strength-bars{
+            display:flex;
+            gap:4px;
+            height:4px;
+        }
+
+        .strength-bars span{
+            flex:1;
+            border-radius:10px;
+            background:#e2e8f0;
+        }
+
+        .strength-text{
+            font-size:9px;
+            color:#94a3b8;
+            margin-top:5px;
+        }
+
+        .password-requirements{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:6px;
+            margin-top:11px;
+        }
+
+        .requirement{
+            color:#94a3b8;
+            font-size:9px;
+        }
+
+        .requirement.valid{
+            color:#16a34a;
+        }
+
+        /* =========================
+           ALERTS
+        ========================== */
+
+        .alert{
+            display:flex;
+            align-items:flex-start;
+            gap:11px;
+            padding:13px 15px;
+            border-radius:12px;
+            margin-bottom:20px;
+            font-size:11px;
+            line-height:1.5;
+        }
+
+        .alert-icon{
+            font-size:15px;
+        }
+
+        .error-msg{
+            background:#fff1f2;
+            border:1px solid #fecdd3;
+            color:#be123c;
+        }
+
+        .success-msg{
+            background:#f0fdf4;
+            border:1px solid #bbf7d0;
+            color:#15803d;
+        }
+
+        /* =========================
+           ACTIONS
+        ========================== */
+
+        .form-footer{
+            display:flex;
+            justify-content:flex-end;
+            align-items:center;
+            gap:10px;
+            border-top:1px solid var(--border);
+            margin-top:28px;
+            padding-top:22px;
+        }
+
+        .cancel-btn,
+        .save-btn{
+            min-height:43px;
+            padding:0 18px;
+            border-radius:10px;
+            font-size:11px;
+            font-weight:700;
+            cursor:pointer;
+            text-decoration:none;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            transition:.2s;
+        }
+
+        .cancel-btn{
+            color:#475569;
+            background:#f1f5f9;
+            border:1px solid #e2e8f0;
+        }
+
+        .cancel-btn:hover{
+            background:#e2e8f0;
+        }
+
+        .save-btn{
+            border:none;
+            color:white;
+            background:linear-gradient(135deg,#2563eb,#1d4ed8);
+            box-shadow:0 8px 20px rgba(37,99,235,.2);
+            min-width:145px;
+        }
+
+        .save-btn:hover{
+            transform:translateY(-1px);
+            box-shadow:0 12px 25px rgba(37,99,235,.28);
+        }
+
+        .save-btn.loading{
+            pointer-events:none;
+            opacity:.8;
+        }
+
+        /* =========================
+           MOBILE OVERLAY
+        ========================== */
+
+        .overlay{
+            display:none;
+            position:fixed;
+            inset:0;
+            background:rgba(2,6,23,.5);
+            backdrop-filter:blur(3px);
+            z-index:900;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media(max-width:1000px){
+
+            .profile-layout{
+                grid-template-columns:1fr;
+            }
+
+            .profile-preview{
+                max-width:650px;
+                width:100%;
+                margin:auto;
+            }
+
+            .profile-info{
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:0 20px;
+            }
+
+            .security-note{
+                grid-column:1/-1;
+            }
+        }
+
+        @media(max-width:800px){
+
+            .sidebar{
+                transform:translateX(-100%);
+                transition:.25s ease;
+            }
+
+            .sidebar.open{
+                transform:translateX(0);
+            }
+
+            .main{
+                margin-left:0;
+            }
+
+            .mobile-menu{
+                display:block;
+            }
+
+            .overlay.show{
+                display:block;
+            }
+
+            .topbar{
+                padding:0 20px;
+            }
+
+            .content{
+                padding:24px 18px;
+            }
+
+            .secure-badge{
+                display:none;
+            }
+        }
+
+        @media(max-width:600px){
+
+            .topbar{
+                height:68px;
+            }
+
+            .page-heading h1{
+                font-size:17px;
+            }
+
+            .page-heading p{
+                font-size:9px;
+            }
+
+            .content{
+                padding:18px 12px;
+            }
+
+            .form-card{
+                padding:20px 16px;
+                border-radius:16px;
+            }
+
+            .form-grid{
+                grid-template-columns:1fr;
+                gap:15px;
+            }
+
+            .field.full{
+                grid-column:auto;
+            }
+
+            .profile-info{
+                display:block;
+            }
+
+            .upload-content{
+                align-items:flex-start;
+            }
+
+            .choose-btn{
+                display:none;
+            }
+
+            .form-footer{
+                flex-direction:column-reverse;
+            }
+
+            .cancel-btn,
+            .save-btn{
+                width:100%;
+            }
+
+            .password-requirements{
+                grid-template-columns:1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+
+        <div class="brand-logo">
+            🗳
+        </div>
+
+        <div class="brand-text">
+            <h2>AI Voting System</h2>
+            <span>SECURE DIGITAL ELECTIONS</span>
+        </div>
+
+    </div>
+
+    <div class="menu-title">Main Menu</div>
+
+    <nav class="nav">
+
+        <a href="/voter">
+            <span class="nav-icon">🏠</span>
+            Dashboard
+        </a>
+
+        <a href="/vote">
+            <span class="nav-icon">🗳</span>
+            Live Election
+        </a>
+
+        <a href="/results">
+            <span class="nav-icon">📊</span>
+            Election Results
+        </a>
+
+        <a href="/profile" class="active">
+            <span class="nav-icon">👤</span>
+            My Profile
+        </a>
+
+    </nav>
+
+    <div class="menu-title" style="margin-top:25px;">Account</div>
+
+    <nav class="nav">
+
+        <a href="/logout">
+            <span class="nav-icon">↪</span>
+            Logout
+        </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+        <div class="user-mini">
+
+            <div class="mini-avatar">
+
+                {% if user.photo %}
+                    <img src="{{ url_for('static', filename='uploads/' + user.photo) }}">
+                {% else %}
+                    {{ user.full_name[0]|upper }}
+                {% endif %}
+
+            </div>
+
+            <div class="mini-info">
+
+                <strong>{{ user.full_name }}</strong>
+                <span>Verified Voter</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</aside>
+
+<div class="overlay" id="overlay"></div>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="main">
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+        <div class="page-heading">
+
+            <button class="mobile-menu" id="menuBtn">
+                ☰
+            </button>
+
+            <div>
+                <h1>Edit Profile</h1>
+                <p>Manage your personal and security information</p>
+            </div>
+
+        </div>
+
+        <div class="top-actions">
+
+            <div class="secure-badge">
+                <span class="secure-dot"></span>
+                Secure Account
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+
+    <section class="content">
+
+        <div class="breadcrumb">
+            Dashboard &nbsp; / &nbsp;
+            <span>Profile Settings</span>
+        </div>
+
+
+        <!-- ALERTS -->
+
+        {% if error %}
+
+        <div class="alert error-msg">
+            <div class="alert-icon">⚠️</div>
+            <div>
+                <strong>Unable to save changes</strong><br>
+                {{ error }}
+            </div>
+        </div>
+
+        {% endif %}
+
+
+        {% if success %}
+
+        <div class="alert success-msg">
+            <div class="alert-icon">✓</div>
+            <div>
+                <strong>Profile updated successfully</strong><br>
+                {{ success }}
+            </div>
+        </div>
+
+        {% endif %}
+
+
+        <div class="profile-layout">
+
+
+            <!-- =========================
+                 PROFILE PREVIEW
+            ========================== -->
+
+            <aside class="profile-preview">
+
+                <div class="preview-cover"></div>
+
+                <div class="preview-body">
+
+                    <div class="large-avatar" id="avatarPreview">
+
+                        {% if user.photo %}
+
+                            <img
+                                src="{{ url_for('static', filename='uploads/' + user.photo) }}"
+                                id="currentPhoto"
+                            >
+
+                        {% else %}
+
+                            <span id="avatarInitial">
+                                {{ user.full_name[0]|upper }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <h2 id="previewName">
+                        {{ user.full_name }}
+                    </h2>
+
+                    <div class="email">
+                        {{ user.email }}
+                    </div>
+
+                    <div class="profile-status">
+                        <span class="status-dot"></span>
+                        Verified Voter
+                    </div>
+
+
+                    <div class="profile-info">
+
+                        <div class="info-row">
+                            <span>Account Type</span>
+                            <span>Voter</span>
+                        </div>
+
+                        <div class="info-row">
+                            <span>Email Status</span>
+                            <span>Verified</span>
+                        </div>
+
+                        <div class="info-row">
+                            <span>Profile</span>
+                            <span>Active</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="security-note">
+
+                        <strong>🔐 Your privacy matters</strong>
+
+                        <p>
+                            Your personal information is protected
+                            and used only for secure election
+                            verification and account management.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+
+            <!-- =========================
+                 FORM
+            ========================== -->
+
+            <div class="form-card">
+
+                <div class="card-title">
+
+                    <div>
+                        <h2>Personal Information</h2>
+                        <p>Keep your voter profile information up to date.</p>
+                    </div>
+
+                    <div class="edit-icon">
+                        ✎
+                    </div>
+
+                </div>
+
+
+                <form
+                    method="POST"
+                    enctype="multipart/form-data"
+                    id="profileForm"
+                >
+
+
+                    <!-- BASIC INFORMATION -->
+
+                    <div class="section">
+
+                        <div class="section-heading">
+
+                            <div class="section-number">
+                                01
+                            </div>
+
+                            <div>
+                                <h3>Basic Information</h3>
+                                <p>Your registered account details</p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-grid">
+
+
+                            <!-- NAME -->
+
+                            <div class="field full">
+
+                                <label for="full_name">
+                                    Full Name
+                                    <span class="optional">Required</span>
+                                </label>
+
+                                <div class="input-wrap">
+
+                                    <span class="input-icon">
+                                        👤
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        id="full_name"
+                                        name="full_name"
+                                        value="{{ user.full_name }}"
+                                        placeholder="Enter your full name"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- EMAIL -->
+
+                            <div class="field full">
+
+                                <label>
+                                    Email Address
+                                    <span class="optional">Login ID</span>
+                                </label>
+
+                                <div class="static-field">
+
+                                    <span>✉️</span>
+
+                                    <span>
+                                        {{ user.email }}
+                                    </span>
+
+                                    <span class="lock">
+                                        🔒
+                                    </span>
+
+                                </div>
+
+                                <div class="hint">
+                                    Email cannot be changed because it is
+                                    permanently linked to your login account.
+                                </div>
+
+                            </div>
+
+
+                            <!-- CNIC -->
+
+                            <div class="field">
+
+                                <label for="cnic">
+                                    CNIC
+                                    <span class="optional">Optional</span>
+                                </label>
+
+                                <div class="input-wrap">
+
+                                    <span class="input-icon">
+                                        🪪
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        id="cnic"
+                                        name="cnic"
+                                        value="{{ user.cnic or '' }}"
+                                        placeholder="12345-1234567-1"
+                                        maxlength="15"
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- PHONE -->
+
+                            <div class="field">
+
+                                <label for="phone">
+                                    Phone Number
+                                    <span class="optional">Optional</span>
+                                </label>
+
+                                <div class="input-wrap">
+
+                                    <span class="input-icon">
+                                        📱
+                                    </span>
+
+                                    <input
+                                        type="tel"
+                                        id="phone"
+                                        name="phone"
+                                        value="{{ user.phone or '' }}"
+                                        placeholder="03001234567"
+                                        maxlength="11"
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- PHOTO -->
+
+                            <div class="field full">
+
+                                <label>
+                                    Profile Photo
+                                    <span class="optional">Optional</span>
+                                </label>
+
+                                <div class="upload-box">
+
+                                    <div class="upload-content">
+
+                                        <div class="upload-icon">
+                                            📷
+                                        </div>
+
+                                        <div class="upload-text">
+
+                                            <strong>
+                                                Update your profile picture
+                                            </strong>
+
+                                            <span>
+                                                JPG, PNG or WEBP • Maximum recommended size 2MB
+                                            </span>
+
+                                        </div>
+
+                                        <label
+                                            for="photo"
+                                            class="choose-btn"
+                                        >
+                                            Choose Photo
+                                        </label>
+
+                                    </div>
+
+                                    <input
+                                        type="file"
+                                        id="photo"
+                                        name="photo"
+                                        accept="image/png,image/jpeg,image/webp"
+                                    >
+
+                                </div>
+
+                                <div class="hint">
+                                    Leave empty to keep your current profile photo.
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SECURITY -->
+
+                    <div class="section">
+
+                        <div class="section-heading">
+
+                            <div class="section-number">
+                                02
+                            </div>
+
+                            <div>
+                                <h3>Account Security</h3>
+                                <p>Change your password securely</p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-grid">
+
+
+                            <!-- NEW PASSWORD -->
+
+                            <div class="field">
+
+                                <label for="new_password">
+                                    New Password
+                                    <span class="optional">Optional</span>
+                                </label>
+
+                                <div class="input-wrap password-box">
+
+                                    <span class="input-icon">
+                                        🔐
+                                    </span>
+
+                                    <input
+                                        type="password"
+                                        id="new_password"
+                                        name="new_password"
+                                        placeholder="Enter new password"
+                                    >
+
+                                    <button
+                                        type="button"
+                                        class="toggle-password"
+                                        data-target="new_password"
+                                    >
+                                        👁
+                                    </button>
+
+                                </div>
+
+
+                                <div class="strength">
+
+                                    <div class="strength-bars">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+
+                                    <div
+                                        class="strength-text"
+                                        id="strengthText"
+                                    >
+                                        Password strength
+                                    </div>
+
+                                </div>
+
+
+                                <div class="password-requirements">
+
+                                    <div
+                                        class="requirement"
+                                        id="lengthReq"
+                                    >
+                                        ○ 8+ characters
+                                    </div>
+
+                                    <div
+                                        class="requirement"
+                                        id="upperReq"
+                                    >
+                                        ○ Uppercase letter
+                                    </div>
+
+                                    <div
+                                        class="requirement"
+                                        id="numberReq"
+                                    >
+                                        ○ Number
+                                    </div>
+
+                                    <div
+                                        class="requirement"
+                                        id="specialReq"
+                                    >
+                                        ○ Special character
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- CONFIRM PASSWORD -->
+
+                            <div class="field">
+
+                                <label for="confirm_password">
+                                    Confirm Password
+                                    <span class="optional">Optional</span>
+                                </label>
+
+                                <div class="input-wrap password-box">
+
+                                    <span class="input-icon">
+                                        🔑
+                                    </span>
+
+                                    <input
+                                        type="password"
+                                        id="confirm_password"
+                                        name="confirm_password"
+                                        placeholder="Confirm new password"
+                                    >
+
+                                    <button
+                                        type="button"
+                                        class="toggle-password"
+                                        data-target="confirm_password"
+                                    >
+                                        👁
+                                    </button>
+
+                                </div>
+
+                                <div
+                                    class="hint"
+                                    id="matchText"
+                                >
+                                    Re-enter the new password to confirm it.
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="form-footer">
+
+                        <a
+                            href="/profile"
+                            class="cancel-btn"
+                        >
+                            Cancel
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="save-btn"
+                            id="saveBtn"
+                        >
+                            <span id="saveIcon">💾</span>
+                            <span id="saveText">Save Changes</span>
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script>
+
+    /* =========================
+       MOBILE SIDEBAR
+    ========================== */
+
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    const menuBtn = document.getElementById("menuBtn");
+
+    menuBtn.addEventListener("click", () => {
+        sidebar.classList.add("open");
+        overlay.classList.add("show");
+    });
+
+    overlay.addEventListener("click", () => {
+        sidebar.classList.remove("open");
+        overlay.classList.remove("show");
+    });
+
+
+    /* =========================
+       LIVE NAME PREVIEW
+    ========================== */
+
+    const nameInput = document.getElementById("full_name");
+    const previewName = document.getElementById("previewName");
+    const avatarPreview = document.getElementById("avatarPreview");
+
+    nameInput.addEventListener("input", function(){
+
+        previewName.textContent =
+            this.value.trim() || "Your Name";
+
+        const existingImage =
+            avatarPreview.querySelector("img");
+
+        if(!existingImage){
+
+            const firstLetter =
+                this.value.trim()
+                    ? this.value.trim().charAt(0).toUpperCase()
+                    : "?";
+
+            avatarPreview.textContent = firstLetter;
+        }
+
+    });
+
+
+    /* =========================
+       PHOTO PREVIEW
+    ========================== */
+
+    const photoInput = document.getElementById("photo");
+
+    photoInput.addEventListener("change", function(){
+
+        const file = this.files[0];
+
+        if(!file) return;
+
+        if(!file.type.startsWith("image/")){
+            alert("Please select a valid image file.");
+            this.value = "";
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = function(e){
+
+            avatarPreview.innerHTML = "";
+
+            const img = document.createElement("img");
+
+            img.src = e.target.result;
+
+            avatarPreview.appendChild(img);
+        };
+
+        reader.readAsDataURL(file);
+
+    });
+
+
+    /* =========================
+       CNIC FORMAT
+    ========================== */
+
+    const cnic = document.getElementById("cnic");
+
+    cnic.addEventListener("input", function(){
+
+        let value =
+            this.value
+                .replace(/\D/g,"")
+                .substring(0,13);
+
+        if(value.length > 5)
+            value =
+                value.substring(0,5) +
+                "-" +
+                value.substring(5);
+
+        if(value.length > 13)
+            value =
+                value.substring(0,13) +
+                "-" +
+                value.substring(13);
+
+        this.value = value;
+    });
+
+
+    /* =========================
+       PHONE FORMAT
+    ========================== */
+
+    const phone = document.getElementById("phone");
+
+    phone.addEventListener("input", function(){
+
+        this.value =
+            this.value
+                .replace(/\D/g,"")
+                .substring(0,11);
+
+    });
+
+
+    /* =========================
+       PASSWORD VISIBILITY
+    ========================== */
+
+    document.querySelectorAll(".toggle-password")
+        .forEach(button => {
+
+            button.addEventListener("click", function(){
+
+                const target =
+                    document.getElementById(
+                        this.dataset.target
+                    );
+
+                if(target.type === "password"){
+
+                    target.type = "text";
+                    this.textContent = "🙈";
+
+                }else{
+
+                    target.type = "password";
+                    this.textContent = "👁";
+
+                }
+
+            });
+
+        });
+
+
+    /* =========================
+       PASSWORD STRENGTH
+    ========================== */
+
+    const password =
+        document.getElementById("new_password");
+
+    const strengthText =
+        document.getElementById("strengthText");
+
+    const bars =
+        document.querySelectorAll(".strength-bars span");
+
+    const lengthReq =
+        document.getElementById("lengthReq");
+
+    const upperReq =
+        document.getElementById("upperReq");
+
+    const numberReq =
+        document.getElementById("numberReq");
+
+    const specialReq =
+        document.getElementById("specialReq");
+
+
+    password.addEventListener("input", function(){
+
+        const value = this.value;
+
+        let score = 0;
+
+        const hasLength = value.length >= 8;
+        const hasUpper = /[A-Z]/.test(value);
+        const hasNumber = /[0-9]/.test(value);
+        const hasSpecial = /[^A-Za-z0-9]/.test(value);
+
+        if(hasLength) score++;
+        if(hasUpper) score++;
+        if(hasNumber) score++;
+        if(hasSpecial) score++;
+
+        bars.forEach(bar => {
+            bar.style.background = "#e2e8f0";
+        });
+
+        if(score === 0){
+
+            strengthText.textContent =
+                "Password strength";
+
+        }else if(score === 1){
+
+            bars[0].style.background =
+                "#ef4444";
+
+            strengthText.textContent =
+                "Weak password";
+
+        }else if(score === 2){
+
+            bars[0].style.background =
+                "#f59e0b";
+
+            bars[1].style.background =
+                "#f59e0b";
+
+            strengthText.textContent =
+                "Fair password";
+
+        }else if(score === 3){
+
+            bars[0].style.background =
+                "#3b82f6";
+
+            bars[1].style.background =
+                "#3b82f6";
+
+            bars[2].style.background =
+                "#3b82f6";
+
+            strengthText.textContent =
+                "Good password";
+
+        }else{
+
+            bars.forEach(bar => {
+                bar.style.background =
+                    "#16a34a";
+            });
+
+            strengthText.textContent =
+                "Strong password";
+        }
+
+
+        updateRequirement(
+            lengthReq,
+            hasLength,
+            "8+ characters"
+        );
+
+        updateRequirement(
+            upperReq,
+            hasUpper,
+            "Uppercase letter"
+        );
+
+        updateRequirement(
+            numberReq,
+            hasNumber,
+            "Number"
+        );
+
+        updateRequirement(
+            specialReq,
+            hasSpecial,
+            "Special character"
+        );
+
+    });
+
+
+    function updateRequirement(
+        element,
+        valid,
+        text
+    ){
+
+        if(valid){
+
+            element.classList.add("valid");
+
+            element.textContent =
+                "✓ " + text;
+
+        }else{
+
+            element.classList.remove("valid");
+
+            element.textContent =
+                "○ " + text;
+
+        }
+
+    }
+
+
+    /* =========================
+       PASSWORD MATCH
+    ========================== */
+
+    const confirmPassword =
+        document.getElementById("confirm_password");
+
+    const matchText =
+        document.getElementById("matchText");
+
+
+    confirmPassword.addEventListener("input", function(){
+
+        if(!this.value){
+
+            matchText.textContent =
+                "Re-enter the new password to confirm it.";
+
+            matchText.style.color =
+                "#94a3b8";
+
+            return;
+        }
+
+
+        if(this.value === password.value){
+
+            matchText.textContent =
+                "✓ Passwords match.";
+
+            matchText.style.color =
+                "#16a34a";
+
+        }else{
+
+            matchText.textContent =
+                "✕ Passwords do not match.";
+
+            matchText.style.color =
+                "#ef4444";
+
+        }
+
+    });
+
+
+    /* =========================
+       FORM VALIDATION
+    ========================== */
+
+    const form =
+        document.getElementById("profileForm");
+
+    const saveBtn =
+        document.getElementById("saveBtn");
+
+    const saveText =
+        document.getElementById("saveText");
+
+    const saveIcon =
+        document.getElementById("saveIcon");
+
+
+    form.addEventListener("submit", function(e){
+
+        const newPassword =
+            password.value.trim();
+
+        const confirm =
+            confirmPassword.value.trim();
+
+
+        if(newPassword || confirm){
+
+            if(newPassword !== confirm){
+
+                e.preventDefault();
+
+                alert(
+                    "New password and confirmation password do not match."
+                );
+
+                return;
+            }
+
+            if(newPassword.length < 8){
+
+                e.preventDefault();
+
+                alert(
+                    "Password must contain at least 8 characters."
+                );
+
+                return;
+            }
+
+        }
+
+
+        saveBtn.classList.add("loading");
+
+        saveIcon.textContent = "⏳";
+
+        saveText.textContent =
+            "Saving Changes...";
+
+    });
+
+
+    /* =========================
+       AUTO HIDE ALERTS
+    ========================== */
+
+    setTimeout(() => {
+
+        document.querySelectorAll(".alert")
+            .forEach(alert => {
+
+                alert.style.transition =
+                    "opacity .5s ease";
+
+                alert.style.opacity = "0";
+
+                setTimeout(() => {
+                    alert.remove();
+                },500);
+
+            });
+
+    },6000);
+
+</script>
+
+</body>
+</html>
+```

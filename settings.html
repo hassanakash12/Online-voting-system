@@ -1,0 +1,2138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Settings | AI Online Voting System</title>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"Inter","Segoe UI",Arial,sans-serif;
+    background:#f4f7fb;
+    color:#0f172a;
+    min-height:100vh;
+}
+
+a{
+    text-decoration:none;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.app{
+    display:flex;
+    min-height:100vh;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar{
+
+    width:250px;
+    min-width:250px;
+
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+
+    z-index:1000;
+
+    display:flex;
+    flex-direction:column;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            180deg,
+            #0b1220 0%,
+            #111c35 55%,
+            #14264d 100%
+        );
+
+    box-shadow:
+        8px 0 30px rgba(15,23,42,.08);
+
+    transition:.3s ease;
+}
+
+
+/* Brand */
+
+.sidebar-brand{
+
+    height:82px;
+
+    padding:0 20px;
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.07);
+}
+
+.brand-logo{
+
+    width:43px;
+    height:43px;
+
+    min-width:43px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
+
+    box-shadow:
+        0 8px 25px rgba(37,99,235,.3);
+
+    font-size:20px;
+}
+
+.brand-text h2{
+
+    font-size:14px;
+
+    font-weight:800;
+
+    letter-spacing:-.3px;
+}
+
+.brand-text span{
+
+    display:block;
+
+    margin-top:3px;
+
+    color:#94a3b8;
+
+    font-size:8px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1.3px;
+}
+
+
+/* Navigation */
+
+.nav-section{
+
+    padding:22px 13px 8px;
+
+    color:#64748b;
+
+    font-size:8px;
+
+    font-weight:800;
+
+    text-transform:uppercase;
+
+    letter-spacing:1.2px;
+}
+
+.sidebar-nav{
+
+    padding:0 10px;
+}
+
+.sidebar-nav a{
+
+    position:relative;
+
+    display:flex;
+    align-items:center;
+
+    gap:11px;
+
+    padding:11px 12px;
+
+    margin-bottom:4px;
+
+    border-radius:10px;
+
+    color:#a8b5ca;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    transition:.25s ease;
+}
+
+.sidebar-nav a i{
+
+    width:19px;
+
+    text-align:center;
+
+    font-size:15px;
+}
+
+.sidebar-nav a:hover{
+
+    color:white;
+
+    background:
+        rgba(255,255,255,.07);
+
+    transform:translateX(2px);
+}
+
+.sidebar-nav a.active{
+
+    color:white;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(37,99,235,.8),
+            rgba(37,99,235,.28)
+        );
+
+    box-shadow:
+        inset 3px 0 #60a5fa;
+}
+
+.sidebar-nav a.active i{
+    color:#93c5fd;
+}
+
+
+/* Sidebar bottom */
+
+.sidebar-bottom{
+
+    margin-top:auto;
+
+    padding:14px;
+
+    border-top:
+        1px solid rgba(255,255,255,.07);
+}
+
+.admin-mini{
+
+    padding:11px;
+
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+
+    border-radius:12px;
+
+    background:
+        rgba(255,255,255,.05);
+}
+
+.admin-avatar{
+
+    width:36px;
+    height:36px;
+
+    min-width:36px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #3b82f6,
+            #06b6d4
+        );
+
+    font-weight:800;
+
+    font-size:12px;
+}
+
+.admin-mini strong{
+
+    display:block;
+
+    color:#e2e8f0;
+
+    font-size:10px;
+}
+
+.admin-mini span{
+
+    display:block;
+
+    color:#64748b;
+
+    margin-top:2px;
+
+    font-size:8px;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main{
+
+    width:calc(100% - 250px);
+
+    margin-left:250px;
+
+    min-height:100vh;
+}
+
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar{
+
+    height:72px;
+
+    padding:0 30px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    background:white;
+
+    border-bottom:
+        1px solid #e2e8f0;
+
+    position:sticky;
+    top:0;
+
+    z-index:900;
+}
+
+.page-heading{
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+}
+
+.page-heading-icon{
+
+    width:39px;
+    height:39px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:11px;
+
+    color:#2563eb;
+
+    background:#eff6ff;
+
+    font-size:17px;
+}
+
+.page-heading h1{
+
+    font-size:15px;
+
+    font-weight:800;
+
+    letter-spacing:-.3px;
+}
+
+.page-heading p{
+
+    margin-top:3px;
+
+    color:#94a3b8;
+
+    font-size:9px;
+}
+
+.top-actions{
+
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+}
+
+.icon-btn{
+
+    width:37px;
+    height:37px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:1px solid #e2e8f0;
+
+    border-radius:10px;
+
+    background:white;
+
+    color:#64748b;
+
+    font-size:15px;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.icon-btn:hover{
+
+    color:#2563eb;
+
+    background:#eff6ff;
+
+    border-color:#bfdbfe;
+}
+
+.admin-top{
+
+    display:flex;
+    align-items:center;
+
+    gap:9px;
+
+    padding-left:9px;
+
+    border-left:
+        1px solid #e2e8f0;
+}
+
+.top-avatar{
+
+    width:36px;
+    height:36px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
+
+    font-size:11px;
+    font-weight:800;
+}
+
+.admin-top-info strong{
+
+    display:block;
+
+    font-size:10px;
+}
+
+.admin-top-info span{
+
+    display:block;
+
+    margin-top:2px;
+
+    color:#16a34a;
+
+    font-size:8px;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content{
+
+    width:min(1120px, calc(100% - 50px));
+
+    margin:28px auto 45px;
+}
+
+
+/* =========================================================
+   PAGE HERO
+========================================================= */
+
+.hero{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:27px 28px;
+
+    margin-bottom:20px;
+
+    border-radius:20px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0f172a,
+            #172554 55%,
+            #1d4ed8
+        );
+
+    box-shadow:
+        0 15px 40px rgba(15,23,42,.15);
+}
+
+.hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:270px;
+    height:270px;
+
+    right:-100px;
+    top:-160px;
+
+    border-radius:50%;
+
+    background:
+        rgba(59,130,246,.15);
+}
+
+.hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:170px;
+    height:170px;
+
+    right:150px;
+    bottom:-130px;
+
+    border-radius:50%;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+}
+
+.hero-content{
+
+    position:relative;
+    z-index:2;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    gap:20px;
+}
+
+.hero-label{
+
+    display:inline-flex;
+    align-items:center;
+
+    gap:6px;
+
+    margin-bottom:9px;
+
+    color:#bfdbfe;
+
+    font-size:8px;
+
+    font-weight:800;
+
+    text-transform:uppercase;
+
+    letter-spacing:1.1px;
+}
+
+.hero h2{
+
+    font-size:24px;
+
+    letter-spacing:-.6px;
+
+    margin-bottom:6px;
+}
+
+.hero p{
+
+    max-width:650px;
+
+    color:#bfdbfe;
+
+    font-size:10px;
+
+    line-height:1.7;
+}
+
+.hero-icon{
+
+    width:67px;
+    height:67px;
+
+    min-width:67px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:19px;
+
+    color:#dbeafe;
+
+    background:
+        rgba(255,255,255,.09);
+
+    border:
+        1px solid rgba(255,255,255,.1);
+
+    font-size:28px;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.section-heading{
+
+    display:flex;
+
+    align-items:flex-end;
+
+    justify-content:space-between;
+
+    margin:25px 2px 13px;
+}
+
+.section-heading h2{
+
+    font-size:14px;
+
+    font-weight:800;
+}
+
+.section-heading p{
+
+    margin-top:3px;
+
+    color:#94a3b8;
+
+    font-size:9px;
+}
+
+.settings-count{
+
+    padding:6px 9px;
+
+    border-radius:7px;
+
+    color:#2563eb;
+
+    background:#eff6ff;
+
+    font-size:8px;
+
+    font-weight:800;
+}
+
+
+/* =========================================================
+   SETTINGS GRID
+========================================================= */
+
+.settings-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap:15px;
+}
+
+
+/* =========================================================
+   SETTING CARD
+========================================================= */
+
+.setting-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:20px;
+
+    display:flex;
+    align-items:center;
+
+    gap:14px;
+
+    min-height:117px;
+
+    border-radius:17px;
+
+    background:white;
+
+    border:
+        1px solid #e2e8f0;
+
+    box-shadow:
+        0 7px 24px rgba(15,23,42,.045);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+}
+
+.setting-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:80px;
+    height:80px;
+
+    border-radius:50%;
+
+    right:-45px;
+    bottom:-45px;
+
+    background:#f8fafc;
+}
+
+.setting-card:hover{
+
+    transform:translateY(-3px);
+
+    border-color:#bfdbfe;
+
+    box-shadow:
+        0 15px 32px rgba(15,23,42,.08);
+}
+
+
+/* Icon */
+
+.setting-icon{
+
+    width:52px;
+    height:52px;
+
+    min-width:52px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:15px;
+
+    color:#2563eb;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eff6ff,
+            #e0f2fe
+        );
+
+    font-size:21px;
+
+    transition:.25s;
+}
+
+.setting-card:hover .setting-icon{
+
+    transform:scale(1.05);
+
+    background:
+        linear-gradient(
+            135deg,
+            #dbeafe,
+            #cffafe
+        );
+}
+
+
+/* Different colors */
+
+.setting-card.security .setting-icon{
+
+    color:#7c3aed;
+
+    background:#f5f3ff;
+}
+
+.setting-card.election .setting-icon{
+
+    color:#d97706;
+
+    background:#fffbeb;
+}
+
+.setting-card.system .setting-icon{
+
+    color:#0891b2;
+
+    background:#ecfeff;
+}
+
+.setting-card.notification .setting-icon{
+
+    color:#db2777;
+
+    background:#fdf2f8;
+}
+
+
+/* Text */
+
+.setting-info{
+
+    min-width:0;
+
+    flex:1;
+
+    position:relative;
+    z-index:2;
+}
+
+.setting-title{
+
+    display:flex;
+    align-items:center;
+
+    gap:7px;
+
+    font-size:12px;
+
+    font-weight:800;
+}
+
+.setting-description{
+
+    margin-top:6px;
+
+    color:#64748b;
+
+    font-size:9px;
+
+    line-height:1.6;
+
+    max-width:350px;
+}
+
+
+/* Status */
+
+.status{
+
+    display:inline-flex;
+    align-items:center;
+
+    gap:4px;
+
+    padding:4px 7px;
+
+    border-radius:20px;
+
+    color:#15803d;
+
+    background:#f0fdf4;
+
+    font-size:7px;
+
+    font-weight:800;
+
+    text-transform:uppercase;
+}
+
+.status-dot{
+
+    width:5px;
+    height:5px;
+
+    border-radius:50%;
+
+    background:#22c55e;
+}
+
+
+/* Button */
+
+.manage-btn{
+
+    position:relative;
+
+    z-index:3;
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:6px;
+
+    min-width:77px;
+
+    height:34px;
+
+    padding:0 11px;
+
+    border-radius:9px;
+
+    color:#2563eb;
+
+    background:#eff6ff;
+
+    border:1px solid #dbeafe;
+
+    font-size:9px;
+
+    font-weight:800;
+
+    transition:.2s;
+
+    white-space:nowrap;
+}
+
+.manage-btn:hover{
+
+    color:white;
+
+    background:#2563eb;
+
+    border-color:#2563eb;
+
+    box-shadow:
+        0 6px 16px rgba(37,99,235,.2);
+}
+
+.manage-btn i{
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   QUICK SECURITY PANEL
+========================================================= */
+
+.security-panel{
+
+    margin-top:20px;
+
+    padding:19px 21px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:20px;
+
+    border-radius:17px;
+
+    background:white;
+
+    border:1px solid #e2e8f0;
+
+    box-shadow:
+        0 7px 24px rgba(15,23,42,.04);
+}
+
+.security-left{
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+}
+
+.security-shield{
+
+    width:43px;
+    height:43px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:12px;
+
+    color:#16a34a;
+
+    background:#f0fdf4;
+
+    font-size:18px;
+}
+
+.security-left strong{
+
+    display:block;
+
+    font-size:10px;
+}
+
+.security-left span{
+
+    display:block;
+
+    margin-top:4px;
+
+    color:#64748b;
+
+    font-size:8px;
+}
+
+.secure-badge{
+
+    display:inline-flex;
+    align-items:center;
+
+    gap:6px;
+
+    padding:7px 10px;
+
+    border-radius:8px;
+
+    color:#15803d;
+
+    background:#f0fdf4;
+
+    font-size:8px;
+
+    font-weight:800;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    padding:23px 3px 0;
+
+    margin-top:25px;
+
+    border-top:1px solid #e2e8f0;
+
+    color:#94a3b8;
+
+    font-size:8px;
+}
+
+.footer strong{
+    color:#64748b;
+}
+
+.footer-links{
+
+    display:flex;
+    gap:15px;
+}
+
+.footer-links a{
+
+    color:#64748b;
+
+    transition:.2s;
+}
+
+.footer-links a:hover{
+    color:#2563eb;
+}
+
+
+/* =========================================================
+   MOBILE OVERLAY
+========================================================= */
+
+.overlay{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:950;
+
+    background:
+        rgba(15,23,42,.45);
+
+    backdrop-filter:blur(2px);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1000px){
+
+    .sidebar{
+
+        transform:translateX(-100%);
+    }
+
+    .sidebar.open{
+
+        transform:translateX(0);
+    }
+
+    .main{
+
+        width:100%;
+
+        margin-left:0;
+    }
+
+    .mobile-toggle{
+
+        display:flex !important;
+    }
+
+    .overlay.show{
+
+        display:block;
+    }
+}
+
+
+@media(min-width:1001px){
+
+    .mobile-toggle{
+
+        display:none !important;
+    }
+}
+
+
+@media(max-width:760px){
+
+    .topbar{
+
+        padding:0 18px;
+    }
+
+    .admin-top-info{
+
+        display:none;
+    }
+
+    .content{
+
+        width:calc(100% - 28px);
+
+        margin-top:20px;
+    }
+
+    .settings-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .hero{
+
+        padding:23px;
+    }
+
+    .hero h2{
+
+        font-size:21px;
+    }
+
+    .hero-icon{
+
+        display:none;
+    }
+
+    .security-panel{
+
+        align-items:flex-start;
+
+        flex-direction:column;
+    }
+
+}
+
+
+@media(max-width:500px){
+
+    .page-heading p{
+
+        display:none;
+    }
+
+    .page-heading-icon{
+
+        width:36px;
+        height:36px;
+    }
+
+    .top-actions .notification-btn{
+
+        display:none;
+    }
+
+    .settings-grid{
+
+        gap:11px;
+    }
+
+    .setting-card{
+
+        padding:16px;
+
+        gap:11px;
+    }
+
+    .setting-icon{
+
+        width:46px;
+        height:46px;
+
+        min-width:46px;
+
+        font-size:18px;
+    }
+
+    .setting-title{
+
+        font-size:11px;
+    }
+
+    .setting-description{
+
+        font-size:8px;
+    }
+
+    .manage-btn{
+
+        min-width:65px;
+
+        height:31px;
+
+        padding:0 8px;
+
+        font-size:8px;
+    }
+
+    .status{
+
+        display:none;
+    }
+
+    .footer{
+
+        flex-direction:column;
+
+        gap:10px;
+
+        text-align:center;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside class="sidebar" id="sidebar">
+
+
+    <div class="sidebar-brand">
+
+        <div class="brand-logo">
+
+            <i class="bi bi-shield-check"></i>
+
+        </div>
+
+        <div class="brand-text">
+
+            <h2>AI Voting System</h2>
+
+            <span>Administration Portal</span>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="nav-section">
+        Main Menu
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+        <a href="/admin">
+
+            <i class="bi bi-grid-1x2-fill"></i>
+
+            Dashboard
+
+        </a>
+
+
+        <a href="{{ url_for('elections') }}">
+
+            <i class="bi bi-ballot-fill"></i>
+
+            Elections
+
+        </a>
+
+
+        <a href="#">
+
+            <i class="bi bi-people-fill"></i>
+
+            Voters
+
+        </a>
+
+
+        <a href="#">
+
+            <i class="bi bi-person-badge-fill"></i>
+
+            Candidates
+
+        </a>
+
+
+        <a href="/results">
+
+            <i class="bi bi-bar-chart-fill"></i>
+
+            Results
+
+        </a>
+
+
+        <a href="{{ url_for('notifications') }}">
+
+            <i class="bi bi-bell-fill"></i>
+
+            Notifications
+
+        </a>
+
+    </nav>
+
+
+
+    <div class="nav-section">
+        Administration
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+        <a href="#" class="active">
+
+            <i class="bi bi-gear-fill"></i>
+
+            Settings
+
+        </a>
+
+
+        <a href="{{ url_for('admin_profile') }}">
+
+            <i class="bi bi-person-circle"></i>
+
+            Admin Profile
+
+        </a>
+
+
+        <a href="{{ url_for('change_password') }}">
+
+            <i class="bi bi-shield-lock-fill"></i>
+
+            Security
+
+        </a>
+
+    </nav>
+
+
+
+    <!-- Sidebar Admin -->
+
+    <div class="sidebar-bottom">
+
+        <div class="admin-mini">
+
+            <div class="admin-avatar">
+                A
+            </div>
+
+            <div>
+
+                <strong>
+                    System Administrator
+                </strong>
+
+                <span>
+                    Administrator
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- Overlay -->
+
+<div class="overlay"
+     id="overlay"
+     onclick="closeSidebar()">
+</div>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main">
+
+
+    <!-- =====================================================
+         TOPBAR
+    ====================================================== -->
+
+    <header class="topbar">
+
+
+        <div class="page-heading">
+
+
+            <button class="icon-btn mobile-toggle"
+                    onclick="openSidebar()">
+
+                <i class="bi bi-list"></i>
+
+            </button>
+
+
+            <div class="page-heading-icon">
+
+                <i class="bi bi-gear-fill"></i>
+
+            </div>
+
+
+            <div>
+
+                <h1>
+                    Admin Settings
+                </h1>
+
+                <p>
+                    Configure and manage your voting platform
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="top-actions">
+
+
+            <button class="icon-btn notification-btn"
+                    title="Notifications"
+                    onclick="window.location.href='{{ url_for('notifications') }}'">
+
+                <i class="bi bi-bell"></i>
+
+            </button>
+
+
+            <button class="icon-btn"
+                    title="Dashboard"
+                    onclick="window.location.href='/admin'">
+
+                <i class="bi bi-house"></i>
+
+            </button>
+
+
+            <div class="admin-top">
+
+                <div class="top-avatar">
+                    A
+                </div>
+
+                <div class="admin-top-info">
+
+                    <strong>
+                        Administrator
+                    </strong>
+
+                    <span>
+                        ● Online
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =====================================================
+         CONTENT
+    ====================================================== -->
+
+    <div class="content">
+
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+
+                <div>
+
+                    <div class="hero-label">
+
+                        <i class="bi bi-sliders2"></i>
+
+                        CONTROL CENTER
+
+                    </div>
+
+
+                    <h2>
+                        System Settings
+                    </h2>
+
+
+                    <p>
+
+                        Manage administrator access, election configuration,
+                        security, notifications and other core settings
+                        of your AI Online Voting System.
+
+                    </p>
+
+                </div>
+
+
+                <div class="hero-icon">
+
+                    <i class="bi bi-gear-wide-connected"></i>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SECTION TITLE
+        ================================================== -->
+
+        <div class="section-heading">
+
+            <div>
+
+                <h2>
+                    Configuration
+                </h2>
+
+                <p>
+                    Select a section to manage your system.
+                </p>
+
+            </div>
+
+
+            <div class="settings-count">
+
+                5 SETTINGS
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             SETTINGS GRID
+        ================================================== -->
+
+        <div class="settings-grid">
+
+
+            <!-- Admin Profile -->
+
+            <div class="setting-card">
+
+
+                <div class="setting-icon">
+
+                    <i class="bi bi-person-vcard-fill"></i>
+
+                </div>
+
+
+                <div class="setting-info">
+
+                    <div class="setting-title">
+
+                        Admin Profile
+
+                        <span class="status">
+
+                            <span class="status-dot"></span>
+
+                            Active
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="setting-description">
+
+                        View and manage administrator account information,
+                        profile details and account preferences.
+
+                    </div>
+
+                </div>
+
+
+                <a href="{{ url_for('admin_profile') }}"
+                   class="manage-btn">
+
+                    Manage
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- Change Password -->
+
+            <div class="setting-card security">
+
+
+                <div class="setting-icon">
+
+                    <i class="bi bi-shield-lock-fill"></i>
+
+                </div>
+
+
+                <div class="setting-info">
+
+                    <div class="setting-title">
+
+                        Change Password
+
+                        <span class="status">
+
+                            <span class="status-dot"></span>
+
+                            Secure
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="setting-description">
+
+                        Update your administrator login password and
+                        protect your administrative account.
+
+                    </div>
+
+                </div>
+
+
+                <a href="{{ url_for('change_password') }}"
+                   class="manage-btn">
+
+                    Change
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- Election Settings -->
+
+            <div class="setting-card election">
+
+
+                <div class="setting-icon">
+
+                    <i class="bi bi-ballot-fill"></i>
+
+                </div>
+
+
+                <div class="setting-info">
+
+                    <div class="setting-title">
+
+                        Election Settings
+
+                        <span class="status">
+
+                            <span class="status-dot"></span>
+
+                            Available
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="setting-description">
+
+                        Manage election status, election schedules,
+                        voting configuration and election controls.
+
+                    </div>
+
+                </div>
+
+
+                <a href="{{ url_for('elections') }}"
+                   class="manage-btn">
+
+                    Manage
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- System Settings -->
+
+            <div class="setting-card system">
+
+
+                <div class="setting-icon">
+
+                    <i class="bi bi-cpu-fill"></i>
+
+                </div>
+
+
+                <div class="setting-info">
+
+                    <div class="setting-title">
+
+                        System Settings
+
+                        <span class="status">
+
+                            <span class="status-dot"></span>
+
+                            Online
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="setting-description">
+
+                        Configure core platform preferences, system
+                        behavior and general voting settings.
+
+                    </div>
+
+                </div>
+
+
+                <a href="#"
+                   class="manage-btn"
+                   onclick="systemSettings()">
+
+                    Configure
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- Notifications -->
+
+            <div class="setting-card notification">
+
+
+                <div class="setting-icon">
+
+                    <i class="bi bi-bell-fill"></i>
+
+                </div>
+
+
+                <div class="setting-info">
+
+                    <div class="setting-title">
+
+                        Notifications
+
+                        <span class="status">
+
+                            <span class="status-dot"></span>
+
+                            Enabled
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="setting-description">
+
+                        Manage system notifications, alerts and important
+                        administrative announcements.
+
+                    </div>
+
+                </div>
+
+
+                <a href="{{ url_for('notifications') }}"
+                   class="manage-btn">
+
+                    Manage
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             SECURITY STATUS
+        ================================================== -->
+
+        <section class="security-panel">
+
+
+            <div class="security-left">
+
+
+                <div class="security-shield">
+
+                    <i class="bi bi-shield-check"></i>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        System Security Status
+                    </strong>
+
+                    <span>
+                        Your administrative control panel is protected.
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="secure-badge">
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                SYSTEM SECURE
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <footer class="footer">
+
+
+            <div>
+
+                © 2026
+                <strong>AI Online Voting System</strong>
+
+                · Admin Control Center
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="#">
+                    Privacy
+                </a>
+
+                <a href="#">
+                    Security
+                </a>
+
+                <a href="#">
+                    Help Center
+                </a>
+
+            </div>
+
+
+        </footer>
+
+
+    </div>
+
+
+</main>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+function openSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList.add("open");
+
+    document
+        .getElementById("overlay")
+        .classList.add("show");
+
+}
+
+
+function closeSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
+
+    document
+        .getElementById("overlay")
+        .classList.remove("show");
+
+}
+
+
+/* =========================================================
+   SYSTEM SETTINGS
+========================================================= */
+
+function systemSettings(){
+
+    alert(
+        "System Settings module is ready for configuration."
+    );
+
+}
+
+
+/* =========================================================
+   ESC KEY
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            closeSidebar();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CLOSE SIDEBAR WHEN WINDOW RESIZES
+========================================================= */
+
+window.addEventListener(
+    "resize",
+    function(){
+
+        if(window.innerWidth > 1000){
+
+            closeSidebar();
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+</html>

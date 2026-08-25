@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Add Candidate | AI Online Voting System</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:
+        linear-gradient(
+            135deg,
+            #eef6ff 0%,
+            #f8fbff 50%,
+            #e8f7ff 100%
+        );
+
+    color:#1e293b;
+}
+
+
+/* ================= HEADER ================= */
+
+.header{
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
+
+    color:white;
+
+    padding:18px 40px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    box-shadow:
+        0 8px 25px rgba(37,99,235,.20);
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.logo-icon{
+
+    width:45px;
+    height:45px;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.18);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:24px;
+}
+
+.logo h1{
+
+    font-size:20px;
+
+    margin-bottom:3px;
+}
+
+.logo p{
+
+    font-size:12px;
+
+    opacity:.85;
+}
+
+
+.back-dashboard{
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:10px 16px;
+
+    border-radius:9px;
+
+    background:rgba(255,255,255,.15);
+
+    font-weight:bold;
+
+    transition:.3s;
+}
+
+.back-dashboard:hover{
+
+    background:rgba(255,255,255,.25);
+
+    transform:translateY(-2px);
+}
+
+
+/* ================= MAIN ================= */
+
+.main{
+
+    width:100%;
+
+    padding:45px 20px 60px;
+}
+
+
+/* ================= FORM CARD ================= */
+
+.form-card{
+
+    width:100%;
+
+    max-width:850px;
+
+    margin:auto;
+
+    background:white;
+
+    border-radius:24px;
+
+    box-shadow:
+        0 20px 50px rgba(15,23,42,.10);
+
+    overflow:hidden;
+
+    border:1px solid #e5edf7;
+}
+
+
+/* ================= CARD HEADER ================= */
+
+.card-header{
+
+    padding:30px 35px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eff6ff,
+            #ecfeff
+        );
+
+    border-bottom:1px solid #e2e8f0;
+}
+
+.card-header-top{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+}
+
+.header-icon{
+
+    width:58px;
+    height:58px;
+
+    border-radius:16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:27px;
+
+    box-shadow:
+        0 8px 18px rgba(37,99,235,.20);
+}
+
+.card-header h2{
+
+    font-size:25px;
+
+    color:#1e293b;
+
+    margin-bottom:5px;
+}
+
+.card-header p{
+
+    color:#64748b;
+
+    font-size:14px;
+}
+
+
+/* ================= FORM ================= */
+
+.form-content{
+
+    padding:35px;
+}
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:22px;
+}
+
+.form-group{
+
+    margin-bottom:3px;
+}
+
+.full-width{
+
+    grid-column:1 / -1;
+}
+
+
+label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    margin-bottom:8px;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    color:#334155;
+}
+
+.required{
+
+    color:#ef4444;
+}
+
+
+.input-wrapper{
+
+    position:relative;
+}
+
+.input-icon{
+
+    position:absolute;
+
+    left:14px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#64748b;
+
+    font-size:17px;
+
+    pointer-events:none;
+}
+
+
+input,
+textarea{
+
+    width:100%;
+
+    border:1px solid #dbe3ef;
+
+    background:#f8fafc;
+
+    border-radius:11px;
+
+    padding:13px 15px;
+
+    font-size:14px;
+
+    color:#1e293b;
+
+    outline:none;
+
+    transition:.25s;
+}
+
+.has-icon{
+
+    padding-left:43px;
+}
+
+
+input:hover,
+textarea:hover{
+
+    border-color:#94a3b8;
+
+    background:white;
+}
+
+input:focus,
+textarea:focus{
+
+    border-color:#2563eb;
+
+    background:white;
+
+    box-shadow:
+        0 0 0 4px rgba(37,99,235,.08);
+}
+
+
+textarea{
+
+    min-height:140px;
+
+    resize:vertical;
+
+    line-height:1.6;
+}
+
+
+/* ================= HELP TEXT ================= */
+
+.help-text{
+
+    margin-top:6px;
+
+    font-size:11px;
+
+    color:#94a3b8;
+}
+
+
+/* ================= PHOTO UPLOAD ================= */
+
+.photo-upload{
+
+    border:2px dashed #bfdbfe;
+
+    background:#f8fbff;
+
+    border-radius:16px;
+
+    padding:25px;
+
+    text-align:center;
+
+    transition:.3s;
+}
+
+.photo-upload:hover{
+
+    border-color:#2563eb;
+
+    background:#eff6ff;
+}
+
+
+.photo-preview{
+
+    width:110px;
+    height:110px;
+
+    margin:0 auto 15px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #dbeafe,
+            #cffafe
+        );
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    overflow:hidden;
+
+    border:4px solid white;
+
+    box-shadow:
+        0 5px 20px rgba(37,99,235,.15);
+}
+
+.photo-preview img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    display:none;
+}
+
+.photo-placeholder{
+
+    font-size:38px;
+
+    color:#2563eb;
+}
+
+
+.file-label{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
+
+    color:white;
+
+    padding:11px 18px;
+
+    border-radius:9px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    font-size:13px;
+
+    transition:.3s;
+}
+
+.file-label:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 8px 18px rgba(37,99,235,.20);
+}
+
+#photo{
+
+    display:none;
+}
+
+.file-name{
+
+    margin-top:10px;
+
+    font-size:12px;
+
+    color:#64748b;
+}
+
+
+/* ================= CHARACTER COUNT ================= */
+
+.textarea-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:6px;
+
+    font-size:11px;
+
+    color:#94a3b8;
+}
+
+
+/* ================= DIVIDER ================= */
+
+.divider{
+
+    height:1px;
+
+    background:#e2e8f0;
+
+    margin:30px 0;
+}
+
+
+/* ================= BUTTONS ================= */
+
+.button-area{
+
+    display:flex;
+
+    gap:12px;
+
+    justify-content:flex-end;
+}
+
+
+.btn{
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:13px 22px;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    text-decoration:none;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    transition:.3s;
+}
+
+
+.cancel-btn{
+
+    background:#f1f5f9;
+
+    color:#475569;
+
+    border:1px solid #e2e8f0;
+}
+
+.cancel-btn:hover{
+
+    background:#e2e8f0;
+
+    transform:translateY(-2px);
+}
+
+
+.submit-btn{
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
+
+    box-shadow:
+        0 8px 18px rgba(37,99,235,.18);
+}
+
+.submit-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 12px 25px rgba(37,99,235,.25);
+}
+
+
+/* ================= FOOTER ================= */
+
+.footer{
+
+    text-align:center;
+
+    color:#94a3b8;
+
+    font-size:12px;
+
+    margin-top:25px;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:700px){
+
+    .header{
+
+        padding:16px 20px;
+    }
+
+    .logo h1{
+
+        font-size:17px;
+    }
+
+    .logo p{
+
+        display:none;
+    }
+
+    .back-dashboard{
+
+        padding:9px 12px;
+
+        font-size:12px;
+    }
+
+    .main{
+
+        padding:25px 15px 40px;
+    }
+
+    .card-header{
+
+        padding:25px 22px;
+    }
+
+    .form-content{
+
+        padding:22px;
+    }
+
+    .form-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .full-width{
+
+        grid-column:auto;
+    }
+
+    .button-area{
+
+        flex-direction:column-reverse;
+    }
+
+    .btn{
+
+        width:100%;
+    }
+}
+
+@media(max-width:450px){
+
+    .header{
+
+        flex-direction:column;
+
+        gap:12px;
+
+        text-align:center;
+    }
+
+    .card-header-top{
+
+        align-items:flex-start;
+    }
+
+    .header-icon{
+
+        width:48px;
+        height:48px;
+
+        font-size:22px;
+    }
+
+    .card-header h2{
+
+        font-size:21px;
+    }
+}
+
+select {
+    width: 100%;
+    padding: 14px 14px 14px 45px;
+    border: 1px solid #dbe3ef;
+    border-radius: 12px;
+    background: #fff;
+    color: #1e293b;
+    font-size: 15px;
+    outline: none;
+    cursor: pointer;
+    transition: .3s;
+}
+
+select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37,99,235,.10);
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            🗳️
+        </div>
+
+        <div>
+
+            <h1>
+                AI Online Voting System
+            </h1>
+
+            <p>
+                Candidate Management
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <a
+        href="/candidates"
+        class="back-dashboard">
+
+        ← Candidate List
+
+    </a>
+
+</header>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+
+<div class="form-card">
+
+
+    <!-- CARD HEADER -->
+
+    <div class="card-header">
+
+        <div class="card-header-top">
+
+            <div class="header-icon">
+                👤
+            </div>
+
+            <div>
+
+                <h2>
+                    Add New Candidate
+                </h2>
+
+                <p>
+                    Enter candidate information to add them
+                    to the voting system.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- FORM -->
+
+    <div class="form-content">
+
+        <form
+            action="/add_candidate"
+            method="POST"
+            enctype="multipart/form-data">
+
+
+            <div class="form-grid">
+
+
+                <!-- CANDIDATE NAME -->
+
+                <div class="form-group">
+
+                    <label>
+                        👤 Candidate Name
+                        <span class="required">*</span>
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            👤
+                        </span>
+
+                        <input
+                            type="text"
+                            name="full_name"
+                            class="has-icon"
+                            placeholder="Enter candidate full name"
+                            required
+                            autocomplete="off">
+
+                    </div>
+
+                    <div class="help-text">
+                        Enter the candidate's complete name.
+                    </div>
+
+                </div>
+
+
+
+                <!-- PARTY NAME -->
+
+                <div class="form-group">
+
+                    <label>
+                        🏛️ Party Name
+                        <span class="required">*</span>
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🏛️
+                        </span>
+
+                        <input
+                            type="text"
+                            name="party_name"
+                            class="has-icon"
+                            placeholder="Enter political party"
+                            required
+                            autocomplete="off">
+
+                    </div>
+
+                    <div class="help-text">
+                        Enter the party or organization name.
+                    </div>
+
+                </div>
+
+
+                <!-- SYMBOL -->
+
+                <div class="form-group">
+
+                    <label>
+                        🔰 Election Symbol
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🔰
+                        </span>
+
+                        <input
+                            type="text"
+                            name="symbol"
+                            class="has-icon"
+                            placeholder="e.g. Book, Eagle, Star"
+                            autocomplete="off">
+
+                    </div>
+
+                    <div class="help-text">
+                        Candidate's election symbol.
+                    </div>
+
+                </div>
+
+                <!-- STATUS -->
+
+<div class="form-group">
+
+    <label>
+        ⚡ Candidate Status
+        <span class="required">*</span>
+    </label>
+
+    <div class="input-wrapper">
+
+        <span class="input-icon">
+            ⚡
+        </span>
+
+        <select
+            name="status"
+            class="has-icon"
+            required>
+
+            <option value="active">
+                Active
+            </option>
+
+            <option value="inactive">
+                Inactive
+            </option>
+
+        </select>
+
+    </div>
+
+    <div class="help-text">
+        Active candidates will be available for voting.
+    </div>
+
+</div>
+
+                <!-- PHOTO -->
+
+                <div class="form-group">
+
+                    <label>
+                        📷 Candidate Photo
+                        <span class="required">*</span>
+                    </label>
+
+                    <div class="photo-upload">
+
+                        <div class="photo-preview">
+
+                            <span
+                                class="photo-placeholder"
+                                id="photoPlaceholder">
+                                👤
+                            </span>
+
+                            <img
+                                id="previewImage"
+                                alt="Candidate Preview">
+
+                        </div>
+
+
+                        <label
+                            for="photo"
+                            class="file-label">
+
+                            📷 Choose Photo
+
+                        </label>
+
+                        <input
+                            type="file"
+                            id="photo"
+                            name="photo"
+                            accept="image/*"
+                            required>
+
+                        <div
+                            class="file-name"
+                            id="fileName">
+
+                            No photo selected
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- MANIFESTO -->
+
+                <div class="form-group full-width">
+
+                    <label>
+                        📝 Candidate Manifesto
+                    </label>
+
+                    <textarea
+                        name="manifesto"
+                        id="manifesto"
+                        maxlength="1000"
+                        placeholder="Enter candidate manifesto, goals and plans..."></textarea>
+
+                    <div class="textarea-footer">
+
+                        <span>
+                            Optional
+                        </span>
+
+                        <span>
+                            <span id="charCount">0</span>/1000
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="divider"></div>
+
+
+
+            <!-- BUTTONS -->
+
+            <div class="button-area">
+
+                <a
+                    href="/candidates"
+                    class="btn cancel-btn">
+
+                    ✕ Cancel
+
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="btn submit-btn"
+                    id="submitBtn">
+
+                    ➕ Add Candidate
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<div class="footer">
+
+    © 2026 AI Online Voting System |
+    Developed by Hassan Akash
+
+</div>
+
+
+</main>
+
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+
+/* ================= PHOTO PREVIEW ================= */
+
+const photoInput =
+    document.getElementById("photo");
+
+const previewImage =
+    document.getElementById("previewImage");
+
+const photoPlaceholder =
+    document.getElementById("photoPlaceholder");
+
+const fileName =
+    document.getElementById("fileName");
+
+
+photoInput.addEventListener("change", function(){
+
+    const file = this.files[0];
+
+    if(!file){
+
+        previewImage.style.display = "none";
+
+        photoPlaceholder.style.display = "block";
+
+        fileName.textContent =
+            "No photo selected";
+
+        return;
+    }
+
+
+    fileName.textContent =
+        file.name;
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload = function(e){
+
+        previewImage.src =
+            e.target.result;
+
+        previewImage.style.display =
+            "block";
+
+        photoPlaceholder.style.display =
+            "none";
+
+    };
+
+
+    reader.readAsDataURL(file);
+
+});
+
+
+
+/* ================= CHARACTER COUNTER ================= */
+
+const manifesto =
+    document.getElementById("manifesto");
+
+const charCount =
+    document.getElementById("charCount");
+
+
+manifesto.addEventListener("input", function(){
+
+    charCount.textContent =
+        this.value.length;
+
+});
+
+
+
+/* ================= FORM SUBMIT ================= */
+
+const form =
+    document.querySelector("form");
+
+const submitBtn =
+    document.getElementById("submitBtn");
+
+
+form.addEventListener("submit", function(){
+
+    submitBtn.disabled = true;
+
+    submitBtn.innerHTML =
+        "⏳ Adding Candidate...";
+
+});
+
+
+</script>
+
+
+</body>
+</html>

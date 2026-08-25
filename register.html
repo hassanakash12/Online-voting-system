@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Voter Account | AI Online Voting System</title>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                "Inter",
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            color: #0f172a;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(59,130,246,.18),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 90% 90%,
+                    rgba(6,182,212,.16),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #eef5ff,
+                    #f8fbff 48%,
+                    #eefdfc
+                );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 35px 18px;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =========================================================
+           BACKGROUND DECORATIONS
+        ========================================================= */
+
+        .background-shape {
+            position: fixed;
+
+            border-radius: 50%;
+
+            pointer-events: none;
+
+            z-index: -1;
+
+            filter: blur(1px);
+        }
+
+        .shape-one {
+            width: 340px;
+            height: 340px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(37,99,235,.14),
+                    transparent 70%
+                );
+
+            top: -150px;
+            left: -100px;
+        }
+
+        .shape-two {
+            width: 400px;
+            height: 400px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(6,182,212,.13),
+                    transparent 70%
+                );
+
+            bottom: -180px;
+            right: -120px;
+        }
+
+
+        /* =========================================================
+           MAIN CONTAINER
+        ========================================================= */
+
+        .register-wrapper {
+
+            width: min(1080px, 100%);
+
+            min-height: 690px;
+
+            display: grid;
+
+            grid-template-columns:
+                .92fr
+                1.08fr;
+
+            background: rgba(255,255,255,.78);
+
+            border: 1px solid rgba(255,255,255,.9);
+
+            border-radius: 28px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 30px 80px rgba(15,23,42,.14),
+                0 5px 25px rgba(37,99,235,.05);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+
+        /* =========================================================
+           LEFT BRAND PANEL
+        ========================================================= */
+
+        .brand-panel {
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 45px;
+
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #0f172a 0%,
+                    #172554 45%,
+                    #1d4ed8 100%
+                );
+        }
+
+        .brand-panel::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 340px;
+            height: 340px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(59,130,246,.15);
+
+            top: -180px;
+            right: -130px;
+        }
+
+        .brand-panel::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 260px;
+            height: 260px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(255,255,255,.08);
+
+            bottom: -130px;
+            left: -100px;
+        }
+
+
+        /* =========================================================
+           BRAND
+        ========================================================= */
+
+        .brand {
+
+            position: relative;
+            z-index: 2;
+
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+        }
+
+        .brand-icon {
+
+            width: 49px;
+            height: 49px;
+
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #3b82f6,
+                    #06b6d4
+                );
+
+            font-size: 23px;
+
+            box-shadow:
+                0 10px 25px rgba(0,0,0,.22);
+        }
+
+        .brand-name h2 {
+
+            font-size: 16px;
+
+            font-weight: 800;
+
+            letter-spacing: -.3px;
+        }
+
+        .brand-name span {
+
+            display: block;
+
+            margin-top: 3px;
+
+            color: #bfdbfe;
+
+            font-size: 9px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.5px;
+        }
+
+
+        /* =========================================================
+           BRAND CONTENT
+        ========================================================= */
+
+        .brand-content {
+
+            position: relative;
+            z-index: 2;
+
+            margin-top: 50px;
+        }
+
+        .brand-content .small-title {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 7px 11px;
+
+            border-radius: 20px;
+
+            color: #bfdbfe;
+
+            background:
+                rgba(255,255,255,.08);
+
+            border:
+                1px solid rgba(255,255,255,.1);
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            margin-bottom: 20px;
+        }
+
+        .brand-content h1 {
+
+            font-size: 37px;
+
+            line-height: 1.13;
+
+            letter-spacing: -1.2px;
+
+            margin-bottom: 17px;
+
+            max-width: 430px;
+        }
+
+        .brand-content h1 span {
+
+            color: #67e8f9;
+        }
+
+        .brand-content p {
+
+            max-width: 410px;
+
+            color: #bfdbfe;
+
+            font-size: 13px;
+
+            line-height: 1.8;
+        }
+
+
+        /* =========================================================
+           BENEFITS
+        ========================================================= */
+
+        .benefits {
+
+            position: relative;
+            z-index: 2;
+
+            margin-top: 34px;
+
+            display: grid;
+
+            gap: 14px;
+        }
+
+        .benefit {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+        .benefit-icon {
+
+            width: 35px;
+            height: 35px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            color: #93c5fd;
+
+            background:
+                rgba(255,255,255,.08);
+
+            border:
+                1px solid rgba(255,255,255,.08);
+
+            font-size: 14px;
+        }
+
+        .benefit-text strong {
+
+            display: block;
+
+            font-size: 11px;
+
+            margin-bottom: 2px;
+        }
+
+        .benefit-text span {
+
+            color: #93c5fd;
+
+            font-size: 9px;
+        }
+
+
+        /* =========================================================
+           TRUST FOOTER
+        ========================================================= */
+
+        .trust-footer {
+
+            position: relative;
+            z-index: 2;
+
+            padding-top: 25px;
+
+            border-top:
+                1px solid rgba(255,255,255,.1);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 10px;
+        }
+
+        .trust {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #bfdbfe;
+
+            font-size: 9px;
+        }
+
+        .trust i {
+
+            color: #4ade80;
+
+            font-size: 14px;
+        }
+
+        .secure {
+
+            color: #86efac;
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            padding: 6px 9px;
+
+            border-radius: 7px;
+
+            background:
+                rgba(34,197,94,.1);
+        }
+
+
+        /* =========================================================
+           FORM PANEL
+        ========================================================= */
+
+        .form-panel {
+
+            background: rgba(255,255,255,.94);
+
+            padding: 43px 48px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+        }
+
+
+        /* =========================================================
+           FORM HEADER
+        ========================================================= */
+
+        .form-header {
+
+            margin-bottom: 28px;
+        }
+
+        .form-header h2 {
+
+            font-size: 27px;
+
+            font-weight: 800;
+
+            letter-spacing: -.7px;
+
+            margin-bottom: 7px;
+        }
+
+        .form-header p {
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================================
+           ERROR MESSAGE
+        ========================================================= */
+
+        .error-box {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 10px;
+
+            padding: 12px 13px;
+
+            margin-bottom: 20px;
+
+            border-radius: 11px;
+
+            color: #b91c1c;
+
+            background: #fef2f2;
+
+            border: 1px solid #fecaca;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+        }
+
+        .error-box i {
+
+            font-size: 15px;
+
+            margin-top: 1px;
+        }
+
+
+        /* =========================================================
+           FORM
+        ========================================================= */
+
+        form {
+
+            width: 100%;
+        }
+
+        .input-box {
+
+            margin-bottom: 17px;
+        }
+
+        .input-box label {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 7px;
+
+            color: #334155;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+        .required {
+
+            color: #ef4444;
+        }
+
+
+        /* =========================================================
+           INPUT
+        ========================================================= */
+
+        .input-wrapper {
+
+            position: relative;
+        }
+
+        .input-icon {
+
+            position: absolute;
+
+            left: 14px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #94a3b8;
+
+            font-size: 15px;
+
+            pointer-events: none;
+
+            transition: .25s ease;
+        }
+
+        .input-wrapper input {
+
+            width: 100%;
+
+            height: 48px;
+
+            padding:
+                0 44px
+                0 42px;
+
+            border-radius: 11px;
+
+            border: 1px solid #dbe3ed;
+
+            outline: none;
+
+            background: #f8fafc;
+
+            color: #0f172a;
+
+            font-family: inherit;
+
+            font-size: 12px;
+
+            transition: .25s ease;
+        }
+
+        .input-wrapper input::placeholder {
+
+            color: #a8b3c2;
+        }
+
+        .input-wrapper input:hover {
+
+            border-color: #bfdbfe;
+
+            background: #fff;
+        }
+
+        .input-wrapper input:focus {
+
+            border-color: #3b82f6;
+
+            background: white;
+
+            box-shadow:
+                0 0 0 4px rgba(59,130,246,.09);
+        }
+
+        .input-wrapper:focus-within .input-icon {
+
+            color: #2563eb;
+        }
+
+
+        /* =========================================================
+           PASSWORD TOGGLE
+        ========================================================= */
+
+        .password-toggle {
+
+            position: absolute;
+
+            right: 13px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            border: none;
+
+            background: transparent;
+
+            color: #94a3b8;
+
+            cursor: pointer;
+
+            padding: 4px;
+
+            font-size: 15px;
+
+            transition: .2s ease;
+        }
+
+        .password-toggle:hover {
+
+            color: #2563eb;
+        }
+
+
+        /* =========================================================
+           PASSWORD STRENGTH
+        ========================================================= */
+
+        .password-strength {
+
+            margin-top: 8px;
+
+            display: none;
+        }
+
+        .strength-bars {
+
+            display: flex;
+
+            gap: 4px;
+
+            margin-bottom: 5px;
+        }
+
+        .strength-bar {
+
+            height: 3px;
+
+            flex: 1;
+
+            border-radius: 10px;
+
+            background: #e2e8f0;
+
+            transition: .3s ease;
+        }
+
+        .strength-text {
+
+            color: #94a3b8;
+
+            font-size: 9px;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================================================
+           PASSWORD MATCH
+        ========================================================= */
+
+        .match-message {
+
+            display: none;
+
+            margin-top: 6px;
+
+            font-size: 9px;
+
+            font-weight: 600;
+        }
+
+        .match-success {
+
+            color: #16a34a;
+        }
+
+        .match-error {
+
+            color: #dc2626;
+        }
+
+
+        /* =========================================================
+           TERMS
+        ========================================================= */
+
+        .terms {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 9px;
+
+            margin: 8px 0 20px;
+        }
+
+        .terms input {
+
+            width: 15px;
+            height: 15px;
+
+            accent-color: #2563eb;
+
+            margin-top: 1px;
+
+            cursor: pointer;
+        }
+
+        .terms label {
+
+            color: #64748b;
+
+            font-size: 9px;
+
+            line-height: 1.6;
+
+            cursor: pointer;
+        }
+
+        .terms a {
+
+            color: #2563eb;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================================================
+           REGISTER BUTTON
+        ========================================================= */
+
+        .register-btn {
+
+            width: 100%;
+
+            height: 49px;
+
+            border: none;
+
+            border-radius: 11px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #1d4ed8
+                );
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            box-shadow:
+                0 10px 24px rgba(37,99,235,.23);
+
+            transition: .25s ease;
+        }
+
+        .register-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 14px 28px rgba(37,99,235,.3);
+        }
+
+        .register-btn:active {
+
+            transform: translateY(0);
+        }
+
+
+        /* =========================================================
+           LOGIN
+        ========================================================= */
+
+        .login-link {
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #64748b;
+
+            font-size: 10px;
+        }
+
+        .login-link a {
+
+            color: #2563eb;
+
+            font-weight: 800;
+
+            text-decoration: none;
+
+            margin-left: 3px;
+        }
+
+        .login-link a:hover {
+
+            text-decoration: underline;
+        }
+
+
+        /* =========================================================
+           FORM SECURITY NOTE
+        ========================================================= */
+
+        .security-note {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 7px;
+
+            margin-top: 20px;
+
+            color: #94a3b8;
+
+            font-size: 8px;
+        }
+
+        .security-note i {
+
+            color: #16a34a;
+
+            font-size: 12px;
+        }
+
+
+        /* =========================================================
+           RESPONSIVE TABLET
+        ========================================================= */
+
+        @media (max-width: 900px) {
+
+            .register-wrapper {
+
+                grid-template-columns: 1fr;
+
+                max-width: 620px;
+            }
+
+            .brand-panel {
+
+                padding: 30px 35px;
+
+                min-height: 420px;
+            }
+
+            .brand-content {
+
+                margin-top: 35px;
+            }
+
+            .brand-content h1 {
+
+                font-size: 30px;
+            }
+
+            .benefits {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .trust-footer {
+
+                margin-top: 30px;
+            }
+
+        }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 600px) {
+
+            body {
+
+                padding: 15px;
+
+                align-items: flex-start;
+            }
+
+            .register-wrapper {
+
+                margin: 10px 0;
+
+                border-radius: 21px;
+            }
+
+            .brand-panel {
+
+                padding: 27px 23px;
+
+                min-height: auto;
+            }
+
+            .brand-icon {
+
+                width: 43px;
+                height: 43px;
+
+                font-size: 19px;
+            }
+
+            .brand-name h2 {
+
+                font-size: 14px;
+            }
+
+            .brand-content {
+
+                margin-top: 28px;
+            }
+
+            .brand-content h1 {
+
+                font-size: 27px;
+
+                letter-spacing: -.7px;
+            }
+
+            .brand-content p {
+
+                font-size: 11px;
+            }
+
+            .benefits {
+
+                grid-template-columns: 1fr;
+
+                gap: 10px;
+
+                margin-top: 24px;
+            }
+
+            .benefit-icon {
+
+                width: 32px;
+                height: 32px;
+            }
+
+            .trust-footer {
+
+                padding-top: 20px;
+            }
+
+            .form-panel {
+
+                padding: 30px 22px;
+            }
+
+            .form-header h2 {
+
+                font-size: 23px;
+            }
+
+        }
+
+
+        /* =========================================================
+           SMALL MOBILE
+        ========================================================= */
+
+        @media (max-width: 380px) {
+
+            .form-panel {
+
+                padding: 25px 17px;
+            }
+
+            .brand-panel {
+
+                padding: 24px 18px;
+            }
+
+            .brand-content h1 {
+
+                font-size: 24px;
+            }
+
+            .trust-footer {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- Background Decorations -->
+
+<div class="background-shape shape-one"></div>
+<div class="background-shape shape-two"></div>
+
+
+
+<!-- =========================================================
+     REGISTER WRAPPER
+========================================================= -->
+
+<div class="register-wrapper">
+
+
+    <!-- =====================================================
+         LEFT BRAND PANEL
+    ====================================================== -->
+
+    <section class="brand-panel">
+
+
+        <!-- Brand -->
+
+        <div class="brand">
+
+            <div class="brand-icon">
+
+                <i class="bi bi-check2-square"></i>
+
+            </div>
+
+            <div class="brand-name">
+
+                <h2>AI Online Voting System</h2>
+
+                <span>Secure Digital Democracy</span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Content -->
+
+        <div class="brand-content">
+
+
+            <div class="small-title">
+
+                <i class="bi bi-stars"></i>
+
+                NEXT-GENERATION VOTING
+
+            </div>
+
+
+            <h1>
+
+                Your Voice.
+                <br>
+
+                <span>Your Choice.</span>
+
+            </h1>
+
+
+            <p>
+
+                Create your secure voter account and take part
+                in transparent, reliable and digitally protected
+                elections.
+
+            </p>
+
+
+
+            <!-- Benefits -->
+
+            <div class="benefits">
+
+
+                <div class="benefit">
+
+                    <div class="benefit-icon">
+
+                        <i class="bi bi-shield-check"></i>
+
+                    </div>
+
+                    <div class="benefit-text">
+
+                        <strong>
+                            Secure Voter Account
+                        </strong>
+
+                        <span>
+                            Your account is protected with
+                            modern security practices.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="benefit">
+
+                    <div class="benefit-icon">
+
+                        <i class="bi bi-person-check"></i>
+
+                    </div>
+
+                    <div class="benefit-text">
+
+                        <strong>
+                            Verified Identity
+                        </strong>
+
+                        <span>
+                            Maintain an authenticated voter profile.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="benefit">
+
+                    <div class="benefit-icon">
+
+                        <i class="bi bi-bar-chart-line"></i>
+
+                    </div>
+
+                    <div class="benefit-text">
+
+                        <strong>
+                            Transparent Elections
+                        </strong>
+
+                        <span>
+                            Access election information and results.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Trust Footer -->
+
+        <div class="trust-footer">
+
+            <div class="trust">
+
+                <i class="bi bi-lock-fill"></i>
+
+                Secure & Protected
+
+            </div>
+
+            <div class="secure">
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                TRUSTED PORTAL
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         RIGHT FORM PANEL
+    ====================================================== -->
+
+    <section class="form-panel">
+
+
+        <!-- Header -->
+
+        <div class="form-header">
+
+            <h2>
+                Create Your Account
+            </h2>
+
+            <p>
+                Register as a voter to access the secure
+                online election portal.
+            </p>
+
+        </div>
+
+
+
+        <!-- Flask Error -->
+
+        {% if error %}
+
+        <div class="error-box">
+
+            <i class="bi bi-exclamation-triangle-fill"></i>
+
+            <div>
+                {{ error }}
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+
+        <!-- =================================================
+             FORM
+        ================================================== -->
+
+        <form action="/register"
+              method="POST"
+              id="registerForm">
+
+
+            <!-- Full Name -->
+
+            <div class="input-box">
+
+                <label for="full_name">
+
+                    Full Name
+
+                    <span class="required">*</span>
+
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="bi bi-person input-icon"></i>
+
+                    <input
+                        type="text"
+                        id="full_name"
+                        name="full_name"
+                        placeholder="Enter your full name"
+                        autocomplete="name"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Email -->
+
+            <div class="input-box">
+
+                <label for="email">
+
+                    Email Address
+
+                    <span class="required">*</span>
+
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="bi bi-envelope input-icon"></i>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email address"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Password -->
+
+            <div class="input-box">
+
+                <label for="password">
+
+                    Password
+
+                    <span class="required">*</span>
+
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="bi bi-lock input-icon"></i>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Create a strong password"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword('password','passwordEye')"
+                        aria-label="Show password">
+
+                        <i class="bi bi-eye"
+                           id="passwordEye"></i>
+
+                    </button>
+
+                </div>
+
+
+                <!-- Strength -->
+
+                <div class="password-strength"
+                     id="passwordStrength">
+
+                    <div class="strength-bars">
+
+                        <span class="strength-bar"></span>
+                        <span class="strength-bar"></span>
+                        <span class="strength-bar"></span>
+                        <span class="strength-bar"></span>
+
+                    </div>
+
+                    <span class="strength-text"
+                          id="strengthText">
+                        Password strength
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Confirm Password -->
+
+            <div class="input-box">
+
+                <label for="confirm_password">
+
+                    Confirm Password
+
+                    <span class="required">*</span>
+
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="bi bi-shield-lock input-icon"></i>
+
+                    <input
+                        type="password"
+                        id="confirm_password"
+                        name="confirm_password"
+                        placeholder="Confirm your password"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword('confirm_password','confirmEye')"
+                        aria-label="Show password">
+
+                        <i class="bi bi-eye"
+                           id="confirmEye"></i>
+
+                    </button>
+
+                </div>
+
+
+                <div class="match-message"
+                     id="matchMessage">
+                </div>
+
+            </div>
+
+
+
+            <!-- Terms -->
+
+            <div class="terms">
+
+                <input
+                    type="checkbox"
+                    id="terms"
+                    required
+                >
+
+                <label for="terms">
+
+                    I agree to the
+                    <a href="#">Terms of Service</a>
+                    and
+                    <a href="#">Privacy Policy</a>
+                    of the AI Online Voting System.
+
+                </label>
+
+            </div>
+
+
+
+            <!-- Register Button -->
+
+            <button
+                type="submit"
+                class="register-btn"
+                id="registerBtn">
+
+                <i class="bi bi-person-plus-fill"></i>
+
+                Create Voter Account
+
+            </button>
+
+
+        </form>
+
+
+
+        <!-- Login -->
+
+        <div class="login-link">
+
+            Already have an account?
+
+            <a href="/">
+                Login Here
+            </a>
+
+        </div>
+
+
+
+        <!-- Security -->
+
+        <div class="security-note">
+
+            <i class="bi bi-shield-lock-fill"></i>
+
+            Your registration information is securely protected.
+
+        </div>
+
+
+    </section>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+
+    /* =========================================================
+       SHOW / HIDE PASSWORD
+    ========================================================= */
+
+    function togglePassword(inputId, iconId) {
+
+        const input =
+            document.getElementById(inputId);
+
+        const icon =
+            document.getElementById(iconId);
+
+
+        if (input.type === "password") {
+
+            input.type = "text";
+
+            icon.classList.remove("bi-eye");
+
+            icon.classList.add("bi-eye-slash");
+
+        } else {
+
+            input.type = "password";
+
+            icon.classList.remove("bi-eye-slash");
+
+            icon.classList.add("bi-eye");
+
+        }
+
+    }
+
+
+
+    /* =========================================================
+       PASSWORD STRENGTH
+    ========================================================= */
+
+    const password =
+        document.getElementById("password");
+
+    const strengthBox =
+        document.getElementById("passwordStrength");
+
+    const strengthText =
+        document.getElementById("strengthText");
+
+    const strengthBars =
+        document.querySelectorAll(".strength-bar");
+
+
+    password.addEventListener("input", function () {
+
+        const value = password.value;
+
+        strengthBox.style.display =
+            value.length > 0 ? "block" : "none";
+
+
+        let score = 0;
+
+
+        if (value.length >= 8) {
+            score++;
+        }
+
+        if (/[A-Z]/.test(value)) {
+            score++;
+        }
+
+        if (/[0-9]/.test(value)) {
+            score++;
+        }
+
+        if (/[^A-Za-z0-9]/.test(value)) {
+            score++;
+        }
+
+
+        strengthBars.forEach(bar => {
+
+            bar.style.background =
+                "#e2e8f0";
+
+        });
+
+
+        if (score === 1) {
+
+            strengthBars[0].style.background =
+                "#ef4444";
+
+            strengthText.textContent =
+                "Weak password";
+
+            strengthText.style.color =
+                "#dc2626";
+
+        }
+
+        else if (score === 2) {
+
+            strengthBars[0].style.background =
+                "#f59e0b";
+
+            strengthBars[1].style.background =
+                "#f59e0b";
+
+            strengthText.textContent =
+                "Fair password";
+
+            strengthText.style.color =
+                "#d97706";
+
+        }
+
+        else if (score === 3) {
+
+            strengthBars[0].style.background =
+                "#3b82f6";
+
+            strengthBars[1].style.background =
+                "#3b82f6";
+
+            strengthBars[2].style.background =
+                "#3b82f6";
+
+            strengthText.textContent =
+                "Good password";
+
+            strengthText.style.color =
+                "#2563eb";
+
+        }
+
+        else if (score === 4) {
+
+            strengthBars.forEach(bar => {
+
+                bar.style.background =
+                    "#22c55e";
+
+            });
+
+            strengthText.textContent =
+                "Strong password";
+
+            strengthText.style.color =
+                "#16a34a";
+
+        }
+
+        else {
+
+            strengthText.textContent =
+                "Password strength";
+
+            strengthText.style.color =
+                "#94a3b8";
+
+        }
+
+    });
+
+
+
+    /* =========================================================
+       PASSWORD MATCH
+    ========================================================= */
+
+    const confirmPassword =
+        document.getElementById("confirm_password");
+
+    const matchMessage =
+        document.getElementById("matchMessage");
+
+
+    confirmPassword.addEventListener("input", checkPasswordMatch);
+
+    password.addEventListener("input", function () {
+
+        if (confirmPassword.value.length > 0) {
+
+            checkPasswordMatch();
+
+        }
+
+    });
+
+
+    function checkPasswordMatch() {
+
+        if (!confirmPassword.value) {
+
+            matchMessage.style.display =
+                "none";
+
+            return;
+
+        }
+
+
+        matchMessage.style.display =
+            "block";
+
+
+        if (
+            password.value ===
+            confirmPassword.value
+        ) {
+
+            matchMessage.textContent =
+                "✓ Passwords match";
+
+            matchMessage.className =
+                "match-message match-success";
+
+        } else {
+
+            matchMessage.textContent =
+                "✕ Passwords do not match";
+
+            matchMessage.className =
+                "match-message match-error";
+
+        }
+
+    }
+
+
+
+    /* =========================================================
+       FORM SUBMIT VALIDATION
+    ========================================================= */
+
+    const form =
+        document.getElementById("registerForm");
+
+    form.addEventListener("submit", function (event) {
+
+        if (
+            password.value !==
+            confirmPassword.value
+        ) {
+
+            event.preventDefault();
+
+            matchMessage.style.display =
+                "block";
+
+            matchMessage.textContent =
+                "✕ Passwords do not match";
+
+            matchMessage.className =
+                "match-message match-error";
+
+            confirmPassword.focus();
+
+            return;
+
+        }
+
+
+        const button =
+            document.getElementById("registerBtn");
+
+
+        button.innerHTML = `
+            <i class="bi bi-arrow-repeat"></i>
+            Creating Account...
+        `;
+
+        button.style.opacity = ".85";
+
+        button.style.pointerEvents = "none";
+
+    });
+
+
+</script>
+
+
+</body>
+
+</html>

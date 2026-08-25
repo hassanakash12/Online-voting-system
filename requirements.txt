@@ -1,0 +1,7 @@
+Flask
+Flask-MySQLdb
+mysqlclient
+python-dotenv
+reportlab
+openpyxl
+google-generativeai

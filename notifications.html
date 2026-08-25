@@ -1,0 +1,2183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Notifications | AI Voting System</title>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        :root{
+            --primary:#2563eb;
+            --primary-dark:#1d4ed8;
+            --cyan:#06b6d4;
+            --green:#16a34a;
+            --red:#dc2626;
+            --orange:#f59e0b;
+
+            --bg:#f5f7fb;
+            --surface:#ffffff;
+            --surface-soft:#f8fafc;
+
+            --text:#0f172a;
+            --text-soft:#475569;
+            --muted:#94a3b8;
+
+            --border:#e7edf5;
+
+            --shadow-sm:
+                0 4px 15px rgba(15,23,42,.05);
+
+            --shadow:
+                0 12px 35px rgba(15,23,42,.08);
+
+            --shadow-lg:
+                0 20px 55px rgba(15,23,42,.12);
+        }
+
+        body{
+            font-family:
+                Inter,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(37,99,235,.07),
+                    transparent 30%
+                ),
+                var(--bg);
+
+            color:var(--text);
+
+            min-height:100vh;
+        }
+
+        button,
+        input{
+            font-family:inherit;
+        }
+
+        a{
+            text-decoration:none;
+        }
+
+
+        /* =========================================================
+           APP LAYOUT
+        ========================================================= */
+
+        .app{
+            min-height:100vh;
+            display:flex;
+        }
+
+
+        /* =========================================================
+           SIDEBAR
+        ========================================================= */
+
+        .sidebar{
+            width:255px;
+            min-height:100vh;
+
+            position:fixed;
+            left:0;
+            top:0;
+            bottom:0;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #0f172a 0%,
+                    #111c35 100%
+                );
+
+            color:white;
+
+            padding:22px 15px;
+
+            z-index:1000;
+
+            transition:.3s ease;
+
+            box-shadow:
+                8px 0 30px rgba(15,23,42,.08);
+        }
+
+
+        /* Brand */
+
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:12px;
+
+            padding:4px 10px 28px;
+        }
+
+        .brand-logo{
+            width:45px;
+            height:45px;
+
+            border-radius:14px;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #06b6d4
+                );
+
+            box-shadow:
+                0 8px 25px rgba(37,99,235,.35);
+
+            font-size:21px;
+        }
+
+        .brand-text strong{
+            display:block;
+            font-size:15px;
+            letter-spacing:.2px;
+        }
+
+        .brand-text span{
+            display:block;
+            margin-top:3px;
+
+            color:#94a3b8;
+
+            font-size:10px;
+            letter-spacing:1px;
+            text-transform:uppercase;
+        }
+
+
+        /* Navigation label */
+
+        .nav-label{
+            padding:12px 12px 8px;
+
+            color:#64748b;
+
+            font-size:10px;
+            font-weight:800;
+
+            letter-spacing:1.4px;
+            text-transform:uppercase;
+        }
+
+
+        /* Navigation */
+
+        .nav{
+            display:flex;
+            flex-direction:column;
+            gap:5px;
+        }
+
+        .nav a{
+            display:flex;
+            align-items:center;
+            gap:12px;
+
+            padding:12px 13px;
+
+            border-radius:12px;
+
+            color:#cbd5e1;
+
+            font-size:13px;
+            font-weight:600;
+
+            transition:.2s;
+        }
+
+        .nav a i{
+            width:20px;
+
+            font-size:17px;
+
+            text-align:center;
+        }
+
+        .nav a:hover{
+            background:rgba(255,255,255,.07);
+            color:white;
+            transform:translateX(2px);
+        }
+
+        .nav a.active{
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(37,99,235,.95),
+                    rgba(6,182,212,.85)
+                );
+
+            color:white;
+
+            box-shadow:
+                0 8px 22px rgba(37,99,235,.25);
+        }
+
+        .nav-badge{
+            margin-left:auto;
+
+            min-width:21px;
+            height:21px;
+
+            padding:0 6px;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            border-radius:20px;
+
+            background:#ef4444;
+            color:white;
+
+            font-size:10px;
+            font-weight:800;
+        }
+
+
+        /* Sidebar footer */
+
+        .sidebar-footer{
+            position:absolute;
+
+            left:15px;
+            right:15px;
+            bottom:18px;
+
+            padding:15px;
+
+            border-radius:14px;
+
+            background:rgba(255,255,255,.05);
+
+            border:1px solid rgba(255,255,255,.06);
+        }
+
+        .security{
+            display:flex;
+            align-items:center;
+            gap:10px;
+        }
+
+        .security-icon{
+            width:34px;
+            height:34px;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            border-radius:10px;
+
+            background:rgba(34,197,94,.12);
+            color:#4ade80;
+        }
+
+        .security-text strong{
+            display:block;
+            font-size:11px;
+        }
+
+        .security-text span{
+            color:#64748b;
+            font-size:9px;
+        }
+
+
+        /* =========================================================
+           MAIN
+        ========================================================= */
+
+        .main{
+            width:calc(100% - 255px);
+
+            margin-left:255px;
+
+            min-height:100vh;
+
+            padding:25px 30px 45px;
+        }
+
+
+        /* =========================================================
+           TOP BAR
+        ========================================================= */
+
+        .topbar{
+            height:65px;
+
+            background:rgba(255,255,255,.88);
+
+            border:1px solid rgba(226,232,240,.8);
+
+            border-radius:17px;
+
+            padding:10px 15px 10px 20px;
+
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+
+            gap:20px;
+
+            box-shadow:var(--shadow-sm);
+
+            backdrop-filter:blur(15px);
+
+            margin-bottom:25px;
+        }
+
+
+        .top-title{
+            display:flex;
+            align-items:center;
+            gap:10px;
+        }
+
+        .mobile-menu{
+            display:none;
+
+            width:38px;
+            height:38px;
+
+            border:none;
+
+            border-radius:10px;
+
+            background:#eff6ff;
+            color:var(--primary);
+
+            cursor:pointer;
+
+            font-size:18px;
+        }
+
+        .top-title-text strong{
+            display:block;
+            font-size:15px;
+        }
+
+        .top-title-text span{
+            color:var(--muted);
+            font-size:10px;
+        }
+
+
+        /* Profile */
+
+        .top-profile{
+            display:flex;
+            align-items:center;
+            gap:10px;
+        }
+
+        .top-avatar{
+            width:38px;
+            height:38px;
+
+            border-radius:50%;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #06b6d4
+                );
+
+            color:white;
+
+            font-size:14px;
+            font-weight:800;
+        }
+
+        .top-user strong{
+            display:block;
+            font-size:12px;
+        }
+
+        .top-user span{
+            color:var(--muted);
+            font-size:10px;
+        }
+
+
+        /* =========================================================
+           PAGE HEADER
+        ========================================================= */
+
+        .page-header{
+            background:
+                linear-gradient(
+                    135deg,
+                    #172554 0%,
+                    #1d4ed8 55%,
+                    #0891b2 100%
+                );
+
+            border-radius:23px;
+
+            padding:30px;
+
+            color:white;
+
+            position:relative;
+
+            overflow:hidden;
+
+            box-shadow:
+                0 18px 45px rgba(37,99,235,.20);
+
+            margin-bottom:20px;
+        }
+
+
+        .page-header::before{
+            content:"";
+
+            position:absolute;
+
+            width:300px;
+            height:300px;
+
+            border-radius:50%;
+
+            right:-90px;
+            top:-180px;
+
+            background:
+                rgba(255,255,255,.08);
+        }
+
+        .page-header::after{
+            content:"";
+
+            position:absolute;
+
+            width:180px;
+            height:180px;
+
+            border-radius:50%;
+
+            right:120px;
+            bottom:-130px;
+
+            background:
+                rgba(6,182,212,.15);
+        }
+
+
+        .header-inner{
+            position:relative;
+            z-index:2;
+
+            display:flex;
+
+            justify-content:space-between;
+            align-items:center;
+
+            gap:25px;
+        }
+
+
+        .header-main{
+            display:flex;
+            align-items:center;
+            gap:17px;
+        }
+
+
+        .header-icon{
+            width:65px;
+            height:65px;
+
+            flex-shrink:0;
+
+            border-radius:18px;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            background:
+                rgba(255,255,255,.13);
+
+            border:
+                1px solid rgba(255,255,255,.18);
+
+            backdrop-filter:blur(10px);
+
+            font-size:27px;
+
+            box-shadow:
+                inset 0 1px rgba(255,255,255,.12);
+        }
+
+
+        .header-copy h1{
+            font-size:27px;
+            margin-bottom:6px;
+            letter-spacing:-.5px;
+        }
+
+        .header-copy p{
+            margin:0;
+
+            color:rgba(255,255,255,.78);
+
+            font-size:12px;
+            line-height:1.6;
+
+            max-width:560px;
+        }
+
+
+        /* Counter */
+
+        .unread-counter{
+            min-width:120px;
+
+            padding:15px 18px;
+
+            border-radius:15px;
+
+            text-align:center;
+
+            background:
+                rgba(255,255,255,.10);
+
+            border:
+                1px solid rgba(255,255,255,.18);
+
+            backdrop-filter:blur(10px);
+        }
+
+        .unread-counter strong{
+            display:block;
+
+            font-size:25px;
+
+            line-height:1;
+
+            margin-bottom:5px;
+        }
+
+        .unread-counter span{
+            font-size:10px;
+
+            color:
+                rgba(255,255,255,.75);
+
+            text-transform:uppercase;
+
+            letter-spacing:.8px;
+        }
+
+
+        /* =========================================================
+           TOOLBAR
+        ========================================================= */
+
+        .toolbar{
+            background:var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius:17px;
+
+            padding:15px;
+
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+
+            gap:15px;
+
+            box-shadow:var(--shadow-sm);
+
+            margin-bottom:17px;
+        }
+
+
+        .toolbar-left{
+            display:flex;
+            align-items:center;
+            gap:10px;
+        }
+
+        .toolbar-icon{
+            width:39px;
+            height:39px;
+
+            border-radius:11px;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            background:#eff6ff;
+            color:var(--primary);
+        }
+
+
+        .toolbar-heading strong{
+            display:block;
+
+            font-size:13px;
+        }
+
+        .toolbar-heading span{
+            color:var(--muted);
+
+            font-size:10px;
+        }
+
+
+        .count-badge{
+            padding:4px 8px;
+
+            background:#eff6ff;
+            color:var(--primary);
+
+            border-radius:20px;
+
+            font-size:10px;
+            font-weight:800;
+        }
+
+
+        .toolbar-actions{
+            display:flex;
+            align-items:center;
+            gap:8px;
+        }
+
+
+        /* Search */
+
+        .search-box{
+            position:relative;
+        }
+
+        .search-box i{
+            position:absolute;
+
+            left:12px;
+            top:50%;
+
+            transform:translateY(-50%);
+
+            color:#94a3b8;
+
+            font-size:13px;
+        }
+
+        .search-box input{
+            width:210px;
+
+            padding:10px 12px 10px 34px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:10px;
+
+            outline:none;
+
+            font-size:11px;
+
+            background:#f8fafc;
+
+            transition:.2s;
+        }
+
+        .search-box input:focus{
+            background:white;
+
+            border-color:
+                #93c5fd;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37,99,235,.08);
+        }
+
+
+        /* Filter */
+
+        .filter-buttons{
+            display:flex;
+            gap:5px;
+
+            padding:4px;
+
+            border-radius:11px;
+
+            background:#f1f5f9;
+        }
+
+        .filter-btn{
+            border:none;
+
+            padding:7px 10px;
+
+            border-radius:8px;
+
+            background:transparent;
+
+            color:#64748b;
+
+            font-size:10px;
+            font-weight:700;
+
+            cursor:pointer;
+
+            transition:.2s;
+        }
+
+        .filter-btn:hover{
+            color:var(--primary);
+        }
+
+        .filter-btn.active{
+            background:white;
+            color:var(--primary);
+
+            box-shadow:
+                0 2px 7px rgba(15,23,42,.08);
+        }
+
+
+        .mark-read-btn{
+            border:none;
+
+            padding:10px 13px;
+
+            border-radius:10px;
+
+            background:
+                #eff6ff;
+
+            color:
+                var(--primary);
+
+            font-size:11px;
+
+            font-weight:700;
+
+            cursor:pointer;
+
+            display:flex;
+            align-items:center;
+            gap:7px;
+
+            transition:.2s;
+        }
+
+        .mark-read-btn:hover{
+            background:#dbeafe;
+
+            transform:translateY(-1px);
+        }
+
+
+        /* =========================================================
+           NOTIFICATION LIST
+        ========================================================= */
+
+        .notification-list{
+            display:flex;
+
+            flex-direction:column;
+
+            gap:10px;
+        }
+
+
+        /* Card */
+
+        .notification-card{
+            background:white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:16px;
+
+            padding:16px 18px;
+
+            display:flex;
+            align-items:center;
+
+            gap:15px;
+
+            box-shadow:
+                0 4px 14px rgba(15,23,42,.035);
+
+            transition:
+                transform .22s,
+                box-shadow .22s,
+                border-color .22s;
+
+            position:relative;
+        }
+
+
+        .notification-card:hover{
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 12px 28px rgba(15,23,42,.08);
+
+            border-color:
+                #dbeafe;
+        }
+
+
+        .notification-card.unread{
+            background:
+                linear-gradient(
+                    90deg,
+                    #f8fbff,
+                    #ffffff
+                );
+
+            border-left:
+                4px solid var(--primary);
+        }
+
+
+        /* Notification icon */
+
+        .notification-icon{
+            width:48px;
+            height:48px;
+
+            min-width:48px;
+
+            border-radius:14px;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            font-size:19px;
+
+            background:#eff6ff;
+            color:#2563eb;
+        }
+
+
+        /* Type colors */
+
+        .type-election{
+            background:#eef2ff;
+            color:#4f46e5;
+        }
+
+        .type-vote{
+            background:#ecfdf5;
+            color:#16a34a;
+        }
+
+        .type-result{
+            background:#fff7ed;
+            color:#ea580c;
+        }
+
+        .type-warning{
+            background:#fef2f2;
+            color:#dc2626;
+        }
+
+
+        /* Content */
+
+        .notification-content{
+            flex:1;
+
+            min-width:0;
+        }
+
+
+        .title-row{
+            display:flex;
+
+            align-items:center;
+
+            gap:8px;
+
+            margin-bottom:5px;
+        }
+
+        .notification-content h3{
+            margin:0;
+
+            font-size:13px;
+
+            font-weight:750;
+
+            color:#0f172a;
+
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        }
+
+
+        .new-badge{
+            flex-shrink:0;
+
+            padding:3px 7px;
+
+            border-radius:20px;
+
+            background:#dbeafe;
+
+            color:#2563eb;
+
+            font-size:8px;
+
+            font-weight:800;
+
+            text-transform:uppercase;
+
+            letter-spacing:.4px;
+        }
+
+
+        .notification-content p{
+            margin:0;
+
+            color:#64748b;
+
+            font-size:11px;
+
+            line-height:1.6;
+
+            display:-webkit-box;
+
+            -webkit-line-clamp:2;
+
+            -webkit-box-orient:vertical;
+
+            overflow:hidden;
+        }
+
+
+        /* Meta */
+
+        .notification-meta{
+            min-width:100px;
+
+            text-align:right;
+        }
+
+
+        .notification-time{
+            display:block;
+
+            color:#94a3b8;
+
+            font-size:9px;
+
+            margin-bottom:5px;
+
+            white-space:nowrap;
+        }
+
+
+        .status-text{
+            font-size:9px;
+
+            font-weight:700;
+        }
+
+        .unread-text{
+            color:#2563eb;
+        }
+
+        .read-text{
+            color:#16a34a;
+        }
+
+
+        /* =========================================================
+           EMPTY STATE
+        ========================================================= */
+
+        .empty-state{
+            background:white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:20px;
+
+            padding:70px 25px;
+
+            text-align:center;
+
+            box-shadow:var(--shadow-sm);
+        }
+
+
+        .empty-icon{
+            width:78px;
+            height:78px;
+
+            margin:0 auto 18px;
+
+            border-radius:50%;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eff6ff,
+                    #ecfeff
+                );
+
+            color:var(--primary);
+
+            font-size:31px;
+        }
+
+
+        .empty-state h2{
+            margin-bottom:7px;
+
+            font-size:20px;
+        }
+
+        .empty-state p{
+            margin:auto;
+
+            max-width:450px;
+
+            color:#64748b;
+
+            font-size:12px;
+
+            line-height:1.7;
+        }
+
+
+        /* Search empty */
+
+        .search-empty{
+            display:none;
+
+            background:white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:16px;
+
+            padding:45px;
+
+            text-align:center;
+
+            color:#64748b;
+        }
+
+        .search-empty i{
+            font-size:30px;
+
+            color:#94a3b8;
+
+            display:block;
+
+            margin-bottom:10px;
+        }
+
+
+        /* =========================================================
+           BACK BUTTON
+        ========================================================= */
+
+        .back-button{
+            display:inline-flex;
+
+            align-items:center;
+
+            gap:8px;
+
+            margin-top:18px;
+
+            padding:10px 15px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:10px;
+
+            background:white;
+
+            color:#475569;
+
+            font-size:11px;
+            font-weight:700;
+
+            transition:.2s;
+        }
+
+        .back-button:hover{
+            color:var(--primary);
+
+            border-color:#bfdbfe;
+
+            background:#eff6ff;
+
+            transform:
+                translateX(-2px);
+        }
+
+
+        /* =========================================================
+           OVERLAY
+        ========================================================= */
+
+        .sidebar-overlay{
+            display:none;
+
+            position:fixed;
+
+            inset:0;
+
+            background:
+                rgba(15,23,42,.45);
+
+            backdrop-filter:
+                blur(3px);
+
+            z-index:900;
+        }
+
+
+        /* =========================================================
+           ANIMATION
+        ========================================================= */
+
+        .notification-card{
+            animation:
+                fadeUp .35s ease both;
+        }
+
+        @keyframes fadeUp{
+
+            from{
+                opacity:0;
+                transform:translateY(8px);
+            }
+
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media(max-width:1050px){
+
+            .sidebar{
+                transform:
+                    translateX(-100%);
+            }
+
+            .sidebar.open{
+                transform:
+                    translateX(0);
+            }
+
+            .sidebar-overlay.show{
+                display:block;
+            }
+
+            .main{
+                width:100%;
+
+                margin-left:0;
+
+                padding:20px;
+            }
+
+            .mobile-menu{
+                display:flex;
+
+                align-items:center;
+                justify-content:center;
+            }
+
+        }
+
+
+        @media(max-width:850px){
+
+            .toolbar{
+                align-items:flex-start;
+
+                flex-direction:column;
+            }
+
+            .toolbar-actions{
+                width:100%;
+
+                flex-wrap:wrap;
+            }
+
+            .search-box{
+                flex:1;
+            }
+
+            .search-box input{
+                width:100%;
+            }
+
+            .filter-buttons{
+                flex:1;
+            }
+
+            .filter-btn{
+                flex:1;
+            }
+
+        }
+
+
+        @media(max-width:700px){
+
+            .main{
+                padding:
+                    12px 12px 35px;
+            }
+
+            .topbar{
+                height:auto;
+
+                min-height:58px;
+
+                padding:9px 12px;
+
+                margin-bottom:15px;
+            }
+
+            .top-user{
+                display:none;
+            }
+
+            .page-header{
+                padding:22px;
+
+                border-radius:18px;
+            }
+
+            .header-inner{
+                align-items:flex-start;
+            }
+
+            .header-main{
+                gap:12px;
+            }
+
+            .header-icon{
+                width:52px;
+                height:52px;
+
+                border-radius:15px;
+
+                font-size:22px;
+            }
+
+            .header-copy h1{
+                font-size:21px;
+            }
+
+            .header-copy p{
+                font-size:10px;
+            }
+
+            .unread-counter{
+                min-width:70px;
+
+                padding:10px;
+            }
+
+            .unread-counter strong{
+                font-size:19px;
+            }
+
+            .unread-counter span{
+                font-size:8px;
+            }
+
+            .notification-card{
+                align-items:flex-start;
+
+                padding:14px;
+            }
+
+            .notification-icon{
+                width:43px;
+                height:43px;
+
+                min-width:43px;
+
+                border-radius:12px;
+
+                font-size:17px;
+            }
+
+            .notification-meta{
+                display:none;
+            }
+
+            .notification-content h3{
+                font-size:12px;
+            }
+
+            .notification-content p{
+                font-size:10px;
+            }
+
+        }
+
+
+        @media(max-width:480px){
+
+            .top-title-text span{
+                display:none;
+            }
+
+            .header-main{
+                align-items:flex-start;
+            }
+
+            .unread-counter{
+                display:none;
+            }
+
+            .toolbar-left{
+                width:100%;
+            }
+
+            .toolbar-actions{
+                display:grid;
+
+                grid-template-columns:1fr;
+            }
+
+            .filter-buttons{
+                width:100%;
+            }
+
+            .mark-read-btn{
+                width:100%;
+                justify-content:center;
+            }
+
+            .notification-card{
+                gap:10px;
+            }
+
+            .new-badge{
+                display:none;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- =========================================================
+         SIDEBAR
+    ========================================================= -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                <i class="bi bi-shield-check"></i>
+            </div>
+
+            <div class="brand-text">
+
+                <strong>AI Voting</strong>
+
+                <span>Secure Platform</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="nav-label">
+            Main Menu
+        </div>
+
+
+        <nav class="nav">
+
+            <a href="/voter">
+
+                <i class="bi bi-grid-1x2-fill"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="/vote">
+
+                <i class="bi bi-box2-heart-fill"></i>
+
+                <span>Live Elections</span>
+
+            </a>
+
+
+            <a href="/results">
+
+                <i class="bi bi-bar-chart-fill"></i>
+
+                <span>Election Results</span>
+
+            </a>
+
+
+            <a href="/notifications" class="active">
+
+                <i class="bi bi-bell-fill"></i>
+
+                <span>Notifications</span>
+
+                {% if unread_count and unread_count > 0 %}
+
+                <span class="nav-badge">
+                    {{ unread_count }}
+                </span>
+
+                {% endif %}
+
+            </a>
+
+
+            <a href="/profile">
+
+                <i class="bi bi-person-circle"></i>
+
+                <span>My Profile</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="nav-label">
+            Account
+        </div>
+
+
+        <nav class="nav">
+
+            <a href="/logout">
+
+                <i class="bi bi-box-arrow-right"></i>
+
+                <span>Logout</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="security">
+
+                <div class="security-icon">
+
+                    <i class="bi bi-shield-lock-fill"></i>
+
+                </div>
+
+                <div class="security-text">
+
+                    <strong>Secure Voting</strong>
+
+                    <span>Your session is protected</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <div class="sidebar-overlay" id="overlay"></div>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================= -->
+
+    <main class="main">
+
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+            <div class="top-title">
+
+                <button class="mobile-menu" id="menuBtn">
+
+                    <i class="bi bi-list"></i>
+
+                </button>
+
+
+                <div class="top-title-text">
+
+                    <strong>Voter Portal</strong>
+
+                    <span>
+                        Secure Online Election Platform
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="top-profile">
+
+                <div class="top-avatar">
+
+                    <i class="bi bi-person-fill"></i>
+
+                </div>
+
+                <div class="top-user">
+
+                    <strong>Voter Account</strong>
+
+                    <span>Verified voter</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             HEADER
+        ===================================================== -->
+
+        <section class="page-header">
+
+            <div class="header-inner">
+
+                <div class="header-main">
+
+                    <div class="header-icon">
+
+                        <i class="bi bi-bell-fill"></i>
+
+                    </div>
+
+
+                    <div class="header-copy">
+
+                        <h1>
+                            Notifications
+                        </h1>
+
+                        <p>
+                            Stay informed about elections, voting
+                            activities, results and important
+                            announcements from the voting system.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="unread-counter">
+
+                    <strong>
+                        {{ unread_count }}
+                    </strong>
+
+                    <span>
+                        Unread
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             TOOLBAR
+        ===================================================== -->
+
+        <section class="toolbar">
+
+
+            <div class="toolbar-left">
+
+                <div class="toolbar-icon">
+
+                    <i class="bi bi-inbox-fill"></i>
+
+                </div>
+
+
+                <div class="toolbar-heading">
+
+                    <strong>
+                        Notification Center
+                    </strong>
+
+                    <span>
+                        Manage your latest updates
+                    </span>
+
+                </div>
+
+
+                <span class="count-badge" id="totalCount">
+                    {{ notifications|length }}
+                </span>
+
+            </div>
+
+
+            <div class="toolbar-actions">
+
+
+                <!-- Search -->
+
+                <div class="search-box">
+
+                    <i class="bi bi-search"></i>
+
+                    <input
+                        type="search"
+                        id="searchInput"
+                        placeholder="Search notifications..."
+                    >
+
+                </div>
+
+
+                <!-- Filter -->
+
+                <div class="filter-buttons">
+
+                    <button
+                        class="filter-btn active"
+                        data-filter="all">
+
+                        All
+
+                    </button>
+
+
+                    <button
+                        class="filter-btn"
+                        data-filter="unread">
+
+                        Unread
+
+                    </button>
+
+
+                    <button
+                        class="filter-btn"
+                        data-filter="read">
+
+                        Read
+
+                    </button>
+
+                </div>
+
+
+                <!-- Mark all -->
+
+                {% if notifications %}
+
+                <form
+                    action="/mark_notifications_read"
+                    method="POST">
+
+                    <button
+                        type="submit"
+                        class="mark-read-btn">
+
+                        <i class="bi bi-check2-all"></i>
+
+                        Mark All Read
+
+                    </button>
+
+                </form>
+
+                {% endif %}
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             NOTIFICATIONS
+        ===================================================== -->
+
+        {% if notifications %}
+
+
+        <div class="notification-list" id="notificationList">
+
+
+            {% for notification in notifications %}
+
+
+            <article
+                class="notification-card
+                {% if notification.is_read == 0 %}
+                    unread
+                {% endif %}"
+                data-status="{% if notification.is_read == 0 %}unread{% else %}read{% endif %}"
+                data-search="{{ notification.title }} {{ notification.message }} {{ notification.type }}"
+            >
+
+
+                <!-- ICON -->
+
+                <div class="notification-icon
+                    {% if notification.type == 'election' %}
+                        type-election
+                    {% elif notification.type == 'vote' %}
+                        type-vote
+                    {% elif notification.type == 'result' %}
+                        type-result
+                    {% elif notification.type == 'warning' %}
+                        type-warning
+                    {% endif %}
+                ">
+
+
+                    {% if notification.type == 'election' %}
+
+                        <i class="bi bi-calendar-event-fill"></i>
+
+                    {% elif notification.type == 'vote' %}
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                    {% elif notification.type == 'result' %}
+
+                        <i class="bi bi-bar-chart-fill"></i>
+
+                    {% elif notification.type == 'warning' %}
+
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+
+                    {% else %}
+
+                        <i class="bi bi-bell-fill"></i>
+
+                    {% endif %}
+
+
+                </div>
+
+
+                <!-- CONTENT -->
+
+                <div class="notification-content">
+
+
+                    <div class="title-row">
+
+                        <h3>
+                            {{ notification.title }}
+                        </h3>
+
+
+                        {% if notification.is_read == 0 %}
+
+                        <span class="new-badge">
+                            New
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <p>
+                        {{ notification.message }}
+                    </p>
+
+
+                </div>
+
+
+                <!-- META -->
+
+                <div class="notification-meta">
+
+
+                    {% if notification.created_at %}
+
+                    <span class="notification-time">
+
+                        <i class="bi bi-clock"></i>
+
+                        {{ notification.created_at }}
+
+                    </span>
+
+                    {% endif %}
+
+
+                    {% if notification.is_read == 0 %}
+
+                    <span class="status-text unread-text">
+
+                        <i class="bi bi-dot"></i>
+
+                        Unread
+
+                    </span>
+
+                    {% else %}
+
+                    <span class="status-text read-text">
+
+                        <i class="bi bi-check2"></i>
+
+                        Read
+
+                    </span>
+
+                    {% endif %}
+
+
+                </div>
+
+
+            </article>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+        <!-- Search empty -->
+
+        <div class="search-empty" id="searchEmpty">
+
+            <i class="bi bi-search"></i>
+
+            No notifications found.
+
+        </div>
+
+
+        {% else %}
+
+
+        <!-- =====================================================
+             EMPTY STATE
+        ===================================================== -->
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+
+                <i class="bi bi-bell-slash-fill"></i>
+
+            </div>
+
+
+            <h2>
+                You're All Caught Up!
+            </h2>
+
+
+            <p>
+                There are no notifications available right now.
+                We'll notify you when an election, voting update,
+                result or important announcement becomes available.
+            </p>
+
+        </div>
+
+
+        {% endif %}
+
+
+        <!-- BACK -->
+
+        <a href="/voter" class="back-button">
+
+            <i class="bi bi-arrow-left"></i>
+
+            Back to Dashboard
+
+        </a>
+
+
+    </main>
+
+</div>
+
+
+<script>
+
+    /* =========================================================
+       MOBILE SIDEBAR
+    ========================================================= */
+
+    const menuBtn =
+        document.getElementById("menuBtn");
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    const overlay =
+        document.getElementById("overlay");
+
+
+    if(menuBtn){
+
+        menuBtn.addEventListener("click", () => {
+
+            sidebar.classList.toggle("open");
+
+            overlay.classList.toggle("show");
+
+        });
+
+    }
+
+
+    if(overlay){
+
+        overlay.addEventListener("click", () => {
+
+            sidebar.classList.remove("open");
+
+            overlay.classList.remove("show");
+
+        });
+
+    }
+
+
+    /* =========================================================
+       SEARCH + FILTER
+    ========================================================= */
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    const cards =
+        document.querySelectorAll(".notification-card");
+
+    const filterButtons =
+        document.querySelectorAll(".filter-btn");
+
+    const searchEmpty =
+        document.getElementById("searchEmpty");
+
+    let currentFilter = "all";
+
+
+    function filterNotifications(){
+
+        const searchValue =
+            searchInput
+                ? searchInput.value
+                    .toLowerCase()
+                    .trim()
+                : "";
+
+
+        let visibleCount = 0;
+
+
+        cards.forEach(card => {
+
+            const status =
+                card.dataset.status;
+
+            const text =
+                card.dataset.search
+                    .toLowerCase();
+
+
+            const matchesFilter =
+                currentFilter === "all" ||
+                status === currentFilter;
+
+
+            const matchesSearch =
+                text.includes(searchValue);
+
+
+            if(
+                matchesFilter &&
+                matchesSearch
+            ){
+
+                card.style.display =
+                    "flex";
+
+                visibleCount++;
+
+            }else{
+
+                card.style.display =
+                    "none";
+
+            }
+
+        });
+
+
+        if(searchEmpty){
+
+            searchEmpty.style.display =
+                visibleCount === 0
+                    ? "block"
+                    : "none";
+
+        }
+
+    }
+
+
+    if(searchInput){
+
+        searchInput.addEventListener(
+            "input",
+            filterNotifications
+        );
+
+    }
+
+
+    filterButtons.forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                filterButtons.forEach(btn => {
+
+                    btn.classList.remove(
+                        "active"
+                    );
+
+                });
+
+
+                button.classList.add(
+                    "active"
+                );
+
+
+                currentFilter =
+                    button.dataset.filter;
+
+
+                filterNotifications();
+
+            }
+        );
+
+    });
+
+
+    /* =========================================================
+       CARD STAGGER ANIMATION
+    ========================================================= */
+
+    cards.forEach((card,index) => {
+
+        card.style.animationDelay =
+            `${index * 0.04}s`;
+
+    });
+
+</script>
+
+
+</body>
+</html>

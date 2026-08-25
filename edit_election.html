@@ -1,0 +1,2308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Edit Election | AI Voting System</title>
+
+
+<!-- GOOGLE FONT -->
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet">
+
+
+<!-- BOOTSTRAP ICONS -->
+
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+<style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root{
+
+    --primary:#2563eb;
+    --primary-dark:#1747b5;
+    --cyan:#06b6d4;
+
+    --dark:#101828;
+    --text:#344054;
+    --muted:#667085;
+
+    --bg:#f4f7fb;
+    --card:#ffffff;
+
+    --border:#e4e7ec;
+
+    --success:#16a34a;
+    --warning:#d97706;
+    --danger:#dc2626;
+
+    --shadow:
+        0 20px 55px rgba(16,24,40,.09);
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+    font-family:'Inter',sans-serif;
+
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body{
+
+    min-height:100vh;
+
+    color:var(--text);
+
+    background:
+
+        radial-gradient(
+            circle at 5% 5%,
+            rgba(37,99,235,.13),
+            transparent 26%
+        ),
+
+        radial-gradient(
+            circle at 95% 90%,
+            rgba(6,182,212,.12),
+            transparent 28%
+        ),
+
+        #f4f7fb;
+
+}
+
+
+/* =========================================================
+   BACKGROUND DECORATION
+========================================================= */
+
+.bg-circle{
+
+    position:fixed;
+
+    border-radius:50%;
+
+    pointer-events:none;
+
+    z-index:-1;
+
+}
+
+
+.bg-one{
+
+    width:300px;
+    height:300px;
+
+    left:-140px;
+    top:-150px;
+
+    background:
+        rgba(37,99,235,.07);
+
+}
+
+
+.bg-two{
+
+    width:260px;
+    height:260px;
+
+    right:-120px;
+    bottom:-120px;
+
+    background:
+        rgba(6,182,212,.08);
+
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page{
+
+    width:100%;
+
+    max-width:1050px;
+
+    margin:0 auto;
+
+    padding:30px 20px 45px;
+
+}
+
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.topbar{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:22px;
+
+}
+
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+
+}
+
+
+.brand-logo{
+
+    width:46px;
+    height:46px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:13px;
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
+
+    box-shadow:
+        0 10px 25px rgba(37,99,235,.25);
+
+    font-size:19px;
+
+}
+
+
+.brand-name{
+
+    color:var(--dark);
+
+    font-size:13px;
+
+    font-weight:800;
+
+}
+
+
+.brand-sub{
+
+    margin-top:3px;
+
+    color:var(--muted);
+
+    font-size:8px;
+
+    text-transform:uppercase;
+
+    letter-spacing:.9px;
+
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.back-button{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    padding:10px 14px;
+
+    color:var(--text);
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:9px;
+
+    text-decoration:none;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    box-shadow:
+        0 5px 15px rgba(16,24,40,.04);
+
+    transition:.25s;
+
+}
+
+
+.back-button:hover{
+
+    color:var(--primary);
+
+    border-color:#bfd2ff;
+
+    transform:translateY(-2px);
+
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header{
+
+    margin-bottom:18px;
+
+}
+
+
+.breadcrumb{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    margin-bottom:8px;
+
+    color:var(--muted);
+
+    font-size:8px;
+
+}
+
+
+.breadcrumb strong{
+
+    color:var(--primary);
+
+}
+
+
+.page-header h1{
+
+    color:var(--dark);
+
+    font-size:25px;
+
+    font-weight:800;
+
+    letter-spacing:-.7px;
+
+}
+
+
+.page-header p{
+
+    margin-top:5px;
+
+    color:var(--muted);
+
+    font-size:9px;
+
+}
+
+
+/* =========================================================
+   MAIN CARD
+========================================================= */
+
+.card{
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.98);
+
+    border:
+        1px solid rgba(255,255,255,.8);
+
+    border-radius:20px;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.card-top{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:25px 30px;
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            120deg,
+            #082b70,
+            #2563eb,
+            #06b6d4
+        );
+
+}
+
+
+.card-top::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:220px;
+    height:220px;
+
+    border-radius:50%;
+
+    right:-90px;
+    top:-140px;
+
+    background:
+        rgba(255,255,255,.08);
+
+}
+
+
+.card-top::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:130px;
+    height:130px;
+
+    border-radius:50%;
+
+    right:180px;
+    bottom:-95px;
+
+    background:
+        rgba(255,255,255,.06);
+
+}
+
+
+.card-top-content{
+
+    position:relative;
+
+    z-index:2;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+
+.top-icon{
+
+    width:50px;
+    height:50px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:14px;
+
+    background:
+        rgba(255,255,255,.15);
+
+    border:
+        1px solid rgba(255,255,255,.2);
+
+    backdrop-filter:blur(10px);
+
+    font-size:20px;
+
+}
+
+
+.card-top h2{
+
+    font-size:15px;
+
+    font-weight:800;
+
+}
+
+
+.card-top p{
+
+    margin-top:4px;
+
+    color:
+        rgba(255,255,255,.72);
+
+    font-size:8px;
+
+}
+
+
+/* =========================================================
+   CARD BODY
+========================================================= */
+
+.card-body{
+
+    padding:30px;
+
+}
+
+
+/* =========================================================
+   ELECTION STATUS SUMMARY
+========================================================= */
+
+.status-summary{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:12px;
+
+    margin-bottom:28px;
+
+}
+
+
+.summary-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+
+    padding:13px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:12px;
+
+    background:#f8fafc;
+
+}
+
+
+.summary-icon{
+
+    width:38px;
+    height:38px;
+
+    min-width:38px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+
+    font-size:14px;
+
+}
+
+
+.summary-icon.calendar{
+
+    color:#2563eb;
+
+    background:#eaf2ff;
+
+}
+
+
+.summary-icon.clock{
+
+    color:#7c3aed;
+
+    background:#f1eaff;
+
+}
+
+
+.summary-icon.status{
+
+    color:#16a34a;
+
+    background:#ecfdf3;
+
+}
+
+
+.summary-card small{
+
+    display:block;
+
+    color:var(--muted);
+
+    font-size:7px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:.5px;
+
+}
+
+
+.summary-card strong{
+
+    display:block;
+
+    margin-top:4px;
+
+    color:var(--dark);
+
+    font-size:9px;
+
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:17px;
+
+}
+
+
+.section-icon{
+
+    width:36px;
+    height:36px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+
+    color:var(--primary);
+
+    background:#eaf2ff;
+
+    font-size:14px;
+
+}
+
+
+.section-title h3{
+
+    color:var(--dark);
+
+    font-size:13px;
+
+    font-weight:800;
+
+}
+
+
+.section-title p{
+
+    margin-top:3px;
+
+    color:var(--muted);
+
+    font-size:8px;
+
+}
+
+
+/* =========================================================
+   FORM GRID
+========================================================= */
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:20px;
+
+}
+
+
+.form-group{
+
+    position:relative;
+
+}
+
+
+.full{
+
+    grid-column:1 / -1;
+
+}
+
+
+/* =========================================================
+   LABEL
+========================================================= */
+
+.form-label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:5px;
+
+    margin-bottom:7px;
+
+    color:#344054;
+
+    font-size:9px;
+
+    font-weight:700;
+
+}
+
+
+.required{
+
+    color:#ef4444;
+
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.input-wrapper{
+
+    position:relative;
+
+}
+
+
+.input-icon{
+
+    position:absolute;
+
+    left:14px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#98a2b3;
+
+    font-size:12px;
+
+    pointer-events:none;
+
+    transition:.2s;
+
+}
+
+
+.form-control{
+
+    width:100%;
+
+    min-height:48px;
+
+    padding:
+        0 14px 0 40px;
+
+    color:var(--dark);
+
+    background:#f9fafc;
+
+    border:
+        1.5px solid var(--border);
+
+    border-radius:10px;
+
+    outline:none;
+
+    font-size:10px;
+
+    transition:.25s;
+
+}
+
+
+.form-control:hover{
+
+    border-color:#c7d0dc;
+
+}
+
+
+.form-control:focus{
+
+    background:#fff;
+
+    border-color:var(--primary);
+
+    box-shadow:
+        0 0 0 4px rgba(37,99,235,.07);
+
+}
+
+
+.input-wrapper:focus-within .input-icon{
+
+    color:var(--primary);
+
+}
+
+
+/* =========================================================
+   TEXTAREA
+========================================================= */
+
+textarea.form-control{
+
+    min-height:135px;
+
+    padding:
+        13px 14px 13px 40px;
+
+    resize:vertical;
+
+    line-height:1.6;
+
+}
+
+
+/* =========================================================
+   DATE INPUT
+========================================================= */
+
+input[type="datetime-local"]{
+
+    color-scheme:light;
+
+}
+
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+.select-wrapper::after{
+
+    content:"\f282";
+
+    font-family:
+        "bootstrap-icons";
+
+    position:absolute;
+
+    right:14px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#98a2b3;
+
+    pointer-events:none;
+
+}
+
+
+.select-wrapper .form-control{
+
+    padding-right:38px;
+
+    appearance:none;
+
+    cursor:pointer;
+
+}
+
+
+/* =========================================================
+   HINT
+========================================================= */
+
+.form-hint{
+
+    margin-top:6px;
+
+    color:#98a2b3;
+
+    font-size:7px;
+
+}
+
+
+/* =========================================================
+   LIVE STATUS
+========================================================= */
+
+.status-preview{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    margin-top:9px;
+
+    font-size:7px;
+
+    color:var(--muted);
+
+}
+
+
+.status-dot{
+
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+}
+
+
+.status-dot.upcoming{
+
+    background:#f59e0b;
+
+    box-shadow:
+        0 0 0 4px rgba(245,158,11,.10);
+
+}
+
+
+.status-dot.active{
+
+    background:#16a34a;
+
+    box-shadow:
+        0 0 0 4px rgba(22,163,74,.10);
+
+}
+
+
+.status-dot.completed{
+
+    background:#64748b;
+
+    box-shadow:
+        0 0 0 4px rgba(100,116,139,.10);
+
+}
+
+
+/* =========================================================
+   DATE VALIDATION MESSAGE
+========================================================= */
+
+.date-warning{
+
+    display:none;
+
+    align-items:center;
+
+    gap:6px;
+
+    margin-top:8px;
+
+    padding:8px 10px;
+
+    color:#b45309;
+
+    background:#fffbeb;
+
+    border:
+        1px solid #fde68a;
+
+    border-radius:8px;
+
+    font-size:7px;
+
+}
+
+
+.date-warning.show{
+
+    display:flex;
+
+}
+
+
+/* =========================================================
+   ACTION BAR
+========================================================= */
+
+.action-bar{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-top:29px;
+
+    padding-top:23px;
+
+    border-top:
+        1px solid var(--border);
+
+}
+
+
+.action-info{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    color:#98a2b3;
+
+    font-size:7px;
+
+}
+
+
+.action-info i{
+
+    color:#16a34a;
+
+}
+
+
+.action-buttons{
+
+    display:flex;
+
+    gap:9px;
+
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.btn{
+
+    min-height:45px;
+
+    padding:
+        0 18px;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:7px;
+
+    border-radius:9px;
+
+    border:none;
+
+    text-decoration:none;
+
+    cursor:pointer;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    transition:.25s;
+
+}
+
+
+.btn-primary{
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #4f46e5
+        );
+
+    box-shadow:
+        0 9px 20px rgba(37,99,235,.20);
+
+}
+
+
+.btn-primary:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 13px 27px rgba(37,99,235,.29);
+
+}
+
+
+.btn-secondary{
+
+    color:#475467;
+
+    background:white;
+
+    border:
+        1px solid var(--border);
+
+}
+
+
+.btn-secondary:hover{
+
+    color:var(--primary);
+
+    border-color:#bfd2ff;
+
+    background:#f8fafc;
+
+    transform:translateY(-2px);
+
+}
+
+
+/* =========================================================
+   SECURITY FOOTER
+========================================================= */
+
+.security-footer{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:6px;
+
+    margin-top:20px;
+
+    color:#98a2b3;
+
+    font-size:7px;
+
+}
+
+
+.security-footer i{
+
+    color:#16a34a;
+
+}
+
+
+/* =========================================================
+   LOADING ANIMATION
+========================================================= */
+
+@keyframes spin{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+
+.spinning{
+
+    animation:
+        spin 1s linear infinite;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:750px){
+
+    .page{
+
+        padding:
+            20px 13px 30px;
+
+    }
+
+
+    .status-summary{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .form-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .full{
+
+        grid-column:auto;
+
+    }
+
+
+    .card-top{
+
+        padding:
+            22px 20px;
+
+    }
+
+
+    .card-body{
+
+        padding:
+            22px 18px;
+
+    }
+
+
+    .action-bar{
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+    }
+
+
+    .action-info{
+
+        justify-content:center;
+
+    }
+
+
+    .action-buttons{
+
+        width:100%;
+
+    }
+
+
+    .action-buttons .btn{
+
+        flex:1;
+
+    }
+
+}
+
+
+@media(max-width:480px){
+
+    .topbar{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:14px;
+
+    }
+
+
+    .back-button{
+
+        align-self:flex-start;
+
+    }
+
+
+    .page-header h1{
+
+        font-size:21px;
+
+    }
+
+
+    .card-top-content{
+
+        align-items:flex-start;
+
+    }
+
+
+    .form-control{
+
+        min-height:46px;
+
+    }
+
+
+    .action-buttons{
+
+        flex-direction:column;
+
+    }
+
+
+    .action-buttons .btn{
+
+        width:100%;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="bg-circle bg-one"></div>
+<div class="bg-circle bg-two"></div>
+
+
+<div class="page">
+
+
+<!-- =====================================================
+     TOP BAR
+===================================================== -->
+
+<div class="topbar">
+
+
+    <div class="brand">
+
+
+        <div class="brand-logo">
+
+            <i class="bi bi-shield-lock-fill"></i>
+
+        </div>
+
+
+        <div>
+
+            <div class="brand-name">
+                AI Voting System
+            </div>
+
+            <div class="brand-sub">
+                Secure Administration Portal
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <a
+        href="/elections"
+        class="back-button">
+
+        <i class="bi bi-arrow-left"></i>
+
+        Election Management
+
+    </a>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     PAGE HEADER
+===================================================== -->
+
+<div class="page-header">
+
+
+    <div class="breadcrumb">
+
+        <span>
+            Administration
+        </span>
+
+        <i class="bi bi-chevron-right"></i>
+
+        <span>
+            Elections
+        </span>
+
+        <i class="bi bi-chevron-right"></i>
+
+        <strong>
+            Edit Election
+        </strong>
+
+    </div>
+
+
+    <h1>
+        Edit Election
+    </h1>
+
+
+    <p>
+        Update election information, schedule and
+        current election status.
+    </p>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     MAIN CARD
+===================================================== -->
+
+<div class="card">
+
+
+    <!-- =================================================
+         CARD HEADER
+    ================================================= -->
+
+    <div class="card-top">
+
+
+        <div class="card-top-content">
+
+
+            <div class="top-icon">
+
+                <i class="bi bi-calendar2-check-fill"></i>
+
+            </div>
+
+
+            <div>
+
+                <h2>
+                    Election Management
+                </h2>
+
+                <p>
+                    Configure the selected election
+                    before publishing changes.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         BODY
+    ================================================= -->
+
+    <div class="card-body">
+
+
+
+        <!-- =================================================
+             SUMMARY
+        ================================================= -->
+
+        <div class="status-summary">
+
+
+            <div class="summary-card">
+
+
+                <div class="summary-icon calendar">
+
+                    <i class="bi bi-calendar-event"></i>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+                        Election Type
+                    </small>
+
+                    <strong>
+                        Online Election
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="summary-card">
+
+
+                <div class="summary-icon clock">
+
+                    <i class="bi bi-clock-history"></i>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+                        Schedule
+                    </small>
+
+                    <strong id="scheduleStatus">
+                        Configured
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="summary-card">
+
+
+                <div class="summary-icon status">
+
+                    <i class="bi bi-broadcast-pin"></i>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+                        Current Status
+                    </small>
+
+                    <strong id="summaryStatus">
+                        {{ election.status|capitalize }}
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             SECTION
+        ================================================= -->
+
+        <div class="section-title">
+
+
+            <div class="section-icon">
+
+                <i class="bi bi-pencil-square"></i>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Election Information
+                </h3>
+
+                <p>
+                    Update the core election details below.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             FORM
+        ================================================= -->
+
+        <form
+            method="POST"
+            id="electionForm">
+
+
+            <div class="form-grid">
+
+
+
+                <!-- =================================================
+                     TITLE
+                ================================================= -->
+
+                <div class="form-group full">
+
+
+                    <label class="form-label">
+
+                        Election Title
+
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+
+                        <i class="bi bi-megaphone-fill input-icon"></i>
+
+
+                        <input
+                            type="text"
+                            name="title"
+                            id="title"
+                            class="form-control"
+                            value="{{ election.title }}"
+                            placeholder="Enter election title"
+                            maxlength="150"
+                            required>
+
+
+                    </div>
+
+
+                    <div class="form-hint">
+
+                        Enter a clear and official title
+                        for this election.
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     DESCRIPTION
+                ================================================= -->
+
+                <div class="form-group full">
+
+
+                    <label class="form-label">
+
+                        Election Description
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+
+                        <i class="bi bi-file-earmark-text input-icon"></i>
+
+
+                        <textarea
+                            name="description"
+                            id="description"
+                            class="form-control"
+                            maxlength="2000"
+                            placeholder="Describe the purpose and scope of this election...">{{ election.description }}</textarea>
+
+
+                    </div>
+
+
+                    <div class="form-hint">
+
+                        Provide additional information
+                        about this election.
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     START DATE
+                ================================================= -->
+
+                <div class="form-group">
+
+
+                    <label class="form-label">
+
+                        Start Date & Time
+
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+
+                        <i class="bi bi-calendar-plus input-icon"></i>
+
+
+                        <input
+                            type="datetime-local"
+                            name="start_date"
+                            id="start_date"
+                            class="form-control"
+                            value="{{ election.start_date }}"
+                            required>
+
+
+                    </div>
+
+
+                    <div class="form-hint">
+
+                        Date and time when voting begins.
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     END DATE
+                ================================================= -->
+
+                <div class="form-group">
+
+
+                    <label class="form-label">
+
+                        End Date & Time
+
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+
+                        <i class="bi bi-calendar-x input-icon"></i>
+
+
+                        <input
+                            type="datetime-local"
+                            name="end_date"
+                            id="end_date"
+                            class="form-control"
+                            value="{{ election.end_date }}"
+                            required>
+
+
+                    </div>
+
+
+                    <div class="form-hint">
+
+                        Date and time when voting closes.
+
+                    </div>
+
+
+                    <div
+                        class="date-warning"
+                        id="dateWarning">
+
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+
+                        End date must be later than start date.
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     STATUS
+                ================================================= -->
+
+                <div class="form-group">
+
+
+                    <label class="form-label">
+
+                        Election Status
+
+                    </label>
+
+
+                    <div
+                        class="input-wrapper select-wrapper">
+
+
+                        <i class="bi bi-broadcast input-icon"></i>
+
+
+                        <select
+                            name="status"
+                            id="status"
+                            class="form-control">
+
+
+                            <option
+                                value="upcoming"
+                                {% if election.status=="upcoming" %}
+                                selected
+                                {% endif %}>
+
+                                Upcoming
+
+                            </option>
+
+
+                            <option
+                                value="active"
+                                {% if election.status=="active" %}
+                                selected
+                                {% endif %}>
+
+                                Active
+
+                            </option>
+
+
+                            <option
+                                value="completed"
+                                {% if election.status=="completed" %}
+                                selected
+                                {% endif %}>
+
+                                Completed
+
+                            </option>
+
+
+                        </select>
+
+
+                    </div>
+
+
+                    <div class="status-preview">
+
+
+                        <span
+                            class="status-dot upcoming"
+                            id="statusDot">
+                        </span>
+
+
+                        <span id="statusText">
+                            Election is scheduled to begin.
+                        </span>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ACTIONS
+            ================================================= -->
+
+            <div class="action-bar">
+
+
+                <div class="action-info">
+
+                    <i class="bi bi-shield-check"></i>
+
+                    Changes are securely submitted
+                    to the election system.
+
+                </div>
+
+
+                <div class="action-buttons">
+
+
+                    <a
+                        href="/elections"
+                        class="btn btn-secondary">
+
+                        <i class="bi bi-x-lg"></i>
+
+                        Cancel
+
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="updateBtn">
+
+
+                        <i
+                            class="bi bi-check2-circle"
+                            id="updateIcon">
+                        </i>
+
+
+                        <span id="updateText">
+                            Update Election
+                        </span>
+
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+        </form>
+
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================= -->
+
+        <div class="security-footer">
+
+            <i class="bi bi-shield-fill-check"></i>
+
+            AI Voting System • Secure Election Administration
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const electionForm =
+    document.getElementById("electionForm");
+
+const title =
+    document.getElementById("title");
+
+const description =
+    document.getElementById("description");
+
+const startDate =
+    document.getElementById("start_date");
+
+const endDate =
+    document.getElementById("end_date");
+
+const status =
+    document.getElementById("status");
+
+const statusDot =
+    document.getElementById("statusDot");
+
+const statusText =
+    document.getElementById("statusText");
+
+const summaryStatus =
+    document.getElementById("summaryStatus");
+
+const scheduleStatus =
+    document.getElementById("scheduleStatus");
+
+const dateWarning =
+    document.getElementById("dateWarning");
+
+const updateBtn =
+    document.getElementById("updateBtn");
+
+const updateIcon =
+    document.getElementById("updateIcon");
+
+const updateText =
+    document.getElementById("updateText");
+
+
+/* =========================================================
+   STATUS PREVIEW
+========================================================= */
+
+function updateStatus(){
+
+    const value =
+        status.value;
+
+
+    /*
+     * Reset classes
+     */
+
+    statusDot.className =
+        "status-dot";
+
+
+    if(value === "upcoming"){
+
+        statusDot.classList.add(
+            "upcoming"
+        );
+
+        statusText.textContent =
+            "Election is scheduled to begin.";
+
+        summaryStatus.textContent =
+            "Upcoming";
+
+    }
+
+
+    else if(value === "active"){
+
+        statusDot.classList.add(
+            "active"
+        );
+
+        statusText.textContent =
+            "Election is currently open for voting.";
+
+        summaryStatus.textContent =
+            "Active";
+
+    }
+
+
+    else{
+
+        statusDot.classList.add(
+            "completed"
+        );
+
+        statusText.textContent =
+            "Election has been completed.";
+
+        summaryStatus.textContent =
+            "Completed";
+
+    }
+
+}
+
+
+status.addEventListener(
+    "change",
+    updateStatus
+);
+
+
+updateStatus();
+
+
+/* =========================================================
+   DATE VALIDATION
+========================================================= */
+
+function validateDates(){
+
+    if(
+        !startDate.value ||
+        !endDate.value
+    ){
+
+        dateWarning.classList.remove(
+            "show"
+        );
+
+        return true;
+
+    }
+
+
+    const start =
+        new Date(startDate.value);
+
+    const end =
+        new Date(endDate.value);
+
+
+    if(end <= start){
+
+        dateWarning.classList.add(
+            "show"
+        );
+
+        scheduleStatus.textContent =
+            "Invalid Schedule";
+
+        return false;
+
+    }
+
+
+    dateWarning.classList.remove(
+        "show"
+    );
+
+    scheduleStatus.textContent =
+        "Configured";
+
+    return true;
+
+}
+
+
+startDate.addEventListener(
+    "change",
+    validateDates
+);
+
+
+endDate.addEventListener(
+    "change",
+    validateDates
+);
+
+
+startDate.addEventListener(
+    "input",
+    validateDates
+);
+
+
+endDate.addEventListener(
+    "input",
+    validateDates
+);
+
+
+/* =========================================================
+   CLEAN TITLE
+========================================================= */
+
+title.addEventListener(
+    "input",
+    function(){
+
+        this.value =
+            this.value.replace(
+                /\s{2,}/g,
+                " "
+            );
+
+    }
+);
+
+
+/* =========================================================
+   FORM SUBMIT
+========================================================= */
+
+electionForm.addEventListener(
+    "submit",
+    function(event){
+
+        const electionTitle =
+            title.value.trim();
+
+
+        /*
+         * Title validation
+         */
+
+        if(
+            electionTitle.length < 3
+        ){
+
+            event.preventDefault();
+
+            alert(
+                "Election title must contain at least 3 characters."
+            );
+
+            title.focus();
+
+            return;
+
+        }
+
+
+        /*
+         * Date validation
+         */
+
+        if(!validateDates()){
+
+            event.preventDefault();
+
+            alert(
+                "Please make sure the end date is later than the start date."
+            );
+
+            endDate.focus();
+
+            return;
+
+        }
+
+
+        /*
+         * Loading state
+         */
+
+        updateBtn.disabled =
+            true;
+
+        updateBtn.style.opacity =
+            ".75";
+
+        updateIcon.className =
+            "bi bi-arrow-repeat spinning";
+
+        updateText.textContent =
+            "Updating Election...";
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

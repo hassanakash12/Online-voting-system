@@ -1,0 +1,2402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Admin Dashboard | AI Online Voting System</title>
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+
+<style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root{
+
+    --primary:#0f62fe;
+    --primary-dark:#0645c0;
+    --secondary:#00b8ff;
+
+    --success:#16a34a;
+    --warning:#f59e0b;
+    --danger:#dc3545;
+
+    --bg:#f4f7fb;
+    --card:#ffffff;
+
+    --text:#172033;
+    --muted:#7b8798;
+
+    --border:#e7ebf2;
+
+    --sidebar-width:270px;
+
+    --shadow:
+    0 10px 30px rgba(15,23,42,.07);
+
+    --shadow-hover:
+    0 20px 45px rgba(15,23,42,.13);
+
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+body.dark{
+
+    --bg:#0b1220;
+
+    --card:#111a2c;
+
+    --text:#f1f5f9;
+
+    --muted:#94a3b8;
+
+    --border:#253149;
+
+    --shadow:
+    0 10px 30px rgba(0,0,0,.25);
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Inter',sans-serif;
+
+}
+
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+
+body{
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+    transition:
+    background .3s ease,
+    color .3s ease;
+
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar{
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    width:var(--sidebar-width);
+
+    height:100vh;
+
+    background:
+    linear-gradient(
+        180deg,
+        #071d49 0%,
+        #0b327d 55%,
+        #0f62fe 100%
+    );
+
+    color:white;
+
+    padding:24px 16px;
+
+    z-index:1000;
+
+    display:flex;
+
+    flex-direction:column;
+
+    box-shadow:
+    10px 0 35px rgba(0,0,0,.12);
+
+    transition:.3s ease;
+
+}
+
+
+/* Brand */
+
+.sidebar-brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:5px 10px 25px;
+
+    border-bottom:
+    1px solid rgba(255,255,255,.15);
+
+}
+
+
+.brand-icon{
+
+    width:48px;
+
+    height:48px;
+
+    border-radius:14px;
+
+    background:white;
+
+    color:var(--primary);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:21px;
+
+    box-shadow:
+    0 8px 20px rgba(0,0,0,.2);
+
+}
+
+
+.brand-text h2{
+
+    font-size:16px;
+
+    font-weight:800;
+
+}
+
+
+.brand-text span{
+
+    font-size:10px;
+
+    opacity:.7;
+
+    display:block;
+
+    margin-top:3px;
+
+}
+
+
+/* Navigation */
+
+.nav-title{
+
+    color:rgba(255,255,255,.45);
+
+    font-size:10px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1.5px;
+
+    font-weight:700;
+
+    margin:
+    25px 12px 10px;
+
+}
+
+
+.nav-menu{
+
+    list-style:none;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:5px;
+
+}
+
+
+.nav-menu li a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:13px;
+
+    padding:12px 13px;
+
+    border-radius:11px;
+
+    color:rgba(255,255,255,.78);
+
+    text-decoration:none;
+
+    font-size:13px;
+
+    font-weight:500;
+
+    transition:.25s ease;
+
+}
+
+
+.nav-menu li a i{
+
+    width:20px;
+
+    text-align:center;
+
+    font-size:15px;
+
+}
+
+
+.nav-menu li a:hover{
+
+    background:
+    rgba(255,255,255,.12);
+
+    color:white;
+
+    transform:translateX(4px);
+
+}
+
+
+.nav-menu li a.active{
+
+    background:
+    rgba(255,255,255,.17);
+
+    color:white;
+
+    box-shadow:
+    inset 3px 0 0 white;
+
+}
+
+
+/* Sidebar Bottom */
+
+.sidebar-bottom{
+
+    margin-top:auto;
+
+    padding-top:18px;
+
+    border-top:
+    1px solid rgba(255,255,255,.15);
+
+}
+
+
+.admin-mini{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:10px;
+
+}
+
+
+.admin-avatar{
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:50%;
+
+    background:
+    linear-gradient(135deg,#fff,#bdeaff);
+
+    color:var(--primary);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:800;
+
+}
+
+
+.admin-mini-info{
+
+    overflow:hidden;
+
+}
+
+
+.admin-mini-info strong{
+
+    display:block;
+
+    font-size:12px;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+
+.admin-mini-info span{
+
+    font-size:10px;
+
+    opacity:.6;
+
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main{
+
+    margin-left:var(--sidebar-width);
+
+    min-height:100vh;
+
+    transition:.3s ease;
+
+}
+
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar{
+
+    height:78px;
+
+    background:var(--card);
+
+    border-bottom:
+    1px solid var(--border);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 32px;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+
+    transition:.3s;
+
+}
+
+
+.top-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+
+.menu-btn{
+
+    display:none;
+
+    border:none;
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    width:40px;
+
+    height:40px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:17px;
+
+}
+
+
+.page-heading h1{
+
+    font-size:20px;
+
+    font-weight:700;
+
+}
+
+
+.page-heading p{
+
+    color:var(--muted);
+
+    font-size:11px;
+
+    margin-top:3px;
+
+}
+
+
+.top-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+
+.icon-btn{
+
+    width:40px;
+
+    height:40px;
+
+    border:none;
+
+    border-radius:11px;
+
+    background:var(--bg);
+
+    color:var(--muted);
+
+    cursor:pointer;
+
+    position:relative;
+
+    transition:.25s;
+
+}
+
+
+.icon-btn:hover{
+
+    color:var(--primary);
+
+    transform:translateY(-2px);
+
+}
+
+
+.notification-dot{
+
+    position:absolute;
+
+    width:7px;
+
+    height:7px;
+
+    background:#ef4444;
+
+    border:2px solid var(--card);
+
+    border-radius:50%;
+
+    right:8px;
+
+    top:7px;
+
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content{
+
+    padding:30px 32px 40px;
+
+    max-width:1500px;
+
+    margin:auto;
+
+}
+
+
+/* =========================================================
+   WELCOME
+========================================================= */
+
+.welcome{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+        120deg,
+        #0a3d9c,
+        #0f62fe,
+        #00b8ff
+    );
+
+    color:white;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    margin-bottom:25px;
+
+    box-shadow:
+    0 15px 35px rgba(15,98,254,.2);
+
+}
+
+
+.welcome::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:230px;
+
+    height:230px;
+
+    border-radius:50%;
+
+    background:
+    rgba(255,255,255,.08);
+
+    right:-60px;
+
+    top:-100px;
+
+}
+
+
+.welcome::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:150px;
+
+    height:150px;
+
+    border-radius:50%;
+
+    background:
+    rgba(255,255,255,.06);
+
+    right:100px;
+
+    bottom:-100px;
+
+}
+
+
+.welcome-content{
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+
+.welcome h2{
+
+    font-size:23px;
+
+    font-weight:700;
+
+}
+
+
+.welcome p{
+
+    margin-top:7px;
+
+    font-size:13px;
+
+    opacity:.8;
+
+}
+
+
+.welcome-date{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin-top:18px;
+
+    background:
+    rgba(255,255,255,.13);
+
+    padding:8px 13px;
+
+    border-radius:8px;
+
+    font-size:11px;
+
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:18px;
+
+    margin-bottom:28px;
+
+}
+
+
+.stat-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    padding:20px;
+
+    box-shadow:var(--shadow);
+
+    transition:.3s;
+
+}
+
+
+.stat-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:var(--shadow-hover);
+
+}
+
+
+.stat-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+
+.stat-icon{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:18px;
+
+}
+
+
+.icon-blue{
+
+    color:#0f62fe;
+
+    background:#e9f1ff;
+
+}
+
+
+.icon-green{
+
+    color:#16a34a;
+
+    background:#eaf9ef;
+
+}
+
+
+.icon-orange{
+
+    color:#d97706;
+
+    background:#fff5df;
+
+}
+
+
+.icon-purple{
+
+    color:#7c3aed;
+
+    background:#f1eaff;
+
+}
+
+
+.stat-change{
+
+    font-size:10px;
+
+    font-weight:600;
+
+    color:#16a34a;
+
+    background:#ecfdf3;
+
+    padding:5px 8px;
+
+    border-radius:20px;
+
+}
+
+
+.stat-card h3{
+
+    font-size:24px;
+
+    margin-top:17px;
+
+    font-weight:700;
+
+}
+
+
+.stat-card p{
+
+    color:var(--muted);
+
+    font-size:11px;
+
+    margin-top:4px;
+
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.section-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+
+}
+
+
+.section-header h2{
+
+    font-size:17px;
+
+}
+
+
+.section-header p{
+
+    color:var(--muted);
+
+    font-size:11px;
+
+    margin-top:4px;
+
+}
+
+
+/* =========================================================
+   MANAGEMENT GRID
+========================================================= */
+
+.management-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:18px;
+
+}
+
+
+.management-card{
+
+    position:relative;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:17px;
+
+    padding:23px;
+
+    box-shadow:var(--shadow);
+
+    transition:.3s ease;
+
+    overflow:hidden;
+
+}
+
+
+.management-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:100px;
+
+    height:100px;
+
+    border-radius:50%;
+
+    background:rgba(15,98,254,.04);
+
+    right:-45px;
+
+    bottom:-45px;
+
+    transition:.3s;
+
+}
+
+
+.management-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:var(--shadow-hover);
+
+    border-color:
+    rgba(15,98,254,.18);
+
+}
+
+
+.management-card:hover::after{
+
+    transform:scale(1.6);
+
+}
+
+
+.card-icon{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:13px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:20px;
+
+    margin-bottom:17px;
+
+}
+
+
+.card-blue{
+
+    background:#eaf2ff;
+
+    color:#0f62fe;
+
+}
+
+
+.card-purple{
+
+    background:#f1eaff;
+
+    color:#7c3aed;
+
+}
+
+
+.card-orange{
+
+    background:#fff4df;
+
+    color:#d97706;
+
+}
+
+
+.card-green{
+
+    background:#eaf9ef;
+
+    color:#16a34a;
+
+}
+
+
+.card-red{
+
+    background:#ffeded;
+
+    color:#dc3545;
+
+}
+
+
+.card-cyan{
+
+    background:#e7faff;
+
+    color:#0891b2;
+
+}
+
+
+.card-yellow{
+
+    background:#fff9db;
+
+    color:#ca8a04;
+
+}
+
+
+.management-card h3{
+
+    font-size:15px;
+
+    margin-bottom:7px;
+
+}
+
+
+.management-card p{
+
+    color:var(--muted);
+
+    font-size:11px;
+
+    line-height:1.7;
+
+    min-height:38px;
+
+}
+
+
+.card-link{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    margin-top:17px;
+
+    color:var(--primary);
+
+    font-size:11px;
+
+    font-weight:700;
+
+    text-decoration:none;
+
+    transition:.25s;
+
+}
+
+
+.card-link i{
+
+    font-size:10px;
+
+    transition:.25s;
+
+}
+
+
+.management-card:hover
+.card-link i{
+
+    transform:translateX(5px);
+
+}
+
+
+/* =========================================================
+   QUICK ACTIONS
+========================================================= */
+
+.quick-panel{
+
+    margin-top:28px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:17px;
+
+    padding:23px;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+.quick-actions{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:18px;
+
+}
+
+
+.quick-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:10px 14px;
+
+    border-radius:9px;
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    border:1px solid var(--border);
+
+    text-decoration:none;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+
+.quick-btn:hover{
+
+    color:var(--primary);
+
+    border-color:
+    rgba(15,98,254,.3);
+
+    transform:translateY(-2px);
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+
+    text-align:center;
+
+    padding:28px 10px 5px;
+
+    color:var(--muted);
+
+    font-size:10px;
+
+}
+
+
+.footer strong{
+
+    color:var(--primary);
+
+}
+
+
+/* =========================================================
+   MOBILE OVERLAY
+========================================================= */
+
+.overlay{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    z-index:999;
+
+}
+
+
+.overlay.show{
+
+    display:block;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1100px){
+
+    .stats-grid{
+
+        grid-template-columns:
+        repeat(2,1fr);
+
+    }
+
+    .management-grid{
+
+        grid-template-columns:
+        repeat(2,1fr);
+
+    }
+
+}
+
+
+@media(max-width:850px){
+
+    :root{
+
+        --sidebar-width:270px;
+
+    }
+
+    .sidebar{
+
+        transform:translateX(-100%);
+
+    }
+
+    .sidebar.open{
+
+        transform:translateX(0);
+
+    }
+
+    .main{
+
+        margin-left:0;
+
+    }
+
+    .menu-btn{
+
+        display:block;
+
+    }
+
+    .topbar{
+
+        padding:0 18px;
+
+    }
+
+    .content{
+
+        padding:22px 18px 30px;
+
+    }
+
+}
+
+
+@media(max-width:600px){
+
+    .stats-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .management-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .welcome{
+
+        padding:23px;
+
+    }
+
+    .welcome h2{
+
+        font-size:19px;
+
+    }
+
+    .page-heading h1{
+
+        font-size:17px;
+
+    }
+
+    .page-heading p{
+
+        display:none;
+
+    }
+
+    .top-actions .icon-btn:nth-child(2){
+
+        display:none;
+
+    }
+
+}
+
+
+@media(max-width:420px){
+
+    .content{
+
+        padding:18px 12px 25px;
+
+    }
+
+    .topbar{
+
+        padding:0 12px;
+
+    }
+
+    .brand-text h2{
+
+        font-size:14px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     MOBILE OVERLAY
+===================================================== -->
+
+<div class="overlay" id="overlay"></div>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar" id="sidebar">
+
+
+    <!-- BRAND -->
+
+    <div class="sidebar-brand">
+
+        <div class="brand-icon">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+        </div>
+
+        <div class="brand-text">
+
+            <h2>AI Voting System</h2>
+
+            <span>ADMIN CONTROL PANEL</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN MENU -->
+
+    <div class="nav-title">
+        Main Menu
+    </div>
+
+
+    <ul class="nav-menu">
+
+        <li>
+
+            <a href="/admin" class="active">
+
+                <i class="fa-solid fa-gauge-high"></i>
+
+                Dashboard
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="/voters">
+
+                <i class="fa-solid fa-users"></i>
+
+                Voter Management
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="/candidates">
+
+                <i class="fa-solid fa-user-tie"></i>
+
+                Candidate Management
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="/elections">
+
+                <i class="fa-solid fa-calendar-days"></i>
+
+                Election Management
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="{{ url_for('results') }}">
+
+                <i class="fa-solid fa-chart-column"></i>
+
+                Election Results
+
+            </a>
+
+        </li>
+
+    </ul>
+
+
+    <!-- SYSTEM -->
+
+    <div class="nav-title">
+        System
+    </div>
+
+
+    <ul class="nav-menu">
+
+        <li>
+
+            <a href="/admin/notifications">
+
+                <i class="fa-solid fa-bell"></i>
+
+                Notifications
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="/chatbot">
+
+                <i class="fa-solid fa-robot"></i>
+
+                AI Assistant
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="/settings">
+
+                <i class="fa-solid fa-gear"></i>
+
+                Settings
+
+            </a>
+
+        </li>
+
+    </ul>
+
+
+    <!-- SIDEBAR BOTTOM -->
+
+    <div class="sidebar-bottom">
+
+        <div class="admin-mini">
+
+            <div class="admin-avatar">
+
+                <i class="fa-solid fa-user-shield"></i>
+
+            </div>
+
+            <div class="admin-mini-info">
+
+                <strong>{{ session.name }}</strong>
+
+                <span>System Administrator</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- =================================================
+         TOPBAR
+    ================================================= -->
+
+    <header class="topbar">
+
+
+        <div class="top-left">
+
+
+            <button
+                class="menu-btn"
+                id="menuBtn">
+
+                <i class="fa-solid fa-bars"></i>
+
+            </button>
+
+
+            <div class="page-heading">
+
+                <h1>Admin Dashboard</h1>
+
+                <p>Manage your complete voting system</p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="top-actions">
+
+
+            <!-- DARK MODE -->
+
+            <button
+                class="icon-btn"
+                id="themeBtn"
+                title="Toggle Theme">
+
+                <i class="fa-solid fa-moon"
+                   id="themeIcon"></i>
+
+            </button>
+
+
+            <!-- NOTIFICATIONS -->
+
+            <a
+                href="/admin/notifications"
+                class="icon-btn"
+                title="Notifications"
+                style="display:flex;align-items:center;justify-content:center;text-decoration:none;">
+
+                <i class="fa-regular fa-bell"></i>
+
+                <span class="notification-dot"></span>
+
+            </a>
+
+
+        </div>
+
+
+    </header>
+
+
+    <!-- =================================================
+         CONTENT
+    ================================================= -->
+
+    <section class="content">
+
+
+        <!-- =================================================
+             WELCOME BANNER
+        ================================================= -->
+
+        <div class="welcome">
+
+            <div class="welcome-content">
+
+                <h2>
+
+                    Welcome back,
+                    {{ session.name }} 👋
+
+                </h2>
+
+                <p>
+
+                    Monitor elections, voters, candidates and
+                    results from your centralized control panel.
+
+                </p>
+
+
+                <div class="welcome-date">
+
+                    <i class="fa-regular fa-calendar"></i>
+
+                    <span id="currentDate">
+
+                        Loading date...
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             STATISTICS
+        ================================================= -->
+
+        <div class="stats-grid">
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon icon-blue">
+
+                        <i class="fa-solid fa-users"></i>
+
+                    </div>
+
+                    <span class="stat-change">
+
+                        <i class="fa-solid fa-arrow-up"></i>
+                        Active
+
+                    </span>
+
+                </div>
+
+                <h3>Voters</h3>
+
+                <p>Registered voters</p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon icon-green">
+
+                        <i class="fa-solid fa-user-tie"></i>
+
+                    </div>
+
+                    <span class="stat-change">
+
+                        <i class="fa-solid fa-check"></i>
+                        Managed
+
+                    </span>
+
+                </div>
+
+                <h3>Candidates</h3>
+
+                <p>Election candidates</p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon icon-orange">
+
+                        <i class="fa-solid fa-calendar-check"></i>
+
+                    </div>
+
+                    <span class="stat-change">
+
+                        <i class="fa-solid fa-circle"></i>
+                        System
+
+                    </span>
+
+                </div>
+
+                <h3>Elections</h3>
+
+                <p>Election management</p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon icon-purple">
+
+                        <i class="fa-solid fa-chart-pie"></i>
+
+                    </div>
+
+                    <span class="stat-change">
+
+                        <i class="fa-solid fa-bolt"></i>
+                        Live
+
+                    </span>
+
+                </div>
+
+                <h3>Results</h3>
+
+                <p>Voting analytics</p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             MANAGEMENT
+        ================================================= -->
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>System Management</h2>
+
+                <p>
+                    Access and manage all major voting modules
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="management-grid">
+
+
+            <!-- VOTERS -->
+
+            <div class="management-card">
+
+                <div class="card-icon card-blue">
+
+                    <i class="fa-solid fa-users"></i>
+
+                </div>
+
+                <h3>Voter Management</h3>
+
+                <p>
+
+                    Add, edit, approve, reject and manage
+                    registered voters.
+
+                </p>
+
+                <a href="/voters" class="card-link">
+
+                    Manage Voters
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+            <!-- CANDIDATES -->
+
+            <div class="management-card">
+
+                <div class="card-icon card-purple">
+
+                    <i class="fa-solid fa-user-tie"></i>
+
+                </div>
+
+                <h3>Candidate Management</h3>
+
+                <p>
+
+                    Add candidates, manage candidate profiles
+                    and election participation.
+
+                </p>
+
+                <a href="/candidates" class="card-link">
+
+                    Manage Candidates
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+            <!-- ELECTION -->
+
+            <div class="management-card">
+
+                <div class="card-icon card-orange">
+
+                    <i class="fa-solid fa-calendar-days"></i>
+
+                </div>
+
+                <h3>Election Management</h3>
+
+                <p>
+
+                    Create, start, monitor and end elections
+                    securely.
+
+                </p>
+
+                <a href="/elections" class="card-link">
+
+                    Manage Elections
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+            <!-- RESULTS -->
+
+            <div class="management-card">
+
+                <div class="card-icon card-green">
+
+                    <i class="fa-solid fa-chart-column"></i>
+
+                </div>
+
+                <h3>Election Results</h3>
+
+                <p>
+
+                    View voting results, candidate performance
+                    and election analytics.
+
+                </p>
+
+                <a
+                    href="{{ url_for('results') }}"
+                    class="card-link">
+
+                    View Results
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+            <!-- SETTINGS -->
+
+            <div class="management-card">
+
+                <div class="card-icon card-red">
+
+                    <i class="fa-solid fa-gear"></i>
+
+                </div>
+
+                <h3>System Settings</h3>
+
+                <p>
+
+                    Configure system options and administrative
+                    settings.
+
+                </p>
+
+                <a href="/settings" class="card-link">
+
+                    Open Settings
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+            <!-- AI -->
+
+            <div class="management-card">
+
+                <div class="card-icon card-cyan">
+
+                    <i class="fa-solid fa-robot"></i>
+
+                </div>
+
+                <h3>AI Assistant</h3>
+
+                <p>
+
+                    Get AI-powered assistance for election
+                    system queries.
+
+                </p>
+
+                <a href="/chatbot" class="card-link">
+
+                    Open AI Assistant
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+            <!-- NOTIFICATIONS -->
+
+            <div class="management-card">
+
+                <div class="card-icon card-yellow">
+
+                    <i class="fa-solid fa-bell"></i>
+
+                </div>
+
+                <h3>Notifications</h3>
+
+                <p>
+
+                    Send election updates, announcements and
+                    important voter notifications.
+
+                </p>
+
+                <a
+                    href="/admin/notifications"
+                    class="card-link">
+
+                    Manage Notifications
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             QUICK ACTIONS
+        ================================================= -->
+
+        <div class="quick-panel">
+
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>Quick Actions</h2>
+
+                    <p>
+                        Frequently used administrative actions
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="quick-actions">
+
+
+                <a href="/voters"
+                   class="quick-btn">
+
+                    <i class="fa-solid fa-user-plus"></i>
+
+                    Manage Voters
+
+                </a>
+
+
+                <a href="/candidates"
+                   class="quick-btn">
+
+                    <i class="fa-solid fa-user-tie"></i>
+
+                    Candidates
+
+                </a>
+
+
+                <a href="/elections"
+                   class="quick-btn">
+
+                    <i class="fa-solid fa-calendar-plus"></i>
+
+                    Elections
+
+                </a>
+
+
+                <a
+                    href="{{ url_for('results') }}"
+                    class="quick-btn">
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                    Results
+
+                </a>
+
+
+                <a href="/admin/notifications"
+                   class="quick-btn">
+
+                    <i class="fa-solid fa-paper-plane"></i>
+
+                    Notifications
+
+                </a>
+
+
+                <a href="/chatbot"
+                   class="quick-btn">
+
+                    <i class="fa-solid fa-robot"></i>
+
+                    AI Assistant
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================= -->
+
+        <div class="footer">
+
+            <p>
+
+                © 2026
+                <strong>AI Online Voting System</strong>
+
+                • Admin Control Panel
+
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+<script>
+
+/* =========================================================
+   MOBILE SIDEBAR
+========================================================= */
+
+const menuBtn =
+document.getElementById("menuBtn");
+
+const sidebar =
+document.getElementById("sidebar");
+
+const overlay =
+document.getElementById("overlay");
+
+
+menuBtn.addEventListener("click",function(){
+
+    sidebar.classList.toggle("open");
+
+    overlay.classList.toggle("show");
+
+});
+
+
+overlay.addEventListener("click",function(){
+
+    sidebar.classList.remove("open");
+
+    overlay.classList.remove("show");
+
+});
+
+
+/* =========================================================
+   CLOSE SIDEBAR ON LINK CLICK
+========================================================= */
+
+document
+.querySelectorAll(".nav-menu a")
+.forEach(function(link){
+
+    link.addEventListener("click",function(){
+
+        if(window.innerWidth <= 850){
+
+            sidebar.classList.remove("open");
+
+            overlay.classList.remove("show");
+
+        }
+
+    });
+
+});
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function updateDate(){
+
+    const dateElement =
+    document.getElementById("currentDate");
+
+    const now = new Date();
+
+    const options = {
+
+        weekday:"long",
+
+        year:"numeric",
+
+        month:"long",
+
+        day:"numeric"
+
+    };
+
+    dateElement.textContent =
+    now.toLocaleDateString("en-US",options);
+
+}
+
+updateDate();
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+const themeBtn =
+document.getElementById("themeBtn");
+
+const themeIcon =
+document.getElementById("themeIcon");
+
+
+const savedTheme =
+localStorage.getItem("adminTheme");
+
+
+if(savedTheme === "dark"){
+
+    document.body.classList.add("dark");
+
+    themeIcon.classList.remove("fa-moon");
+
+    themeIcon.classList.add("fa-sun");
+
+}
+
+
+themeBtn.addEventListener("click",function(){
+
+    document.body.classList.toggle("dark");
+
+
+    if(document.body.classList.contains("dark")){
+
+        localStorage.setItem(
+            "adminTheme",
+            "dark"
+        );
+
+        themeIcon.classList.remove(
+            "fa-moon"
+        );
+
+        themeIcon.classList.add(
+            "fa-sun"
+        );
+
+    }
+
+    else{
+
+        localStorage.setItem(
+            "adminTheme",
+            "light"
+        );
+
+        themeIcon.classList.remove(
+            "fa-sun"
+        );
+
+        themeIcon.classList.add(
+            "fa-moon"
+        );
+
+    }
+
+});
+
+
+/* =========================================================
+   CARD ENTRANCE ANIMATION
+========================================================= */
+
+const cards =
+document.querySelectorAll(
+    ".management-card,.stat-card"
+);
+
+
+const observer =
+new IntersectionObserver(
+    function(entries){
+
+        entries.forEach(function(entry){
+
+            if(entry.isIntersecting){
+
+                entry.target.style.opacity = "1";
+
+                entry.target.style.transform =
+                "translateY(0)";
+
+            }
+
+        });
+
+    },
+    {
+        threshold:.1
+    }
+);
+
+
+cards.forEach(function(card){
+
+    card.style.opacity = "0";
+
+    card.style.transform =
+    "translateY(20px)";
+
+    card.style.transition =
+    "opacity .5s ease, transform .5s ease";
+
+    observer.observe(card);
+
+});
+
+
+/* =========================================================
+   PREVENT ACCIDENTAL DOUBLE CLICK
+========================================================= */
+
+document
+.querySelectorAll(".card-link,.quick-btn")
+.forEach(function(link){
+
+    link.addEventListener("click",function(){
+
+        this.style.opacity = ".65";
+
+    });
+
+});
+
+</script>
+
+
+</body>
+
+</html>

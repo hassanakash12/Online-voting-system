@@ -1,0 +1,2380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Edit Candidate | AI Voting System</title>
+
+
+<!-- GOOGLE FONT -->
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet">
+
+
+<!-- BOOTSTRAP ICONS -->
+
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+<style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root{
+
+    --primary:#2563eb;
+    --primary-dark:#1747b5;
+    --cyan:#06b6d4;
+
+    --dark:#101828;
+    --text:#344054;
+    --muted:#667085;
+
+    --bg:#f4f7fb;
+    --card:#ffffff;
+
+    --border:#e4e7ec;
+
+    --success:#16a34a;
+    --danger:#dc2626;
+
+    --shadow:
+        0 20px 55px rgba(16,24,40,.09);
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Inter',sans-serif;
+
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body{
+
+    min-height:100vh;
+
+    color:var(--text);
+
+    background:
+
+        radial-gradient(
+            circle at 5% 5%,
+            rgba(37,99,235,.13),
+            transparent 26%
+        ),
+
+        radial-gradient(
+            circle at 95% 90%,
+            rgba(6,182,212,.12),
+            transparent 28%
+        ),
+
+        var(--bg);
+
+}
+
+
+/* =========================================================
+   DECORATIVE CIRCLES
+========================================================= */
+
+.bg-circle{
+
+    position:fixed;
+
+    border-radius:50%;
+
+    pointer-events:none;
+
+    z-index:-1;
+
+}
+
+
+.bg-one{
+
+    width:280px;
+
+    height:280px;
+
+    top:-130px;
+
+    left:-100px;
+
+    background:
+        rgba(37,99,235,.07);
+
+}
+
+
+.bg-two{
+
+    width:240px;
+
+    height:240px;
+
+    right:-110px;
+
+    bottom:-100px;
+
+    background:
+        rgba(6,182,212,.08);
+
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page{
+
+    width:100%;
+
+    max-width:1050px;
+
+    margin:0 auto;
+
+    padding:30px 20px 45px;
+
+}
+
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.topbar{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:22px;
+
+}
+
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+
+}
+
+
+.brand-logo{
+
+    width:46px;
+
+    height:46px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:13px;
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
+
+    box-shadow:
+        0 10px 25px rgba(37,99,235,.25);
+
+    font-size:19px;
+
+}
+
+
+.brand-name{
+
+    color:var(--dark);
+
+    font-size:13px;
+
+    font-weight:800;
+
+}
+
+
+.brand-sub{
+
+    margin-top:3px;
+
+    color:var(--muted);
+
+    font-size:8px;
+
+    text-transform:uppercase;
+
+    letter-spacing:.9px;
+
+}
+
+
+.back-button{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    padding:10px 14px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:9px;
+
+    color:var(--text);
+
+    background:var(--card);
+
+    text-decoration:none;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    box-shadow:
+        0 5px 15px rgba(16,24,40,.04);
+
+    transition:.25s;
+
+}
+
+
+.back-button:hover{
+
+    color:var(--primary);
+
+    border-color:#bfd2ff;
+
+    transform:translateY(-2px);
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.page-header{
+
+    margin-bottom:18px;
+
+}
+
+
+.breadcrumb{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    margin-bottom:8px;
+
+    color:var(--muted);
+
+    font-size:8px;
+
+}
+
+
+.breadcrumb strong{
+
+    color:var(--primary);
+
+}
+
+
+.page-header h1{
+
+    color:var(--dark);
+
+    font-size:25px;
+
+    font-weight:800;
+
+    letter-spacing:-.7px;
+
+}
+
+
+.page-header p{
+
+    margin-top:5px;
+
+    color:var(--muted);
+
+    font-size:9px;
+
+}
+
+
+/* =========================================================
+   MAIN CARD
+========================================================= */
+
+.card{
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.98);
+
+    border:
+        1px solid rgba(255,255,255,.8);
+
+    border-radius:20px;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+/* =========================================================
+   CARD TOP
+========================================================= */
+
+.card-top{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:25px 30px;
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            120deg,
+            #082b70,
+            #2563eb,
+            #06b6d4
+        );
+
+}
+
+
+.card-top::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:210px;
+
+    height:210px;
+
+    border-radius:50%;
+
+    right:-80px;
+
+    top:-130px;
+
+    background:
+        rgba(255,255,255,.08);
+
+}
+
+
+.card-top::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:120px;
+
+    height:120px;
+
+    border-radius:50%;
+
+    right:190px;
+
+    bottom:-90px;
+
+    background:
+        rgba(255,255,255,.06);
+
+}
+
+
+.card-top-content{
+
+    position:relative;
+
+    z-index:2;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+
+.top-icon{
+
+    width:48px;
+
+    height:48px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:13px;
+
+    background:
+        rgba(255,255,255,.15);
+
+    border:
+        1px solid rgba(255,255,255,.2);
+
+    backdrop-filter:blur(10px);
+
+    font-size:20px;
+
+}
+
+
+.card-top h2{
+
+    font-size:15px;
+
+    font-weight:800;
+
+}
+
+
+.card-top p{
+
+    margin-top:4px;
+
+    color:rgba(255,255,255,.72);
+
+    font-size:8px;
+
+}
+
+
+/* =========================================================
+   CARD BODY
+========================================================= */
+
+.card-body{
+
+    padding:30px;
+
+}
+
+
+/* =========================================================
+   PHOTO SECTION
+========================================================= */
+
+.photo-section{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:22px;
+
+    padding:18px;
+
+    margin-bottom:25px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:15px;
+
+    background:#f8fafc;
+
+}
+
+
+.photo-preview{
+
+    position:relative;
+
+    width:105px;
+
+    height:105px;
+
+    min-width:105px;
+
+}
+
+
+.photo-preview img{
+
+    width:105px;
+
+    height:105px;
+
+    display:block;
+
+    object-fit:cover;
+
+    border-radius:20px;
+
+    border:
+        3px solid white;
+
+    outline:
+        2px solid #2563eb;
+
+    box-shadow:
+        0 10px 25px rgba(37,99,235,.18);
+
+}
+
+
+.photo-badge{
+
+    position:absolute;
+
+    right:-5px;
+
+    bottom:-5px;
+
+    width:29px;
+
+    height:29px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    color:white;
+
+    background:#2563eb;
+
+    border:3px solid white;
+
+    font-size:10px;
+
+}
+
+
+.photo-info h3{
+
+    color:var(--dark);
+
+    font-size:13px;
+
+    font-weight:800;
+
+}
+
+
+.photo-info p{
+
+    max-width:550px;
+
+    margin-top:5px;
+
+    color:var(--muted);
+
+    font-size:8px;
+
+    line-height:1.6;
+
+}
+
+
+.photo-status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:5px;
+
+    margin-top:9px;
+
+    padding:5px 8px;
+
+    border-radius:20px;
+
+    color:#15803d;
+
+    background:#ecfdf3;
+
+    font-size:7px;
+
+    font-weight:700;
+
+}
+
+
+.photo-status span{
+
+    width:5px;
+
+    height:5px;
+
+    border-radius:50%;
+
+    background:#16a34a;
+
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:17px;
+
+}
+
+
+.section-icon{
+
+    width:36px;
+
+    height:36px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:10px;
+
+    color:var(--primary);
+
+    background:#eaf2ff;
+
+    font-size:14px;
+
+}
+
+
+.section-title h3{
+
+    color:var(--dark);
+
+    font-size:13px;
+
+    font-weight:800;
+
+}
+
+
+.section-title p{
+
+    margin-top:3px;
+
+    color:var(--muted);
+
+    font-size:8px;
+
+}
+
+
+/* =========================================================
+   FORM GRID
+========================================================= */
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:20px;
+
+}
+
+
+.form-group{
+
+    position:relative;
+
+}
+
+
+.full{
+
+    grid-column:1 / -1;
+
+}
+
+
+/* =========================================================
+   LABEL
+========================================================= */
+
+.form-label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:5px;
+
+    margin-bottom:7px;
+
+    color:#344054;
+
+    font-size:9px;
+
+    font-weight:700;
+
+}
+
+
+.required{
+
+    color:#ef4444;
+
+}
+
+
+/* =========================================================
+   INPUT WRAPPER
+========================================================= */
+
+.input-wrapper{
+
+    position:relative;
+
+}
+
+
+.input-icon{
+
+    position:absolute;
+
+    left:14px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#98a2b3;
+
+    font-size:12px;
+
+    pointer-events:none;
+
+    transition:.2s;
+
+}
+
+
+.form-control{
+
+    width:100%;
+
+    min-height:48px;
+
+    padding:
+        0 14px 0 40px;
+
+    border:
+        1.5px solid var(--border);
+
+    border-radius:10px;
+
+    outline:none;
+
+    color:var(--dark);
+
+    background:#f9fafc;
+
+    font-size:10px;
+
+    transition:.25s;
+
+}
+
+
+.form-control:hover{
+
+    border-color:#c7d0dc;
+
+}
+
+
+.form-control:focus{
+
+    border-color:var(--primary);
+
+    background:white;
+
+    box-shadow:
+        0 0 0 4px rgba(37,99,235,.07);
+
+}
+
+
+.input-wrapper:focus-within .input-icon{
+
+    color:var(--primary);
+
+}
+
+
+/* =========================================================
+   FILE INPUT
+========================================================= */
+
+.file-wrapper{
+
+    position:relative;
+
+}
+
+
+.file-input{
+
+    width:100%;
+
+    min-height:48px;
+
+    padding:13px 14px;
+
+    border:
+        1.5px dashed #cbd5e1;
+
+    border-radius:10px;
+
+    color:var(--muted);
+
+    background:#f9fafc;
+
+    font-size:9px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+
+.file-input:hover{
+
+    border-color:var(--primary);
+
+    background:#f4f8ff;
+
+}
+
+
+.file-input::file-selector-button{
+
+    margin-right:10px;
+
+    padding:7px 10px;
+
+    border:none;
+
+    border-radius:7px;
+
+    color:white;
+
+    background:var(--primary);
+
+    font-size:8px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+}
+
+
+/* =========================================================
+   TEXTAREA
+========================================================= */
+
+textarea.form-control{
+
+    min-height:135px;
+
+    padding:
+        13px 14px 13px 40px;
+
+    resize:vertical;
+
+    line-height:1.6;
+
+}
+
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+select.form-control{
+
+    appearance:none;
+
+    cursor:pointer;
+
+}
+
+
+.select-wrapper::after{
+
+    content:"\f282";
+
+    font-family:
+        "bootstrap-icons";
+
+    position:absolute;
+
+    right:14px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#98a2b3;
+
+    pointer-events:none;
+
+}
+
+
+.select-wrapper .form-control{
+
+    padding-right:38px;
+
+}
+
+
+/* =========================================================
+   HINT
+========================================================= */
+
+.form-hint{
+
+    margin-top:6px;
+
+    color:#98a2b3;
+
+    font-size:7px;
+
+}
+
+
+/* =========================================================
+   STATUS SELECT
+========================================================= */
+
+.status-preview{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    margin-top:8px;
+
+    color:var(--muted);
+
+    font-size:7px;
+
+}
+
+
+.status-dot{
+
+    width:7px;
+
+    height:7px;
+
+    border-radius:50%;
+
+}
+
+
+.status-dot.active{
+
+    background:#16a34a;
+
+    box-shadow:
+        0 0 0 4px rgba(22,163,74,.09);
+
+}
+
+
+.status-dot.inactive{
+
+    background:#94a3b8;
+
+}
+
+
+/* =========================================================
+   ACTION BAR
+========================================================= */
+
+.action-bar{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-top:28px;
+
+    padding-top:23px;
+
+    border-top:
+        1px solid var(--border);
+
+}
+
+
+.action-left{
+
+    color:#98a2b3;
+
+    font-size:7px;
+
+}
+
+
+.action-left i{
+
+    color:#16a34a;
+
+    margin-right:4px;
+
+}
+
+
+.action-buttons{
+
+    display:flex;
+
+    gap:9px;
+
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.btn{
+
+    min-height:45px;
+
+    padding:
+        0 18px;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:7px;
+
+    border-radius:9px;
+
+    text-decoration:none;
+
+    border:none;
+
+    cursor:pointer;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    transition:.25s;
+
+}
+
+
+.btn-primary{
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #4f46e5
+        );
+
+    box-shadow:
+        0 9px 20px rgba(37,99,235,.20);
+
+}
+
+
+.btn-primary:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 13px 27px rgba(37,99,235,.28);
+
+}
+
+
+.btn-secondary{
+
+    color:#475467;
+
+    background:white;
+
+    border:
+        1px solid var(--border);
+
+}
+
+
+.btn-secondary:hover{
+
+    color:var(--primary);
+
+    border-color:#bfd2ff;
+
+    background:#f8fafc;
+
+    transform:translateY(-2px);
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.security-footer{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:6px;
+
+    margin-top:19px;
+
+    color:#98a2b3;
+
+    font-size:7px;
+
+}
+
+
+.security-footer i{
+
+    color:#16a34a;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:750px){
+
+    .page{
+
+        padding:
+            20px 13px 30px;
+
+    }
+
+
+    .topbar{
+
+        align-items:flex-start;
+
+        gap:15px;
+
+    }
+
+
+    .page-header h1{
+
+        font-size:21px;
+
+    }
+
+
+    .card-top{
+
+        padding:
+            22px 20px;
+
+    }
+
+
+    .card-body{
+
+        padding:
+            22px 18px;
+
+    }
+
+
+    .form-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .full{
+
+        grid-column:auto;
+
+    }
+
+
+    .photo-section{
+
+        align-items:flex-start;
+
+    }
+
+
+    .action-bar{
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+    }
+
+
+    .action-left{
+
+        text-align:center;
+
+    }
+
+
+    .action-buttons{
+
+        width:100%;
+
+    }
+
+
+    .action-buttons .btn{
+
+        flex:1;
+
+    }
+
+}
+
+
+@media(max-width:480px){
+
+    .topbar{
+
+        flex-direction:column;
+
+    }
+
+
+    .back-button{
+
+        align-self:flex-start;
+
+    }
+
+
+    .photo-section{
+
+        flex-direction:column;
+
+        align-items:center;
+
+        text-align:center;
+
+    }
+
+
+    .photo-info p{
+
+        max-width:none;
+
+    }
+
+
+    .form-control{
+
+        min-height:46px;
+
+    }
+
+
+    .action-buttons{
+
+        flex-direction:column;
+
+    }
+
+
+    .action-buttons .btn{
+
+        width:100%;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- BACKGROUND -->
+
+<div class="bg-circle bg-one"></div>
+
+<div class="bg-circle bg-two"></div>
+
+
+<div class="page">
+
+
+<!-- =====================================================
+     TOP BAR
+===================================================== -->
+
+<div class="topbar">
+
+
+    <div class="brand">
+
+
+        <div class="brand-logo">
+
+            <i class="bi bi-shield-lock-fill"></i>
+
+        </div>
+
+
+        <div>
+
+            <div class="brand-name">
+                AI Voting System
+            </div>
+
+            <div class="brand-sub">
+                Secure Administration Portal
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <a href="/candidates"
+       class="back-button">
+
+        <i class="bi bi-arrow-left"></i>
+
+        Candidate List
+
+    </a>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     PAGE HEADER
+===================================================== -->
+
+<div class="page-header">
+
+
+    <div class="breadcrumb">
+
+        <span>
+            Administration
+        </span>
+
+        <i class="bi bi-chevron-right"></i>
+
+        <span>
+            Candidates
+        </span>
+
+        <i class="bi bi-chevron-right"></i>
+
+        <strong>
+            Edit Candidate
+        </strong>
+
+    </div>
+
+
+    <h1>
+        Edit Candidate
+    </h1>
+
+
+    <p>
+        Update candidate information, election details,
+        manifesto and account status.
+    </p>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     MAIN CARD
+===================================================== -->
+
+<div class="card">
+
+
+    <!-- =================================================
+         CARD HEADER
+    ================================================= -->
+
+    <div class="card-top">
+
+
+        <div class="card-top-content">
+
+
+            <div class="top-icon">
+
+                <i class="bi bi-person-vcard-fill"></i>
+
+            </div>
+
+
+            <div>
+
+                <h2>
+                    Candidate Management
+                </h2>
+
+                <p>
+                    Make changes to the selected election candidate.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         CARD BODY
+    ================================================= -->
+
+    <div class="card-body">
+
+
+
+        <!-- =================================================
+             PHOTO
+        ================================================= -->
+
+        <div class="photo-section">
+
+
+            <div class="photo-preview">
+
+
+                <img
+                    id="candidatePreview"
+                    src="{{ url_for('static', filename='uploads/' + candidate.photo) }}"
+                    alt="Candidate Photo">
+
+
+                <div class="photo-badge">
+
+                    <i class="bi bi-camera-fill"></i>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="photo-info">
+
+
+                <h3>
+                    Candidate Profile Photo
+                </h3>
+
+
+                <p>
+                    Current candidate profile image.
+                    You can replace this image using
+                    the upload option below.
+                </p>
+
+
+                <div class="photo-status">
+
+                    <span></span>
+
+                    Current Photo
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             BASIC INFORMATION
+        ================================================= -->
+
+        <div class="section-title">
+
+
+            <div class="section-icon">
+
+                <i class="bi bi-person-lines-fill"></i>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Candidate Information
+                </h3>
+
+                <p>
+                    Basic details of the election candidate
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+            id="candidateForm">
+
+
+            <div class="form-grid">
+
+
+
+                <!-- =================================================
+                     FULL NAME
+                ================================================= -->
+
+                <div class="form-group">
+
+
+                    <label class="form-label">
+
+                        Candidate Name
+
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+
+                        <i class="bi bi-person input-icon"></i>
+
+
+                        <input
+                            type="text"
+                            name="full_name"
+                            id="full_name"
+                            class="form-control"
+                            value="{{ candidate.full_name }}"
+                            placeholder="Enter candidate name"
+                            maxlength="100"
+                            required>
+
+
+                    </div>
+
+
+                    <div class="form-hint">
+
+                        Enter the candidate's official full name.
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PARTY
+                ================================================= -->
+
+                <div class="form-group">
+
+
+                    <label class="form-label">
+
+                        Party Name
+
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+
+                        <i class="bi bi-flag-fill input-icon"></i>
+
+
+                        <input
+                            type="text"
+                            name="party_name"
+                            id="party_name"
+                            class="form-control"
+                            value="{{ candidate.party_name }}"
+                            placeholder="Enter political party"
+                            maxlength="100"
+                            required>
+
+
+                    </div>
+
+
+                    <div class="form-hint">
+
+                        Enter the registered political party name.
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     SYMBOL
+                ================================================= -->
+
+                <div class="form-group">
+
+
+                    <label class="form-label">
+
+                        Election Symbol
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+
+                        <i class="bi bi-award-fill input-icon"></i>
+
+
+                        <input
+                            type="text"
+                            name="symbol"
+                            id="symbol"
+                            class="form-control"
+                            value="{{ candidate.symbol }}"
+                            placeholder="e.g. Eagle, Star, Book"
+                            maxlength="100">
+
+
+                    </div>
+
+
+                    <div class="form-hint">
+
+                        Candidate's official election symbol.
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PHOTO
+                ================================================= -->
+
+                <div class="form-group">
+
+
+                    <label class="form-label">
+
+                        Change Candidate Photo
+
+                    </label>
+
+
+                    <div class="file-wrapper">
+
+
+                        <input
+                            type="file"
+                            name="photo"
+                            id="photo"
+                            class="file-input"
+                            accept="image/png,image/jpeg,image/jpg,image/webp">
+
+
+                    </div>
+
+
+                    <div class="form-hint">
+
+                        JPG, PNG or WEBP recommended. Maximum size
+                        should be handled by your backend.
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     MANIFESTO
+                ================================================= -->
+
+                <div class="form-group full">
+
+
+                    <label class="form-label">
+
+                        Candidate Manifesto
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+
+                        <i class="bi bi-file-earmark-text input-icon"></i>
+
+
+                        <textarea
+                            name="manifesto"
+                            id="manifesto"
+                            class="form-control"
+                            placeholder="Enter candidate manifesto..."
+                            maxlength="2000">{{ candidate.manifesto }}</textarea>
+
+
+                    </div>
+
+
+                    <div class="form-hint">
+
+                        Provide the candidate's election manifesto
+                        or public policy statement.
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     STATUS
+                ================================================= -->
+
+                <div class="form-group">
+
+
+                    <label class="form-label">
+
+                        Candidate Status
+
+                    </label>
+
+
+                    <div class="input-wrapper select-wrapper">
+
+
+                        <i class="bi bi-toggle-on input-icon"></i>
+
+
+                        <select
+                            name="status"
+                            id="status"
+                            class="form-control">
+
+
+                            <option
+                                value="active"
+                                {% if candidate.status=="active" %}
+                                selected
+                                {% endif %}>
+
+                                Active
+
+                            </option>
+
+
+                            <option
+                                value="inactive"
+                                {% if candidate.status=="inactive" %}
+                                selected
+                                {% endif %}>
+
+                                Inactive
+
+                            </option>
+
+
+                        </select>
+
+
+                    </div>
+
+
+                    <div
+                        class="status-preview"
+                        id="statusPreview">
+
+
+                        <span
+                            class="status-dot active"
+                            id="statusDot">
+                        </span>
+
+
+                        <span id="statusText">
+                            Candidate is currently active
+                        </span>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ACTION BAR
+            ================================================= -->
+
+            <div class="action-bar">
+
+
+                <div class="action-left">
+
+                    <i class="bi bi-shield-check"></i>
+
+                    Changes are securely submitted
+                    to the administration system.
+
+                </div>
+
+
+                <div class="action-buttons">
+
+
+                    <a
+                        href="/candidates"
+                        class="btn btn-secondary">
+
+                        <i class="bi bi-x-lg"></i>
+
+                        Cancel
+
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="updateBtn">
+
+
+                        <i
+                            class="bi bi-check2-circle"
+                            id="updateIcon">
+                        </i>
+
+
+                        <span id="updateText">
+                            Update Candidate
+                        </span>
+
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+        </form>
+
+
+
+        <!-- =================================================
+             SECURITY FOOTER
+        ================================================= -->
+
+        <div class="security-footer">
+
+            <i class="bi bi-shield-fill-check"></i>
+
+            AI Voting System • Secure Candidate Administration
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const candidateForm =
+    document.getElementById("candidateForm");
+
+const fullName =
+    document.getElementById("full_name");
+
+const partyName =
+    document.getElementById("party_name");
+
+const manifesto =
+    document.getElementById("manifesto");
+
+const photoInput =
+    document.getElementById("photo");
+
+const candidatePreview =
+    document.getElementById("candidatePreview");
+
+const status =
+    document.getElementById("status");
+
+const statusDot =
+    document.getElementById("statusDot");
+
+const statusText =
+    document.getElementById("statusText");
+
+const updateBtn =
+    document.getElementById("updateBtn");
+
+const updateIcon =
+    document.getElementById("updateIcon");
+
+const updateText =
+    document.getElementById("updateText");
+
+
+/* =========================================================
+   PHOTO PREVIEW
+========================================================= */
+
+photoInput.addEventListener(
+    "change",
+    function(){
+
+        const file =
+            this.files[0];
+
+
+        if(!file){
+
+            return;
+
+        }
+
+
+        /*
+         * Validate image type
+         */
+
+        if(!file.type.startsWith("image/")){
+
+            alert(
+                "Please select a valid image file."
+            );
+
+            this.value = "";
+
+            return;
+
+        }
+
+
+        /*
+         * Preview image
+         */
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function(event){
+
+                candidatePreview.src =
+                    event.target.result;
+
+            };
+
+
+        reader.readAsDataURL(
+            file
+        );
+
+    }
+);
+
+
+/* =========================================================
+   STATUS PREVIEW
+========================================================= */
+
+function updateStatusPreview(){
+
+    if(status.value === "active"){
+
+        statusDot.className =
+            "status-dot active";
+
+        statusText.textContent =
+            "Candidate is currently active";
+
+    }
+
+    else{
+
+        statusDot.className =
+            "status-dot inactive";
+
+        statusText.textContent =
+            "Candidate is currently inactive";
+
+    }
+
+}
+
+
+status.addEventListener(
+    "change",
+    updateStatusPreview
+);
+
+
+updateStatusPreview();
+
+
+/* =========================================================
+   CLEAN NAME SPACES
+========================================================= */
+
+fullName.addEventListener(
+    "input",
+    function(){
+
+        this.value =
+            this.value.replace(
+                /\s{2,}/g,
+                " "
+            );
+
+    }
+);
+
+
+partyName.addEventListener(
+    "input",
+    function(){
+
+        this.value =
+            this.value.replace(
+                /\s{2,}/g,
+                " "
+            );
+
+    }
+);
+
+
+/* =========================================================
+   FORM SUBMIT
+========================================================= */
+
+candidateForm.addEventListener(
+    "submit",
+    function(event){
+
+        const name =
+            fullName.value.trim();
+
+        const party =
+            partyName.value.trim();
+
+
+        /*
+         * Candidate name validation
+         */
+
+        if(name.length < 3){
+
+            event.preventDefault();
+
+            alert(
+                "Candidate name must contain at least 3 characters."
+            );
+
+            fullName.focus();
+
+            return;
+
+        }
+
+
+        /*
+         * Party validation
+         */
+
+        if(party.length < 2){
+
+            event.preventDefault();
+
+            alert(
+                "Please enter a valid party name."
+            );
+
+            partyName.focus();
+
+            return;
+
+        }
+
+
+        /*
+         * File validation
+         */
+
+        if(photoInput.files.length > 0){
+
+            const file =
+                photoInput.files[0];
+
+
+            const allowedTypes = [
+
+                "image/jpeg",
+
+                "image/png",
+
+                "image/webp"
+
+            ];
+
+
+            if(
+                !allowedTypes.includes(
+                    file.type
+                )
+            ){
+
+                event.preventDefault();
+
+                alert(
+                    "Only JPG, PNG and WEBP images are allowed."
+                );
+
+                photoInput.focus();
+
+                return;
+
+            }
+
+        }
+
+
+        /*
+         * Loading state
+         */
+
+        updateBtn.disabled =
+            true;
+
+        updateBtn.style.opacity =
+            ".75";
+
+        updateIcon.className =
+            "bi bi-arrow-repeat";
+
+        updateIcon.style.animation =
+            "spin 1s linear infinite";
+
+        updateText.textContent =
+            "Updating Candidate...";
+
+    }
+);
+
+
+/* =========================================================
+   SPINNER
+========================================================= */
+
+const style =
+document.createElement("style");
+
+
+style.innerHTML = `
+
+@keyframes spin{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+`;
+
+
+document.head.appendChild(
+    style
+);
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Profile | AI Online Voting System</title>
+
+
+    <!-- GOOGLE FONT -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <!-- FONT AWESOME -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+
+    <style>
+
+        /* =====================================================
+           ROOT
+        ===================================================== */
+
+        :root {
+
+            --primary: #0f62fe;
+            --primary-dark: #0645c0;
+            --cyan: #00b8ff;
+
+            --success: #16a34a;
+            --danger: #dc3545;
+
+            --dark: #172033;
+            --text: #344054;
+            --muted: #7b8798;
+
+            --bg: #f4f7fb;
+            --card: #ffffff;
+
+            --border: #e5eaf1;
+
+            --shadow:
+                0 15px 40px rgba(15, 23, 42, .08);
+
+            --shadow-hover:
+                0 20px 50px rgba(15, 23, 42, .14);
+
+        }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+            font-family: 'Inter', sans-serif;
+
+        }
+
+
+        /* =====================================================
+           BODY
+        ===================================================== */
+
+        body {
+
+            min-height: 100vh;
+
+            background:
+
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(0, 184, 255, .15),
+                    transparent 25%
+                ),
+
+                radial-gradient(
+                    circle at 90% 90%,
+                    rgba(79, 70, 229, .15),
+                    transparent 28%
+                ),
+
+                #f4f7fb;
+
+            color: var(--text);
+
+            padding: 35px 20px;
+
+        }
+
+
+        /* =====================================================
+           BACKGROUND CIRCLES
+        ===================================================== */
+
+        .background-circle {
+
+            position: fixed;
+
+            border-radius: 50%;
+
+            pointer-events: none;
+
+            z-index: -1;
+
+        }
+
+
+        .circle-one {
+
+            width: 300px;
+
+            height: 300px;
+
+            top: -150px;
+
+            left: -120px;
+
+            background:
+                rgba(15, 98, 254, .08);
+
+        }
+
+
+        .circle-two {
+
+            width: 250px;
+
+            height: 250px;
+
+            right: -120px;
+
+            bottom: -100px;
+
+            background:
+                rgba(0, 184, 255, .10);
+
+        }
+
+
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
+
+        .profile-container {
+
+            width: 100%;
+
+            max-width: 1000px;
+
+            margin: 0 auto;
+
+        }
+
+
+        /* =====================================================
+           TOP HEADER
+        ===================================================== */
+
+        .top-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+        }
+
+
+        .brand-icon {
+
+            width: 52px;
+
+            height: 52px;
+
+            border-radius: 15px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: white;
+
+            font-size: 21px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f62fe,
+                    #00b8ff
+                );
+
+            box-shadow:
+                0 10px 25px rgba(15, 98, 254, .25);
+
+        }
+
+
+        .brand-text h1 {
+
+            color: #ffffff;
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+        }
+
+
+        .brand-text p {
+
+            color: rgba(255,255,255,.75);
+
+            font-size: 10px;
+
+            margin-top: 3px;
+
+        }
+
+
+        .back-dashboard {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            text-decoration: none;
+
+            background: rgba(255,255,255,.95);
+
+            color: var(--primary);
+
+            padding: 11px 15px;
+
+            border-radius: 10px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            box-shadow:
+                0 8px 20px rgba(0,0,0,.12);
+
+            transition: .25s;
+
+        }
+
+
+        .back-dashboard:hover {
+
+            transform: translateY(-2px);
+
+            color: var(--primary-dark);
+
+        }
+
+
+        /* =====================================================
+           MAIN CARD
+        ===================================================== */
+
+        .profile-card {
+
+            background: rgba(255,255,255,.98);
+
+            border: 1px solid rgba(255,255,255,.7);
+
+            border-radius: 24px;
+
+            overflow: hidden;
+
+            box-shadow: var(--shadow);
+
+        }
+
+
+        /* =====================================================
+           PROFILE HERO
+        ===================================================== */
+
+        .profile-hero {
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 38px 40px;
+
+            color: white;
+
+            background:
+
+                linear-gradient(
+                    120deg,
+                    #082b70,
+                    #0f62fe,
+                    #00b8ff
+                );
+
+        }
+
+
+        .profile-hero::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 230px;
+
+            height: 230px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,.08);
+
+            right: -70px;
+
+            top: -130px;
+
+        }
+
+
+        .profile-hero::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 140px;
+
+            height: 140px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,.06);
+
+            right: 180px;
+
+            bottom: -90px;
+
+        }
+
+
+        .hero-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 22px;
+
+        }
+
+
+        /* =====================================================
+           PROFILE AVATAR
+        ===================================================== */
+
+        .profile-avatar {
+
+            width: 92px;
+
+            height: 92px;
+
+            min-width: 92px;
+
+            border-radius: 25px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                rgba(255,255,255,.18);
+
+            border:
+                1px solid rgba(255,255,255,.35);
+
+            box-shadow:
+                0 12px 25px rgba(0,0,0,.15);
+
+            font-size: 38px;
+
+            backdrop-filter: blur(10px);
+
+        }
+
+
+        .hero-info h2 {
+
+            font-size: 24px;
+
+            font-weight: 800;
+
+        }
+
+
+        .hero-info p {
+
+            margin-top: 7px;
+
+            color: rgba(255,255,255,.78);
+
+            font-size: 12px;
+
+        }
+
+
+        .role-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            margin-top: 12px;
+
+            padding: 7px 11px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,255,255,.14);
+
+            border:
+                1px solid rgba(255,255,255,.2);
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+        }
+
+
+        .role-badge i {
+
+            color: #b7ffcf;
+
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .profile-content {
+
+            padding: 32px 40px 38px;
+
+        }
+
+
+        /* =====================================================
+           ALERT
+        ===================================================== */
+
+        .alert-message {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            padding: 13px 16px;
+
+            border-radius: 11px;
+
+            margin-bottom: 25px;
+
+            font-size: 12px;
+
+            font-weight: 500;
+
+        }
+
+
+        .alert-success {
+
+            background: #ecfdf3;
+
+            color: #15803d;
+
+            border: 1px solid #bbf7d0;
+
+        }
+
+
+        .alert-danger {
+
+            background: #fff1f2;
+
+            color: #be123c;
+
+            border: 1px solid #fecdd3;
+
+        }
+
+
+        .alert-warning {
+
+            background: #fffbeb;
+
+            color: #b45309;
+
+            border: 1px solid #fde68a;
+
+        }
+
+
+        .alert-info {
+
+            background: #eff6ff;
+
+            color: #1d4ed8;
+
+            border: 1px solid #bfdbfe;
+
+        }
+
+
+        /* =====================================================
+           SECTION TITLE
+        ===================================================== */
+
+        .section-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .section-title-icon {
+
+            width: 38px;
+
+            height: 38px;
+
+            border-radius: 10px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: var(--primary);
+
+            background: #eaf2ff;
+
+            font-size: 15px;
+
+        }
+
+
+        .section-title h3 {
+
+            color: var(--dark);
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+        }
+
+
+        .section-title p {
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+            margin-top: 3px;
+
+        }
+
+
+        /* =====================================================
+           INFORMATION CARDS
+        ===================================================== */
+
+        .info-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 32px;
+
+        }
+
+
+        .info-card {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 16px;
+
+            border-radius: 13px;
+
+            background: #f8fafc;
+
+            border: 1px solid var(--border);
+
+            transition: .25s;
+
+        }
+
+
+        .info-card:hover {
+
+            transform: translateY(-3px);
+
+            border-color:
+                rgba(15,98,254,.2);
+
+            box-shadow:
+                0 8px 20px rgba(15,23,42,.05);
+
+        }
+
+
+        .info-icon {
+
+            width: 42px;
+
+            height: 42px;
+
+            min-width: 42px;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #eaf2ff;
+
+            color: var(--primary);
+
+            font-size: 15px;
+
+        }
+
+
+        .info-card:nth-child(2)
+        .info-icon {
+
+            color: #7c3aed;
+
+            background: #f1eaff;
+
+        }
+
+
+        .info-card small {
+
+            display: block;
+
+            color: var(--muted);
+
+            font-size: 9px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .7px;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .info-card strong {
+
+            display: block;
+
+            color: var(--dark);
+
+            font-size: 12px;
+
+            word-break: break-word;
+
+        }
+
+
+        /* =====================================================
+           EDIT SECTION
+        ===================================================== */
+
+        .edit-section {
+
+            border-top: 1px solid var(--border);
+
+            padding-top: 30px;
+
+        }
+
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
+
+        }
+
+
+        .form-group {
+
+            position: relative;
+
+        }
+
+
+        .full {
+
+            grid-column: 1 / -1;
+
+        }
+
+
+        .form-label {
+
+            display: block;
+
+            color: #344054;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .input-wrapper {
+
+            position: relative;
+
+        }
+
+
+        .input-wrapper i {
+
+            position: absolute;
+
+            left: 15px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #98a2b3;
+
+            font-size: 14px;
+
+            pointer-events: none;
+
+            transition: .25s;
+
+        }
+
+
+        .form-control {
+
+            width: 100%;
+
+            height: 52px;
+
+            padding:
+                0 15px 0 43px;
+
+            border: 1.5px solid var(--border);
+
+            border-radius: 11px;
+
+            outline: none;
+
+            background: #f9fafc;
+
+            color: var(--dark);
+
+            font-size: 13px;
+
+            transition: .25s;
+
+        }
+
+
+        .form-control::placeholder {
+
+            color: #a4adba;
+
+        }
+
+
+        .form-control:hover {
+
+            border-color: #c5ceda;
+
+        }
+
+
+        .form-control:focus {
+
+            background: #ffffff;
+
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 4px rgba(15,98,254,.08);
+
+        }
+
+
+        .input-wrapper:focus-within i {
+
+            color: var(--primary);
+
+        }
+
+
+        /* =====================================================
+           FORM HINT
+        ===================================================== */
+
+        .form-hint {
+
+            margin-top: 6px;
+
+            color: #98a2b3;
+
+            font-size: 9px;
+
+        }
+
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        .form-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-top: 28px;
+
+            padding-top: 23px;
+
+            border-top: 1px solid var(--border);
+
+        }
+
+
+        .btn {
+
+            min-height: 48px;
+
+            padding: 0 20px;
+
+            border-radius: 10px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            text-decoration: none;
+
+            border: none;
+
+            cursor: pointer;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            transition: .25s;
+
+        }
+
+
+        .btn-primary {
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f62fe,
+                    #4f46e5
+                );
+
+            box-shadow:
+                0 9px 20px rgba(15,98,254,.22);
+
+        }
+
+
+        .btn-primary:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 13px 28px rgba(15,98,254,.3);
+
+        }
+
+
+        .btn-secondary {
+
+            color: #475467;
+
+            background: #ffffff;
+
+            border: 1px solid var(--border);
+
+        }
+
+
+        .btn-secondary:hover {
+
+            color: var(--primary);
+
+            border-color:
+                rgba(15,98,254,.3);
+
+            background: #f8fafc;
+
+            transform: translateY(-2px);
+
+        }
+
+
+        /* =====================================================
+           SECURITY FOOTER
+        ===================================================== */
+
+        .security-footer {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            margin-top: 25px;
+
+            color: #98a2b3;
+
+            font-size: 9px;
+
+        }
+
+
+        .security-footer i {
+
+            color: var(--success);
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            body {
+
+                padding: 20px 12px;
+
+            }
+
+
+            .top-header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+            }
+
+
+            .back-dashboard {
+
+                align-self: flex-start;
+
+            }
+
+
+            .profile-hero {
+
+                padding: 28px 22px;
+
+            }
+
+
+            .hero-content {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+
+            }
+
+
+            .hero-info h2 {
+
+                font-size: 21px;
+
+            }
+
+
+            .profile-content {
+
+                padding: 25px 20px 30px;
+
+            }
+
+
+            .info-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .full {
+
+                grid-column: auto;
+
+            }
+
+
+            .form-actions {
+
+                flex-direction: column-reverse;
+
+                align-items: stretch;
+
+            }
+
+
+            .btn {
+
+                width: 100%;
+
+            }
+
+        }
+
+
+        @media (max-width: 430px) {
+
+            .brand-text h1 {
+
+                font-size: 17px;
+
+            }
+
+
+            .brand-icon {
+
+                width: 46px;
+
+                height: 46px;
+
+                font-size: 18px;
+
+            }
+
+
+            .profile-avatar {
+
+                width: 75px;
+
+                height: 75px;
+
+                min-width: 75px;
+
+                font-size: 30px;
+
+            }
+
+
+            .profile-hero {
+
+                padding: 24px 18px;
+
+            }
+
+
+            .profile-content {
+
+                padding: 22px 16px 27px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     BACKGROUND
+===================================================== -->
+
+<div class="background-circle circle-one"></div>
+
+<div class="background-circle circle-two"></div>
+
+
+<!-- =====================================================
+     MAIN CONTAINER
+===================================================== -->
+
+<div class="profile-container">
+
+
+    <!-- =================================================
+         TOP HEADER
+    ================================================= -->
+
+    <div class="top-header">
+
+
+        <div class="brand">
+
+            <div class="brand-icon">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+            </div>
+
+
+            <div class="brand-text">
+
+                <h1>
+                    AI Online Voting System
+                </h1>
+
+                <p>
+                    Secure Administration Portal
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a
+            href="/admin"
+            class="back-dashboard">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Dashboard
+
+        </a>
+
+
+    </div>
+
+
+    <!-- =================================================
+         PROFILE CARD
+    ================================================= -->
+
+    <div class="profile-card">
+
+
+        <!-- =================================================
+             PROFILE HERO
+        ================================================= -->
+
+        <div class="profile-hero">
+
+
+            <div class="hero-content">
+
+
+                <div class="profile-avatar">
+
+                    <i class="fa-solid fa-user-shield"></i>
+
+                </div>
+
+
+                <div class="hero-info">
+
+                    <h2>
+                        {{ admin.full_name }}
+                    </h2>
+
+
+                    <p>
+                        Manage your administrator account
+                        and profile information.
+                    </p>
+
+
+                    <div class="role-badge">
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        System Administrator
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             PROFILE CONTENT
+        ================================================= -->
+
+        <div class="profile-content">
+
+
+            <!-- =================================================
+                 MESSAGE
+            ================================================= -->
+
+            {% if message %}
+
+            <div class="alert-message
+                {% if message_type == 'success' %}
+                    alert-success
+                {% elif message_type == 'danger' %}
+                    alert-danger
+                {% elif message_type == 'warning' %}
+                    alert-warning
+                {% else %}
+                    alert-info
+                {% endif %}">
+
+
+                {% if message_type == 'success' %}
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                {% elif message_type == 'danger' %}
+
+                    <i class="fa-solid fa-circle-xmark"></i>
+
+                {% elif message_type == 'warning' %}
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                {% else %}
+
+                    <i class="fa-solid fa-circle-info"></i>
+
+                {% endif %}
+
+
+                <span>
+                    {{ message }}
+                </span>
+
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 ACCOUNT INFORMATION
+            ================================================= -->
+
+            <div class="section-title">
+
+
+                <div class="section-title-icon">
+
+                    <i class="fa-solid fa-id-card"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Account Information
+                    </h3>
+
+                    <p>
+                        Current administrator account details
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="info-grid">
+
+
+                <!-- USER ID -->
+
+                <div class="info-card">
+
+
+                    <div class="info-icon">
+
+                        <i class="fa-solid fa-fingerprint"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <small>
+                            User ID
+                        </small>
+
+                        <strong>
+                            #{{ admin.id }}
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- ROLE -->
+
+                <div class="info-card">
+
+
+                    <div class="info-icon">
+
+                        <i class="fa-solid fa-user-shield"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <small>
+                            Account Role
+                        </small>
+
+                        <strong>
+                            Administrator
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 EDIT PROFILE
+            ================================================= -->
+
+            <div class="edit-section">
+
+
+                <div class="section-title">
+
+
+                    <div class="section-title-icon">
+
+                        <i class="fa-solid fa-user-pen"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            Edit Profile
+                        </h3>
+
+                        <p>
+                            Update your administrator information
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <form method="POST"
+                      id="profileForm">
+
+
+                    <div class="form-grid">
+
+
+                        <!-- FULL NAME -->
+
+                        <div class="form-group">
+
+
+                            <label class="form-label">
+
+                                Full Name
+
+                            </label>
+
+
+                            <div class="input-wrapper">
+
+
+                                <i class="fa-solid fa-user"></i>
+
+
+                                <input
+                                    type="text"
+                                    name="full_name"
+                                    id="full_name"
+                                    class="form-control"
+                                    value="{{ admin.full_name }}"
+                                    placeholder="Enter your full name"
+                                    maxlength="100"
+                                    required>
+
+
+                            </div>
+
+
+                            <div class="form-hint">
+
+                                Enter the name displayed in the admin panel.
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+
+                        <div class="form-group">
+
+
+                            <label class="form-label">
+
+                                Email Address
+
+                            </label>
+
+
+                            <div class="input-wrapper">
+
+
+                                <i class="fa-solid fa-envelope"></i>
+
+
+                                <input
+                                    type="email"
+                                    name="email"
+                                    id="email"
+                                    class="form-control"
+                                    value="{{ admin.email }}"
+                                    placeholder="admin@example.com"
+                                    maxlength="150"
+                                    required>
+
+
+                            </div>
+
+
+                            <div class="form-hint">
+
+                                Use an active email address.
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- =================================================
+                         ACTIONS
+                    ================================================= -->
+
+                    <div class="form-actions">
+
+
+                        <a
+                            href="{{ url_for('settings') }}"
+                            class="btn btn-secondary">
+
+                            <i class="fa-solid fa-arrow-left"></i>
+
+                            Back to Settings
+
+                        </a>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                            id="saveBtn">
+
+                            <i class="fa-solid fa-floppy-disk"
+                               id="saveIcon"></i>
+
+                            <span id="saveText">
+                                Save Changes
+                            </span>
+
+                        </button>
+
+
+                    </div>
+
+
+                </form>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 SECURITY
+            ================================================= -->
+
+            <div class="security-footer">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                Your administrator profile is protected
+                by the voting system.
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   FORM ELEMENTS
+========================================================= */
+
+const profileForm =
+    document.getElementById("profileForm");
+
+const saveBtn =
+    document.getElementById("saveBtn");
+
+const saveIcon =
+    document.getElementById("saveIcon");
+
+const saveText =
+    document.getElementById("saveText");
+
+const fullName =
+    document.getElementById("full_name");
+
+const email =
+    document.getElementById("email");
+
+
+/* =========================================================
+   FORM VALIDATION
+========================================================= */
+
+profileForm.addEventListener(
+    "submit",
+    function(event) {
+
+
+        const name =
+            fullName.value.trim();
+
+        const emailValue =
+            email.value.trim();
+
+
+        /* NAME VALIDATION */
+
+        if(name.length < 3) {
+
+            event.preventDefault();
+
+            alert(
+                "Full Name must contain at least 3 characters."
+            );
+
+            fullName.focus();
+
+            return;
+
+        }
+
+
+        /* EMAIL VALIDATION */
+
+        const emailPattern =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+        if(!emailPattern.test(emailValue)) {
+
+            event.preventDefault();
+
+            alert(
+                "Please enter a valid email address."
+            );
+
+            email.focus();
+
+            return;
+
+        }
+
+
+        /* LOADING STATE */
+
+        saveBtn.disabled = true;
+
+        saveBtn.style.opacity = "0.75";
+
+        saveIcon.className =
+            "fa-solid fa-spinner fa-spin";
+
+        saveText.textContent =
+            "Saving Changes...";
+
+    }
+);
+
+
+/* =========================================================
+   CLEAN MULTIPLE SPACES
+========================================================= */
+
+fullName.addEventListener(
+    "input",
+    function() {
+
+        this.value =
+            this.value.replace(/\s{2,}/g, " ");
+
+    }
+);
+
+
+/* =========================================================
+   AUTO HIDE MESSAGE
+========================================================= */
+
+const alertMessage =
+    document.querySelector(".alert-message");
+
+
+if(alertMessage) {
+
+    setTimeout(
+        function() {
+
+            alertMessage.style.transition =
+                "opacity .4s ease";
+
+            alertMessage.style.opacity =
+                "0";
+
+        },
+        5000
+    );
+
+}
+
+</script>
+
+
+</body>
+
+</html>
